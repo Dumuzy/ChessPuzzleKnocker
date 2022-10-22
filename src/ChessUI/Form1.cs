@@ -15,6 +15,18 @@ using AwiUtils;
 
 namespace ChessUI
 {
+
+    class SquareTag
+    {
+        public SquareTag(string labelName)
+        {
+            Square = Square.Create(labelName.Substring(4));
+        }
+
+        public Square Square;
+        public Player? PieceCol;
+    }
+
     public partial class Form1 : Form
     {
         private readonly Label[] _squareLabels;
@@ -110,7 +122,7 @@ namespace ChessUI
             }
 
             foreach (var c in new Control[] { cbFlipBoard, btLichess, btNext, lblWhoseTurn, lblPuzzleState,
-                cbPuzzleSets, cbPromoteTo, lblPromoteTo })
+                cbPuzzleSets, cbPromoteTo, lblPromoteTo, btCreatePuzleSet })
                 c.Location = AddDxDy(c.Location, (int)(9.5 * delta), 0);
         }
 
@@ -404,16 +416,15 @@ namespace ChessUI
 
         private void ReadCurrentPzlName() => cbPuzzleSets.SelectedItem = File.ReadAllText("ChessPuzzlePecker.ini");
 
-    }
-
-    class SquareTag
-    {
-        public SquareTag(string labelName)
+        private void btCreatePuzleSet_Click(object sender, EventArgs e)
         {
-            Square = Square.Create(labelName.Substring(4));
+            var ib = new InputBox(_puzzleSet);
+            var res = ib.ShowDialog();
+            if (res == DialogResult.OK)
+            {
+                cbPuzzleSets.Items.Add(ib.tbNameOfSet.Text);
+                cbPuzzleSets.SelectedItem = ib.tbNameOfSet.Text;
+            }
         }
-
-        public Square Square;
-        public Player? PieceCol;
     }
 }

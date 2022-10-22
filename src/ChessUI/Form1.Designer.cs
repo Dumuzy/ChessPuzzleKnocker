@@ -116,6 +116,7 @@
             this.cbPuzzleSets = new System.Windows.Forms.ComboBox();
             this.cbPromoteTo = new System.Windows.Forms.ComboBox();
             this.lblPromoteTo = new System.Windows.Forms.Label();
+            this.btCreatePuzleSet = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // lbl_A1
@@ -763,7 +764,7 @@
             // 
             this.lblWhoseTurn.AutoSize = true;
             this.lblWhoseTurn.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.lblWhoseTurn.Location = new System.Drawing.Point(643, 94);
+            this.lblWhoseTurn.Location = new System.Drawing.Point(642, 160);
             this.lblWhoseTurn.Name = "lblWhoseTurn";
             this.lblWhoseTurn.Size = new System.Drawing.Size(19, 21);
             this.lblWhoseTurn.TabIndex = 66;
@@ -916,7 +917,7 @@
             // cbFlipBoard
             // 
             this.cbFlipBoard.AutoSize = true;
-            this.cbFlipBoard.Location = new System.Drawing.Point(643, 131);
+            this.cbFlipBoard.Location = new System.Drawing.Point(642, 197);
             this.cbFlipBoard.Name = "cbFlipBoard";
             this.cbFlipBoard.Size = new System.Drawing.Size(79, 19);
             this.cbFlipBoard.TabIndex = 86;
@@ -927,7 +928,7 @@
             // btNext
             // 
             this.btNext.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.btNext.Location = new System.Drawing.Point(643, 195);
+            this.btNext.Location = new System.Drawing.Point(642, 261);
             this.btNext.Name = "btNext";
             this.btNext.Size = new System.Drawing.Size(149, 39);
             this.btNext.TabIndex = 87;
@@ -939,7 +940,7 @@
             // 
             this.lblPuzzleState.AutoSize = true;
             this.lblPuzzleState.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.lblPuzzleState.Location = new System.Drawing.Point(643, 73);
+            this.lblPuzzleState.Location = new System.Drawing.Point(642, 139);
             this.lblPuzzleState.Name = "lblPuzzleState";
             this.lblPuzzleState.Size = new System.Drawing.Size(13, 21);
             this.lblPuzzleState.TabIndex = 88;
@@ -948,7 +949,7 @@
             // btLichess
             // 
             this.btLichess.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.btLichess.Location = new System.Drawing.Point(643, 248);
+            this.btLichess.Location = new System.Drawing.Point(642, 314);
             this.btLichess.Name = "btLichess";
             this.btLichess.Size = new System.Drawing.Size(149, 39);
             this.btLichess.TabIndex = 89;
@@ -960,7 +961,7 @@
             // 
             this.cbPuzzleSets.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.cbPuzzleSets.FormattingEnabled = true;
-            this.cbPuzzleSets.Location = new System.Drawing.Point(643, 28);
+            this.cbPuzzleSets.Location = new System.Drawing.Point(642, 94);
             this.cbPuzzleSets.Name = "cbPuzzleSets";
             this.cbPuzzleSets.Size = new System.Drawing.Size(149, 29);
             this.cbPuzzleSets.TabIndex = 90;
@@ -970,7 +971,7 @@
             // 
             this.cbPromoteTo.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.cbPromoteTo.FormattingEnabled = true;
-            this.cbPromoteTo.Location = new System.Drawing.Point(724, 159);
+            this.cbPromoteTo.Location = new System.Drawing.Point(723, 225);
             this.cbPromoteTo.Name = "cbPromoteTo";
             this.cbPromoteTo.Size = new System.Drawing.Size(68, 23);
             this.cbPromoteTo.TabIndex = 91;
@@ -979,17 +980,29 @@
             // 
             this.lblPromoteTo.AutoSize = true;
             this.lblPromoteTo.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.lblPromoteTo.Location = new System.Drawing.Point(643, 162);
+            this.lblPromoteTo.Location = new System.Drawing.Point(642, 228);
             this.lblPromoteTo.Name = "lblPromoteTo";
             this.lblPromoteTo.Size = new System.Drawing.Size(67, 15);
             this.lblPromoteTo.TabIndex = 92;
             this.lblPromoteTo.Text = "Promote to";
+            // 
+            // btCreatePuzleSet
+            // 
+            this.btCreatePuzleSet.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.btCreatePuzleSet.Location = new System.Drawing.Point(642, 38);
+            this.btCreatePuzleSet.Name = "btCreatePuzleSet";
+            this.btCreatePuzleSet.Size = new System.Drawing.Size(149, 39);
+            this.btCreatePuzleSet.TabIndex = 93;
+            this.btCreatePuzleSet.Text = "Create Puzzle Set";
+            this.btCreatePuzleSet.UseVisualStyleBackColor = true;
+            this.btCreatePuzleSet.Click += new System.EventHandler(this.btCreatePuzleSet_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(869, 622);
+            this.Controls.Add(this.btCreatePuzleSet);
             this.Controls.Add(this.lblPromoteTo);
             this.Controls.Add(this.cbPromoteTo);
             this.Controls.Add(this.cbPuzzleSets);
@@ -1177,6 +1190,7 @@
         private System.Windows.Forms.ComboBox cbPuzzleSets;
         private System.Windows.Forms.ComboBox cbPromoteTo;
         private System.Windows.Forms.Label lblPromoteTo;
+        private System.Windows.Forms.Button btCreatePuzleSet;
     }
 }
 

@@ -7,6 +7,6 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="..\WoUtils\WoUtils.csproj" />
+    <ProjectReference Include="..\AwiUtils\AwiUtils.csproj" />
   </ItemGroup>
 </Project>

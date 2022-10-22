@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using Wolter.VA.Utils;
+using AwiUtils;
 
 namespace ChessSharp.Pieces
 {

@@ -984,7 +984,6 @@
             this.lblPromoteTo.Size = new System.Drawing.Size(67, 15);
             this.lblPromoteTo.TabIndex = 92;
             this.lblPromoteTo.Text = "Promote to";
-            this.lblPromoteTo.Click += new System.EventHandler(this.label9_Click);
             // 
             // Form1
             // 

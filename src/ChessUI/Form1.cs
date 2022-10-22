@@ -11,7 +11,7 @@ using System.Windows.Forms;
 using ChessSharp;
 using ChessSharp.Pieces;
 using ChessSharp.SquareData;
-using Wolter.VA.Utils;
+using AwiUtils;
 
 namespace ChessUI
 {
@@ -109,7 +109,7 @@ namespace ChessUI
                 lbl.Location = AddDxDy(lbl.Location, dx, dy);
             }
 
-            foreach (var c in new Control[] { cbFlipBoard, btLichess, btNext, lblWhoseTurn, lblPuzzleState, 
+            foreach (var c in new Control[] { cbFlipBoard, btLichess, btNext, lblWhoseTurn, lblPuzzleState,
                 cbPuzzleSets, cbPromoteTo, lblPromoteTo })
                 c.Location = AddDxDy(c.Location, (int)(9.5 * delta), 0);
         }
@@ -227,17 +227,23 @@ namespace ChessUI
                     Select(m => m.Destination).ToLi();
                 if (validDestinations.Contains(targetSquare))
                 {
-                    if (_gameBoard.TryMove(_selectedSourceSquare.Value, targetSquare, 
-                            _gameBoard.IsPromotionMove(_selectedSourceSquare.Value, targetSquare) ? 
+                    if (_gameBoard.TryMove(_selectedSourceSquare.Value, targetSquare,
+                            _gameBoard.IsPromotionMove(_selectedSourceSquare.Value, targetSquare) ?
                             (PawnPromotion)cbPromoteTo.SelectedItem : (PawnPromotion?)null))
                         _isCurrentFinished = _gameBoard.MakeMoveAndAnswer(MakeMove);
                     else
                         _puzzleSet.CurrentIsError();
                     if (_isCurrentFinished)
                     {
+                        var currentRound = _puzzleSet.CurrentRound;
+                        lblPuzzleState.Text = PuzzleSetInfoDone;
                         _puzzleSet.CurrentIsFinished();
-                        lblPuzzleState.Text = $"Done {_puzzleSet.NumDone}/{_puzzleSet.NumTotal}  R {_puzzleSet.CurrentRound}" ;
                         lblWhoseTurn.Text = _puzzleSet.CurrentRating();
+                        if (_puzzleSet.IsRoundFinished(currentRound))
+                        {
+                            MessageBox.Show($"Round #{currentRound} is finished. Fanfare.");
+                            _puzzleSet.RebasePuzzles();
+                        }
                     }
                     _puzzleSet.WriteSet();
                 }
@@ -246,6 +252,10 @@ namespace ChessUI
                 _selectedSourceSquare = null;
             }
         }
+
+        string PuzzleSetInfo => $"{_puzzleSet.NumDone + 1}/{_puzzleSet.NumTotal}  R {_puzzleSet.CurrentRound}";
+        string PuzzleSetInfoDone => $"Done {PuzzleSetInfo}";
+
 
         bool _isCurrentFinished;
 
@@ -316,7 +326,7 @@ namespace ChessUI
             try
             {
                 Player player = _gameBoard.WhoseTurn;
-                PawnPromotion? pawnPromotion = _gameBoard.IsPromotionMove(source, destination) ? 
+                PawnPromotion? pawnPromotion = _gameBoard.IsPromotionMove(source, destination) ?
                     (PawnPromotion)cbPromoteTo.SelectedItem : (PawnPromotion?)null;
 
                 var move = new Move(source, destination, player, pawnPromotion);
@@ -353,17 +363,12 @@ namespace ChessUI
                 if (!_isCurrentFinished)
                     _puzzleSet.CurrentIsError();
                 _isCurrentFinished = false;
-                if (_puzzleSet.IsCurrentRoundFinished)
-                {
-                    MessageBox.Show("Current round is finished. Fanfare.");
-                    _puzzleSet.RebasePuzzles();
-                }
                 _gameBoard = _puzzleSet.NextPuzzle();
                 if (_gameBoard != null)
                 {
                     SetSideOf();
                     DrawBoard();
-                    lblPuzzleState.Text = "";
+                    lblPuzzleState.Text = PuzzleSetInfo;
                     lblWhoseTurn.Text = _gameBoard.WhoseTurn.ToString();
                 }
                 else
@@ -399,10 +404,6 @@ namespace ChessUI
 
         private void ReadCurrentPzlName() => cbPuzzleSets.SelectedItem = File.ReadAllText("ChessPuzzlePecker.ini");
 
-        private void label9_Click(object sender, EventArgs e)
-        {
-
-        }
     }
 
     class SquareTag

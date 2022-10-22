@@ -24,7 +24,7 @@ namespace ChessSharp.Pieces
                 return true;
             }
             // Not castle move.
-            if (absDeltaX != 2 || absDeltaY != 0 || move.Source.File != File.E ||
+            if (absDeltaX != 2 || absDeltaY != 0 || move.Source.File != Linie.E ||
                 (move.Player == Player.White && move.Source.Rank != Rank.First) ||
                 (move.Player == Player.Black && move.Source.Rank != Rank.Eighth) ||
                 (board.GameState == GameState.BlackInCheck || board.GameState == GameState.WhiteInCheck))
@@ -33,39 +33,39 @@ namespace ChessSharp.Pieces
             }
 
             // White king-side castle move.
-            if (move.Player == Player.White && move.Destination.File == File.G && board.CanWhiteCastleKingSide &&
-                !board.IsTherePieceInBetween(move.Source, new Square(File.H, Rank.First)) &&
-                new Rook(Player.White).Equals(board[File.H, Rank.First]))
+            if (move.Player == Player.White && move.Destination.File == Linie.G && board.CanWhiteCastleKingSide &&
+                !board.IsTherePieceInBetween(move.Source, new Square(Linie.H, Rank.First)) &&
+                new Rook(Player.White).Equals(board[Linie.H, Rank.First]))
             {
                 return !board.PlayerWillBeInCheck(
-                    new Move(move.Source, new Square(File.F, Rank.First), move.Player));
+                    new Move(move.Source, new Square(Linie.F, Rank.First), move.Player));
             }
 
             // Black king-side castle move.
-            if (move.Player == Player.Black && move.Destination.File == File.G && board.CanBlackCastleKingSide &&
-                !board.IsTherePieceInBetween(move.Source, new Square(File.H, Rank.Eighth)) &&
-                new Rook(Player.Black).Equals(board[File.H, Rank.Eighth]))
+            if (move.Player == Player.Black && move.Destination.File == Linie.G && board.CanBlackCastleKingSide &&
+                !board.IsTherePieceInBetween(move.Source, new Square(Linie.H, Rank.Eighth)) &&
+                new Rook(Player.Black).Equals(board[Linie.H, Rank.Eighth]))
             {
                 return !board.PlayerWillBeInCheck(
-                    new Move(move.Source, new Square(File.F, Rank.Eighth), move.Player));
+                    new Move(move.Source, new Square(Linie.F, Rank.Eighth), move.Player));
             }
 
             // White queen-side castle move.
-            if (move.Player == Player.White && move.Destination.File == File.C && board.CanWhiteCastleQueenSide &&
-                !board.IsTherePieceInBetween(move.Source, new Square(File.A, Rank.First)) &&
-                new Rook(Player.White).Equals(board[File.A, Rank.First]))
+            if (move.Player == Player.White && move.Destination.File == Linie.C && board.CanWhiteCastleQueenSide &&
+                !board.IsTherePieceInBetween(move.Source, new Square(Linie.A, Rank.First)) &&
+                new Rook(Player.White).Equals(board[Linie.A, Rank.First]))
             {
                 return !board.PlayerWillBeInCheck(
-                    new Move(move.Source, new Square(File.D, Rank.First), move.Player));
+                    new Move(move.Source, new Square(Linie.D, Rank.First), move.Player));
             }
 
             // Black queen-side castle move.
-            if (move.Player == Player.Black && move.Destination.File == File.C && board.CanBlackCastleQueenSide &&
-                !board.IsTherePieceInBetween(move.Source, new Square(File.A, Rank.Eighth)) &&
-                new Rook(Player.Black).Equals(board[File.A, Rank.Eighth]))
+            if (move.Player == Player.Black && move.Destination.File == Linie.C && board.CanBlackCastleQueenSide &&
+                !board.IsTherePieceInBetween(move.Source, new Square(Linie.A, Rank.Eighth)) &&
+                new Rook(Player.Black).Equals(board[Linie.A, Rank.Eighth]))
             {
                 return !board.PlayerWillBeInCheck(
-                    new Move(move.Source, new Square(File.D, Rank.Eighth), move.Player));
+                    new Move(move.Source, new Square(Linie.D, Rank.Eighth), move.Player));
             }
 
             return false;

@@ -29,6 +29,8 @@ namespace ChessSharp
 
         public override int GetHashCode() => HashCode.Combine(Source, Destination, Player);
 
+        public override string ToString() => $"{Source}{Destination}" + PromoteTo ?? "";
+
         /// <summary>Initializes a new instance of the <see cref="Move"/> class with the given arguments.</summary>
         /// <param name="source">The source <see cref="Square"/> of the <see cref="Move"/>.</param>
         /// <param name="destination">The destination <see cref="Square"/> of the <see cref="Move"/>.</param>

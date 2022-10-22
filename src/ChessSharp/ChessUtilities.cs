@@ -10,11 +10,11 @@ namespace ChessSharp
     public static class ChessUtilities
     {
         private static readonly IEnumerable<Square> s_allSquares =
-            from file in Enum.GetValues(typeof(File)).Cast<File>()
+            from file in Enum.GetValues(typeof(Linie)).Cast<Linie>()
             from rank in Enum.GetValues(typeof(Rank)).Cast<Rank>()
             select new Square(file, rank);
 
-        internal static Player RevertPlayer(Player player) => player == Player.White ? Player.Black : Player.White;
+        public static Player Opponent(Player player) => player == Player.White ? Player.Black : Player.White;
 
         /* TODO: Still not sure where to implement it, but I may need methods:
            TODO: bool CanClaimDraw + bool ClaimDraw + OfferDraw
@@ -54,10 +54,8 @@ namespace ChessSharp
         /// 
         public static List<Move> GetValidMovesOfSourceSquare(Square source, ChessGame board)
         {
-            if (board == null)
-            {
-                throw new ArgumentNullException(nameof(board));
-            }
+            if (board == null || source == null)
+                throw new ArgumentNullException(nameof(board) + " or " + nameof(source));
 
             var validMoves = new List<Move>();
             Piece? piece = board[source.File, source.Rank];
@@ -75,9 +73,10 @@ namespace ChessSharp
             return validMoves;
         }
 
+
         internal static bool IsPlayerInCheck(Player player, ChessGame board)
         {
-            Player opponent = RevertPlayer(player);
+            Player opponent = Opponent(player);
             IEnumerable<Square> opponentOwnedSquares = s_allSquares.Where(sq => board[sq.File, sq.Rank]?.Owner == opponent);
             Square playerKingSquare = s_allSquares.First(sq => new King(player).Equals(board[sq.File, sq.Rank]));
 

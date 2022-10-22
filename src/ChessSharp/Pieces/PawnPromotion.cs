@@ -1,4 +1,8 @@
-﻿namespace ChessSharp.Pieces
+﻿using System;
+using System.Collections.Generic;
+using Wolter.VA.Utils;
+
+namespace ChessSharp.Pieces
 {
     /// <summary>Represents the promotion of the pawn.</summary>
     public enum PawnPromotion
@@ -12,4 +16,21 @@
         /// <summary>Promote the pawn to a queen.</summary>
         Queen,
     }
+
+    public static class PawnPromotionHelper
+    {
+        static PawnPromotionHelper()
+        {
+            charToPPDict = new Dictionary<string, PawnPromotion>(StringComparer.InvariantCultureIgnoreCase);
+            var dict = Helper.ToDictionary("N Knight B Bishop R Rook Q Queen");
+            foreach (var kvp in dict)
+                charToPPDict.Add(kvp.Key, (PawnPromotion)Enum.Parse(typeof(PawnPromotion), kvp.Value));
+        }
+
+        static public PawnPromotion Get(char c) => charToPPDict["" + c];
+
+        static Dictionary<string, PawnPromotion> charToPPDict;
+    }
+
+
 }

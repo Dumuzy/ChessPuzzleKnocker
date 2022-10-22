@@ -2,7 +2,7 @@
 {
 
     /// <summary>Represents a square file.</summary>
-    public enum File
+    public enum Linie
     {
         /// <summary>Represents the A file.</summary>
         A,

@@ -6,7 +6,7 @@ namespace ChessSharp.SquareData
 {
     internal class Parser
     {
-        private static File ParseFile(char file)
+        private static Linie ParseFile(char file)
         {
             // Culture doesn't really matter here, but to silence CA1304
             file = char.ToUpper(file, CultureInfo.InvariantCulture);
@@ -15,7 +15,7 @@ namespace ChessSharp.SquareData
                 throw new ArgumentOutOfRangeException(nameof(file));
             }
 
-            return (File)(file - 'A');
+            return (Linie)(file - 'A');
         }
 
         private static Rank ParseRank(char rank)
@@ -36,7 +36,7 @@ namespace ChessSharp.SquareData
                 throw new ArgumentException("Argument length must be 2", nameof(square));
             }
 
-            File file = ParseFile(square[0]);
+            Linie file = ParseFile(square[0]);
             Rank rank = ParseRank(square[1]);
 
             return new Square(file, rank);
@@ -49,7 +49,7 @@ namespace ChessSharp.SquareData
                 throw new ArgumentException("Argument length must be 2", nameof(square));
             }
 
-            File file = ParseFile(square[0]);
+            Linie file = ParseFile(square[0]);
             Rank rank = ParseRank(square[1]);
 
             return new Square(file, rank);
@@ -63,21 +63,24 @@ namespace ChessSharp.SquareData
         /// <summary>
         /// Initializes a new instance of the <c>Square</c>class.
         /// </summary>
-        /// <param name="file">A <see cref="SquareData.File"/> enum representing the file of the square.</param>
+        /// <param name="file">A <see cref="SquareData.Linie"/> enum representing the file of the square.</param>
         /// <param name="rank">A <see cref="SquareData.Rank"/> enum representing the rank of the square.</param>
-        public Square(File file, Rank rank)
+        public Square(Linie file, Rank rank)
         {
             File = file;
             Rank = rank;
         }
 
-#pragma warning disable CA2225 // Operator overloads have named alternates - Investigate this later.
-        public static implicit operator Square(string s) => Parser.Parse(s);
-        public static implicit operator Square(ReadOnlySpan<char> s) => Parser.Parse(s);
-#pragma warning restore CA2225 // Operator overloads have named alternates - Investigate this later.
+        public static Square Create(string s) => Parser.Parse(s);
+        public static Square Create(ReadOnlySpan<char> s) => Parser.Parse(s);
 
-        /// <summary>Gets the <see cref="SquareData.File"/> of the square.</summary>
-        public File File { get; }
+        //#pragma warning disable CA2225 // Operator overloads have named alternates - Investigate this later.
+        //        public static implicit operator Square(string s) => Parser.Parse(s);
+        //        public static implicit operator Square(ReadOnlySpan<char> s) => Parser.Parse(s);
+        //#pragma warning restore CA2225 // Operator overloads have named alternates - Investigate this later.
+
+        /// <summary>Gets the <see cref="SquareData.Linie"/> of the square.</summary>
+        public Linie File { get; }
 
         /// <summary>Gets the <see cref="SquareData.Rank"/> of the square.</summary>
         public Rank Rank { get; }

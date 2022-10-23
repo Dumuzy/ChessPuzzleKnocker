@@ -16,6 +16,10 @@ namespace ChessSharp
         /// <param name="rank">The <see cref="Rank"/> of the square.</param>
         public Piece? this[Linie file, Rank rank] => Board[(int)rank][(int)file];
 
+        public Piece? this[Square sq] => Board[(int)sq.Rank][(int)sq.File];
+
+        public void SetPiece(Square sq, Piece? p) => Board[(int)sq.Rank][(int)sq.File] = p;
+
         /// <summary>Gets a list of the game moves.</summary>
         public Li<Move> Moves { get; private set; } // TODO: BAD! Investigate why the class consumer would even need this. Make it a private field if appropriate. And make it some kind of interface (`IEnumerable` for example).
 
@@ -28,12 +32,12 @@ namespace ChessSharp
         /// <summary>Gets the current <see cref="ChessSharp.GameState"/>.</summary>
         public GameState GameState { get; private set; }
 
-        public bool IsPromotionMove(Square source, Square target)
+        public bool IsPromotionMove(Square? source, Square target)
         {
             bool isPromotion = false;
-            if (target.Rank == Rank.First || target.Rank == Rank.Eighth)
+            if (source != null && (target.Rank == Rank.First || target.Rank == Rank.Eighth))
             {
-                Piece? piece = this[source.File, source.Rank];
+                Piece? piece = this[source.Value];
                 isPromotion = piece != null && piece.GetType() == typeof(Pawn);
             }
             return isPromotion;
@@ -169,12 +173,12 @@ namespace ChessSharp
                 if (Pawn.GetPawnMoveType(move) == PawnMoveType.Capture &&
                     this[move.Destination.File, move.Destination.Rank] == null)
                 {
-                    Board[(int)Moves.Last().Destination.Rank][(int)Moves.Last().Destination.File] = null;
+                    this.SetPiece(Moves.Last().Destination, null);
                 }
 
             }
-            Board[(int)move.Source.Rank][(int)move.Source.File] = null;
-            Board[(int)move.Destination.Rank][(int)move.Destination.File] = piece;
+            this.SetPiece(move.Source, null);
+            this.SetPiece(move.Destination, piece);
             Moves.Add(move);
             WhoseTurn = ChessUtilities.Opponent(move.Player);
             SetGameState();
@@ -229,32 +233,48 @@ namespace ChessSharp
         public bool IsValidMove(Move move)
         {
             if (move == null)
-            {
                 throw new ArgumentNullException(nameof(move));
-            }
 
-            Piece? pieceSource = this[move.Source.File, move.Source.Rank];
-            Piece? pieceDestination = this[move.Destination.File, move.Destination.Rank];
+            Piece? pieceSource = this[move.Source];
+            Piece? pieceDestination = this[move.Destination];
             return (WhoseTurn == move.Player && pieceSource != null && pieceSource.Owner == move.Player &&
                     !Equals(move.Source, move.Destination) &&
                     (pieceDestination == null || pieceDestination.Owner != move.Player) &&
-                    !PlayerWillBeInCheck(move) && pieceSource.IsValidGameMove(move, this));
+                    pieceSource.IsValidGameMove(move, this) && !PlayerWillBeInCheck(move));
         }
 
         internal bool PlayerWillBeInCheck(Move move)
         {
             if (move == null)
-            {
                 throw new ArgumentNullException(nameof(move));
-            }
 
             ChessGame clone = DeepClone(); // Make the move on this board to keep original board as is.
-            Piece? piece = clone[move.Source.File, move.Source.Rank]; // TODO: throwing causes un-intended behavior. ?? throw new ArgumentException("Invalid move", nameof(move));
-            clone.Board[(int)move.Source.Rank][(int)move.Source.File] = null;
-            clone.Board[(int)move.Destination.Rank][(int)move.Destination.File] = piece;
+            Piece? piece = clone[move.Source];
+            clone.SetPiece(move.Source, null);
+            if (piece is Pawn)
+            {
+                var lm = clone.Moves.Last();
+                // en passant handling
+                if (Pawn.GetPawnMoveType(lm) == PawnMoveType.TwoSteps &&
+                    lm.Destination.Rank == move.Source.Rank)
+                    if (lm.Source.File == move.Destination.File)
+                    {
+                        var lmPiece = clone[lm.Destination];
+                        if (lmPiece is Pawn &&
+                                AbsDist(lm.Source.File, move.Source.File) == 1 &&
+                                clone[move.Destination] == null)
+                            // It is en passant. Remove the taken pawn. 
+                            clone.SetPiece(lm.Destination, null);
+                    }
+            }
+            clone.SetPiece(move.Destination, piece);
 
             return ChessUtilities.IsPlayerInCheck(move.Player, clone);
         }
+
+        public int Dist(Linie l1, Linie l2) => (int)l1 - (int)l2;
+
+        public int AbsDist(Linie l1, Linie l2) => Math.Abs((int)l1 - (int)l2);
 
         internal void SetGameState()
         {
@@ -320,17 +340,15 @@ namespace ChessSharp
         internal static bool IsValidMove(Move move, ChessGame board)
         {
             if (move == null)
-            {
                 throw new ArgumentNullException(nameof(move));
-            }
 
-            Piece? pieceSource = board[move.Source.File, move.Source.Rank];
-            Piece? pieceDestination = board[move.Destination.File, move.Destination.Rank];
+            Piece? pieceSource = board[move.Source];
+            Piece? pieceDestination = board[move.Destination];
 
             return (pieceSource != null && pieceSource.Owner == move.Player &&
                     !Equals(move.Source, move.Destination) &&
                     (pieceDestination == null || pieceDestination.Owner != move.Player) &&
-                    !board.PlayerWillBeInCheck(move) && pieceSource.IsValidGameMove(move, board));
+                    pieceSource.IsValidGameMove(move, board) && !board.PlayerWillBeInCheck(move));
         }
 
         internal bool IsTherePieceInBetween(Square square1, Square square2)
@@ -373,10 +391,11 @@ namespace ChessSharp
             var parts = line.Split(',');
             Fen = parts[1];
             var firstPlayer = Fen.Split()[1] == "w" ? Player.White : Player.Black;
-            SMoves = parts[2].Split().ToLi();
+            SMoves = parts[2].Split().ToLiro();
             Moves = new Li<Move>();
             for (int i = 0; i < SMoves.Count; ++i)
                 Moves.Add(CreateMoveFromSMove(SMoves[i], firstPlayer, i));
+            Motifs = parts[7].SplitToWords().ToLiro();
         }
         private static Move CreateMoveFromSMove(string sMove, Player firstPlayer, int nMove)
         {
@@ -390,8 +409,9 @@ namespace ChessSharp
         }
 
         public readonly string Fen;
-        public readonly Li<string> SMoves;
+        public readonly Liro<string> SMoves;
         public readonly Li<Move> Moves;
+        public readonly Liro<string> Motifs;
     }
 
     public class PuzzleGame : ChessGame
@@ -407,18 +427,31 @@ namespace ChessSharp
         /// </summary>
         /// <param name="formMakeMove"></param>
         /// <returns>true, if puzzle is finished.</returns>
-        public bool MakeMoveAndAnswer(Action<Square, Square> formMakeMove)
+        public bool MakeMoveAndAnswer(Action<Square, Square> formMakeMove, Move tryMove)
         {
             if (HasMove)
-                MakeMove(formMakeMove);
+                MakeMove(formMakeMove, tryMove);
             if (HasMove)
-                MakeMove(formMakeMove);
+                MakeMove(formMakeMove, null);
             return !HasMove;
         }
 
-        public bool TryMove(Square from, Square to, PawnPromotion? pp)
+        public bool TryMove(Move m)
         {
-            bool isOk = IsCorrectMove(from, to, pp);
+            bool isOk = IsCorrectMove(m.Source, m.Destination, m.PromoteTo);
+            if (!isOk && puzzle.Moves.Count == puzzleMoveNum + 1)
+            {
+                // Might be an alternate end.  Lichess puzzles allow alternate ends - 
+                // but only in mating puzzles as last move. 
+                if (puzzle.Motifs.Contains("mate", StringComparer.OrdinalIgnoreCase))
+                {
+                    var clone = this.DeepClone();
+                    clone.MakeMove(m, false);
+                    if (clone.GameState == GameState.WhiteWinner || clone.GameState == GameState.BlackWinner)
+                        isOk = true;
+                }
+            }
+
             if (!isOk)
                 ++NErrors;
             return isOk;
@@ -429,9 +462,14 @@ namespace ChessSharp
         private bool IsCorrectMove(Square from, Square to, PawnPromotion? pp) => HasMove &&
                     from == CurrMove.Source && to == CurrMove.Destination && pp == CurrMove.PromoteTo;
 
-        private void MakeMove(Action<Square, Square> formMakeMove)
+        private void MakeMove(Action<Square, Square> formMakeMove, Move? tryMove)
         {
-            formMakeMove(CurrMove.Source, CurrMove.Destination);
+            // Lichess allows alternate solutions in mating puzzles as last move. 
+            // Therefore, not always i CurrMove the move to make. 
+            if(tryMove != null)
+                formMakeMove(tryMove.Source, tryMove.Destination);
+            else
+                formMakeMove(CurrMove.Source, CurrMove.Destination);
             ++puzzleMoveNum;
         }
 

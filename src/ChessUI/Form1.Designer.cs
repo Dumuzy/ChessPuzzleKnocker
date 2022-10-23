@@ -117,6 +117,7 @@
             this.cbPromoteTo = new System.Windows.Forms.ComboBox();
             this.lblPromoteTo = new System.Windows.Forms.Label();
             this.btCreatePuzleSet = new System.Windows.Forms.Button();
+            this.lblPuzzleId = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // lbl_A1
@@ -995,13 +996,26 @@
             this.btCreatePuzleSet.TabIndex = 93;
             this.btCreatePuzleSet.Text = "Create Puzzle Set";
             this.btCreatePuzleSet.UseVisualStyleBackColor = true;
-            this.btCreatePuzleSet.Click += new System.EventHandler(this.btCreatePuzleSet_Click);
+            this.btCreatePuzleSet.Click += new System.EventHandler(this.btCreatePuzzleSet_Click);
+            // 
+            // lblPuzzleId
+            // 
+            this.lblPuzzleId.AutoSize = true;
+            this.lblPuzzleId.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.lblPuzzleId.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.lblPuzzleId.Location = new System.Drawing.Point(747, 160);
+            this.lblPuzzleId.Name = "lblPuzzleId";
+            this.lblPuzzleId.Size = new System.Drawing.Size(42, 14);
+            this.lblPuzzleId.TabIndex = 94;
+            this.lblPuzzleId.Text = "aBcWX";
+            this.lblPuzzleId.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(869, 622);
+            this.Controls.Add(this.lblPuzzleId);
             this.Controls.Add(this.btCreatePuzleSet);
             this.Controls.Add(this.lblPromoteTo);
             this.Controls.Add(this.cbPromoteTo);
@@ -1191,6 +1205,7 @@
         private System.Windows.Forms.ComboBox cbPromoteTo;
         private System.Windows.Forms.Label lblPromoteTo;
         private System.Windows.Forms.Button btCreatePuzleSet;
+        private System.Windows.Forms.Label lblPuzzleId;
     }
 }
 

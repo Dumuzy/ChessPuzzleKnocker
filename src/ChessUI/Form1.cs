@@ -13,61 +13,48 @@ using ChessSharp.Pieces;
 using ChessSharp.SquareData;
 using AwiUtils;
 using System.Net;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace ChessUI
 {
 
-    class SquareTag
-    {
-        public SquareTag(string labelName)
-        {
-            Square = Square.Create(labelName.Substring(4));
-        }
-
-        public Square Square;
-        public Player? PieceCol;
-    }
-
     public partial class Form1 : Form
     {
         private readonly Label[] _squareLabels;
-        private readonly Label[] _allLabelsToFlip;
-        private readonly Dictionary<string, Point> _whiteLocations;
-        private readonly Dictionary<string, Point> _blackLocations;
-        private Dictionary<string, Point> _currentLocations = null;
+        private readonly Liro<Label> _sideLabels;
         private Square? _selectedSourceSquare;
         private PuzzleGame _gameBoard = new PuzzleGame("00143,r2q1rk1/5ppp/1np5/p1b5/2p1B3/P7/1P3PPP/R1BQ1RK1 b - - 1 17,d8f6 d1h5 h7h6 h5c5,1871,75,93,790,advantage middlegame short,https://lichess.org/jcuxlI63/black#34");
         private PuzzleSet _puzzleSet;
         string _currPuzzleSetName;
+        bool _isCurrentPuzzleFinished;
+
+        class SquareTag
+        {
+            public SquareTag(string labelName)
+            {
+                Square = Square.Create(labelName.Substring(4));
+            }
+
+            public Square Square;
+            public Player? PieceCol;
+            public override string ToString() => "" + Square + $" {PieceCol}";
+        }
 
         public Form1()
         {
             InitializeComponent();
             this.Text = "ChessPuzzlePecker";
             cbFlipBoard.Text = "Flip board";
-            _squareLabels = Controls.OfType<Label>()
-                                 .Where(m => Regex.IsMatch(m.Name, "lbl_[A-H][1-8]")).ToArray();
-            var fileLabels = Controls.OfType<Label>().Where(m => Regex.IsMatch(m.Name, "^label[A-H]$")).ToLi();
-            var rowLabels = Controls.OfType<Label>().Where(m => Regex.IsMatch(m.Name, "^label[1-8]$")).ToLi();
+            _squareLabels = Controls.OfType<Label>().Where(m => Regex.IsMatch(m.Name, "lbl_[A-H][1-8]")).ToArray();
+            _sideLabels = Controls.OfType<Label>().Where(m => Regex.IsMatch(m.Name, "^label[A-H1-8]$")).ToLiro();
 
-            foreach (var squareLabel in _squareLabels)
-                squareLabel.Tag = new SquareTag(squareLabel.Name);
-
-            this.ResizeForm(0.7);
-
-            Array.ForEach(_squareLabels, lbl =>
+            foreach (var lbl in _squareLabels)
             {
+                lbl.Tag = new SquareTag(lbl.Name);
                 lbl.BackgroundImageLayout = ImageLayout.Zoom;
                 lbl.Click += SquaresLabels_Click;
-            });
-
-            var allLabels = new Li<Label>(_squareLabels);
-            allLabels.AddRange(fileLabels);
-            allLabels.AddRange(rowLabels);
-            _allLabelsToFlip = allLabels.ToArray();
-
-            _whiteLocations = _allLabelsToFlip.ToDictionary(lbl => lbl.Name, lbl => lbl.Location);
-            _blackLocations = _allLabelsToFlip.ToDictionary(lbl => InvertLabel(lbl.Name), lbl => lbl.Location);
+            }
+            this.ResizeForm(0.7);
 
             foreach (PawnPromotion p in Enum.GetValues(typeof(PawnPromotion)))
                 cbPromoteTo.Items.Add(p);
@@ -83,7 +70,7 @@ namespace ChessUI
             {
                 _puzzleSet = PuzzleSet.ReadPuzzleSet(_currPuzzleSetName);
                 if (_puzzleSet == null)
-                    MessageBox.Show($"Cannot find PuzzleSet {_currPuzzleSetName}. You must create a new one.");
+                    MessageBox.Show($"Cannot find PuzzleSet {_currPuzzleSetName}.");
             }
         }
 
@@ -101,7 +88,7 @@ namespace ChessUI
                 sl.Location = AddDxDy(sl.Location, dx, dy);
             }
 
-            var fileLabels = Controls.OfType<Label>().Where(m => Regex.IsMatch(m.Name, "^label[A-H]$")).ToLi();
+            var fileLabels = _sideLabels.Where(m => Regex.IsMatch(m.Name, "^label[A-H]$")).ToLi();
             foreach (var lbl in fileLabels)
             {
                 var dx = (int)((lbl.Text[0] - 'A' + 0.3) * delta);
@@ -109,7 +96,7 @@ namespace ChessUI
                 lbl.Location = AddDxDy(lbl.Location, dx, dy);
             }
 
-            var rowLabels = Controls.OfType<Label>().Where(m => Regex.IsMatch(m.Name, "^label[1-8]$")).ToLi();
+            var rowLabels = _sideLabels.Where(m => Regex.IsMatch(m.Name, "^label[1-8]$")).ToLi();
             foreach (var lbl in rowLabels)
             {
                 var dx = 8 * delta;
@@ -118,7 +105,7 @@ namespace ChessUI
             }
 
             foreach (var c in new Control[] { cbFlipBoard, btLichess, btNext, lblWhoseTurn, lblPuzzleState,
-                cbPuzzleSets, cbPromoteTo, lblPromoteTo, btCreatePuzleSet })
+                cbPuzzleSets, cbPromoteTo, lblPromoteTo, btCreatePuzleSet, lblPuzzleId })
                 c.Location = AddDxDy(c.Location, (int)(9.5 * delta), 0);
         }
 
@@ -130,14 +117,47 @@ namespace ChessUI
         }
 
         #region Board flipping
+        private Player PlayerAtBottom =>
+             ((SquareTag)lbl_A8.Tag).Square.ToString() == "A8" ? Player.White : Player.Black;
+
         private void ShowUIFromSideOf(Player player)
         {
-            var locationsDictionary = player == Player.White ? _whiteLocations : _blackLocations;
-            if (_currentLocations != locationsDictionary)
+            if (PlayerAtBottom != player)
             {
-                Array.ForEach(_allLabelsToFlip, lbl => lbl.Location = locationsDictionary[lbl.Name]);
-                _currentLocations = locationsDictionary;
+                foreach (var lbl in _squareLabels)
+                {
+                    var sq = Square.Create(lbl.Name.Substring(4));
+                    if (sq.Rank > Rank.Forth)
+                        continue;
+                    var sqInv = InvertSquare(lbl.Name);
+                    var lblInv = _squareLabels.First(l => l.Name == sqInv);
+                    SwapTags(lbl, lblInv);
+                }
+
+                var lbls = "ABCD1234".ToCharArray();
+                foreach (var lbl in _sideLabels)
+                {
+                    if (lbl.Name[5].IsContainedIn(lbls))
+                        continue;
+                    var lblInv = _sideLabels.First(l => l.Name == InvertLabel(lbl.Name));
+                    SwapTexts(lbl, lblInv);
+                }
             }
+            // else nothing to do. 
+        }
+
+        private void SwapTexts(Label l1, Label l2)
+        {
+            var th = l1.Text;
+            l1.Text = l2.Text;
+            l2.Text = th;
+        }
+
+        private void SwapTags(Label l1, Label l2)
+        {
+            var th = l1.Tag;
+            l1.Tag = l2.Tag;
+            l2.Tag = th;
         }
 
         private static string InvertSquare(string sq)
@@ -182,7 +202,6 @@ namespace ChessUI
         }
         #endregion Board flipping
 
-
         public static void OpenWithDefaultApp(string path)
         {
             using Process fileopener = new Process();
@@ -194,19 +213,15 @@ namespace ChessUI
         private Player? GetPlayerInCheck()
         {
             if (_gameBoard.GameState == GameState.BlackInCheck || _gameBoard.GameState == GameState.WhiteWinner)
-            {
                 return Player.Black;
-            }
             if (_gameBoard.GameState == GameState.WhiteInCheck || _gameBoard.GameState == GameState.BlackWinner)
-            {
                 return Player.White;
-            }
             return null;
         }
 
         private void SquaresLabels_Click(object sender, EventArgs e)
         {
-            if (_isCurrentFinished)
+            if (_isCurrentPuzzleFinished)
                 return;
             Label selectedLabel = (Label)sender;
             // First click
@@ -215,9 +230,8 @@ namespace ChessUI
                 // Re-draw to remove previously colored labels.
                 DrawBoard(GetPlayerInCheck());
 
-                // This part highlights possible Squares for the selected Piece. Strange but true, 
-                // this color is used also to determine, if a move is to be made. 
-                if ((selectedLabel.Tag as SquareTag).PieceCol != _gameBoard.WhoseTurn) return;
+                if ((selectedLabel.Tag as SquareTag).PieceCol != _gameBoard.WhoseTurn) 
+                    return;
                 _selectedSourceSquare = (selectedLabel.Tag as SquareTag).Square;
                 var validDestinations = ChessUtilities.GetValidMovesOfSourceSquare(_selectedSourceSquare.Value, _gameBoard).Select(m => m.Destination).ToArray();
                 if (validDestinations.Length == 0)
@@ -230,23 +244,24 @@ namespace ChessUI
             else
             {
                 // Second click
-                var targetSquare = Square.Create(selectedLabel.Name.AsSpan().Slice("lbl_".Length));
+                var targetSquare = (selectedLabel.Tag as SquareTag).Square;
                 var validDestinations = ChessUtilities.GetValidMovesOfSourceSquare(_selectedSourceSquare.Value, _gameBoard).
                     Select(m => m.Destination).ToLi();
                 if (validDestinations.Contains(targetSquare))
                 {
-                    if (_gameBoard.TryMove(_selectedSourceSquare.Value, targetSquare,
-                            _gameBoard.IsPromotionMove(_selectedSourceSquare.Value, targetSquare) ?
-                            (PawnPromotion)cbPromoteTo.SelectedItem : (PawnPromotion?)null))
-                        _isCurrentFinished = _gameBoard.MakeMoveAndAnswer(MakeMove);
+                    var tryMove = new Move(_selectedSourceSquare.Value, targetSquare, _gameBoard.WhoseTurn,
+                        _gameBoard.IsPromotionMove(_selectedSourceSquare, targetSquare) ?
+                            (PawnPromotion)cbPromoteTo.SelectedItem : (PawnPromotion?)null);
+                    if (_gameBoard.TryMove(tryMove))
+                        _isCurrentPuzzleFinished = _gameBoard.MakeMoveAndAnswer(MakeMove, tryMove);
                     else
                         _puzzleSet.CurrentIsError();
-                    if (_isCurrentFinished)
+                    if (_isCurrentPuzzleFinished)
                     {
                         var currentRound = _puzzleSet.CurrentRound;
                         lblPuzzleState.Text = PuzzleSetInfoDone;
                         _puzzleSet.CurrentIsFinished();
-                        lblWhoseTurn.Text = _puzzleSet.CurrentRating();
+                        lblWhoseTurn.Text = _puzzleSet.CurrentRating;
                         if (_puzzleSet.IsRoundFinished(currentRound))
                         {
                             MessageBox.Show($"Round #{currentRound} is finished. Fanfare.");
@@ -263,9 +278,6 @@ namespace ChessUI
 
         string PuzzleSetInfo => $"{_puzzleSet.NumDone + 1}/{_puzzleSet.NumTotal}  R {_puzzleSet.CurrentRound}";
         string PuzzleSetInfoDone => $"Done {PuzzleSetInfo}";
-
-
-        bool _isCurrentFinished;
 
         private void DrawBoard(Player? playerInCheck = null)
         {
@@ -347,16 +359,8 @@ namespace ChessUI
 
                 DrawBoard(GetPlayerInCheck());
 
-                if (_gameBoard.GameState == GameState.Draw || _gameBoard.GameState == GameState.Stalemate ||
-                    _gameBoard.GameState == GameState.BlackWinner || _gameBoard.GameState == GameState.WhiteWinner)
-                {
-                    MessageBox.Show(_gameBoard.GameState.ToString());
-                    return;
-                }
-
                 Player whoseTurn = _gameBoard.WhoseTurn;
                 lblWhoseTurn.Text = whoseTurn.ToString();
-                // FlipUi(whoseTurn);
             }
             catch (Exception exception)
             {
@@ -368,9 +372,9 @@ namespace ChessUI
         {
             if (_puzzleSet != null && _puzzleSet.HasPuzzles)
             {
-                if (!_isCurrentFinished)
+                if (!_isCurrentPuzzleFinished)
                     _puzzleSet.CurrentIsError();
-                _isCurrentFinished = false;
+                _isCurrentPuzzleFinished = false;
                 _gameBoard = _puzzleSet.NextPuzzle();
                 if (_gameBoard != null)
                 {
@@ -378,6 +382,7 @@ namespace ChessUI
                     DrawBoard();
                     lblPuzzleState.Text = PuzzleSetInfo;
                     lblWhoseTurn.Text = _gameBoard.WhoseTurn.ToString();
+                    lblPuzzleId.Text = _puzzleSet.CurrentLichessId;
                 }
                 else
                     SystemSounds.Beep.Play();
@@ -386,12 +391,12 @@ namespace ChessUI
 
         private void btLichess_Click(object sender, EventArgs e)
         {
-            if (!_isCurrentFinished)
+            if (!_isCurrentPuzzleFinished)
                 _puzzleSet.CurrentIsError();
-            OpenWithDefaultApp("https://lichess.org/training/" + _puzzleSet.CurrentPuzzleLichessId);
+            OpenWithDefaultApp("https://lichess.org/training/" + _puzzleSet.CurrentLichessId);
         }
 
-        void FillPuzzleSetsComboBox()
+        private void FillPuzzleSetsComboBox()
         {
             var pzls = Directory.EnumerateFiles(".", "*.pzl");
             foreach (var pzl in pzls)
@@ -403,7 +408,7 @@ namespace ChessUI
             _currPuzzleSetName = (string)cbPuzzleSets.SelectedItem;
 
             ReadPuzzles();
-            _isCurrentFinished = true;
+            _isCurrentPuzzleFinished = true;
             SaveCurrentPzlName();
             btNext_Click(this, null);
         }
@@ -418,10 +423,8 @@ namespace ChessUI
 
         const string IniFileName = "ChessPuzzlePecker.ini";
 
-
-        private void btCreatePuzleSet_Click(object sender, EventArgs e)
+        private void btCreatePuzzleSet_Click(object sender, EventArgs e)
         {
-
             if (_puzzleSet == null)
                 _puzzleSet = new PuzzleSet("MyPuzzles-1", 100,
                     "fork master:70;masterVsMaster:10;hangingPiece:20;", 1800, 2150, 1000);
@@ -435,7 +438,5 @@ namespace ChessUI
                 cbPuzzleSets.SelectedItem = ib.tbNameOfSet.Text;
             }
         }
-
-
     }
 }

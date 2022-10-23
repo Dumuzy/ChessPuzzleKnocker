@@ -110,8 +110,8 @@
             this.tbUpperRating.BackColor = System.Drawing.SystemColors.ControlLight;
             this.tbUpperRating.LargeChange = 100;
             this.tbUpperRating.Location = new System.Drawing.Point(164, 98);
-            this.tbUpperRating.Maximum = 2700;
-            this.tbUpperRating.Minimum = 900;
+            this.tbUpperRating.Maximum = 3200;
+            this.tbUpperRating.Minimum = 500;
             this.tbUpperRating.Name = "tbUpperRating";
             this.tbUpperRating.RightToLeftLayout = true;
             this.tbUpperRating.Size = new System.Drawing.Size(292, 45);
@@ -126,8 +126,8 @@
             this.tbLowerRating.BackColor = System.Drawing.SystemColors.ControlLight;
             this.tbLowerRating.LargeChange = 100;
             this.tbLowerRating.Location = new System.Drawing.Point(164, 41);
-            this.tbLowerRating.Maximum = 2700;
-            this.tbLowerRating.Minimum = 900;
+            this.tbLowerRating.Maximum = 3200;
+            this.tbLowerRating.Minimum = 500;
             this.tbLowerRating.Name = "tbLowerRating";
             this.tbLowerRating.RightToLeftLayout = true;
             this.tbLowerRating.Size = new System.Drawing.Size(292, 45);

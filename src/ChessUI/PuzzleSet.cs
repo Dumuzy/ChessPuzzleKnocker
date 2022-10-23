@@ -66,9 +66,9 @@ namespace ChessUI
             this.Puzzles = Puzzles.OrderBy(p => p.NumTried).ThenByDescending(p => p.NumError).ToLi();
         }
 
-        public string CurrentPuzzleLichessId => Puzzles[currentPuzzleNum].LichessId;
+        public string CurrentLichessId => Puzzles[currentPuzzleNum].LichessId;
 
-        public string CurrentRating() => Puzzles[currentPuzzleNum].Rating;
+        public string CurrentRating => Puzzles[currentPuzzleNum].Rating;
 
         public void CurrentIsFinished() => ++Puzzles[currentPuzzleNum].NumTried;
 
@@ -77,6 +77,7 @@ namespace ChessUI
         public bool HasPuzzles => !Puzzles.IsEmpty;
 
         public int NumTotal => Puzzles.Count;
+
         /// <summary> Number of puzzles done in the current round. </summary>
         public int NumDone
         {
@@ -109,13 +110,15 @@ namespace ChessUI
                 return;
             for (int i = 0; Puzzles.Count != NumPuzzlesWanted && i < 20; ++i)
             {
+                int j = 0;
                 foreach (string line in File.ReadLines(LichessCsvFileName))
-                    if (IsAllowed(line))
-                    {
-                        Puzzles.Add(new Puzzle(line));
-                        if (Puzzles.Count >= NumPuzzlesWanted)
-                            break;
-                    }
+                    if (j++ >= StartPuzzleNumForCreation)
+                        if (IsAllowed(line))
+                        {
+                            Puzzles.Add(new Puzzle(line));
+                            if (Puzzles.Count >= NumPuzzlesWanted)
+                                break;
+                        }
                 // for debugging
                 foreach (var f in Filters)
                 {
@@ -124,10 +127,10 @@ namespace ChessUI
                 }
                 if (Puzzles.Count < NumPuzzlesWanted)
                 {
-                    if (i % 2 == 0)
-                        this.LowerRating -= 50;
-                    else
-                        this.UpperRating += 50;
+                    if (i % 2 == 0 && LowerRating >= 550)
+                        LowerRating -= 50;
+                    else if (i % 2 == 1 && UpperRating <= 3150)
+                        UpperRating += 50;
                 }
             }
         }
@@ -160,12 +163,12 @@ namespace ChessUI
         bool GetLichessCsvFile()
         {
             DownloadLichessCsvIfNeeded();
-            return File.Exists("LichessCsvFileName");
+            return File.Exists(LichessCsvFileName);
         }
 
         private void DownloadLichessCsvIfNeeded()
         {
-            if (!File.Exists(PuzzleSet.LichessCsvFileName))
+            if (!File.Exists(LichessCsvFileName))
             {
                 MessageBox.Show($@"
                 You must download 
@@ -232,6 +235,7 @@ date={DateTime.Now}
 
         #endregion Read and Write
 
+        #region Fields
         Li<Puzzle> Puzzles;
 
         public readonly Li<PuzzleFilter> Filters;
@@ -243,6 +247,7 @@ date={DateTime.Now}
 
         static string SFileName(string name) => Helper.MakeFilenameSafe(name) + ".pzl";
         static Random rand = new Random();
+        #endregion Fields  
     }
 }
 
@@ -309,7 +314,6 @@ public class PuzzleFilter
             foreach (var f in filters)
                 f.Percentage = 10;
 
-        filters.RemoveAll(f => f.Motifs.Count == 0);
         filters.RemoveAll(f => f.Percentage == 0);
 
         // Set realPercentage so that Sum(realPercentage) == 100.

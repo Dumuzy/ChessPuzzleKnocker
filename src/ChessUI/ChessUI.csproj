@@ -5,6 +5,7 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <UseWindowsForms>true</UseWindowsForms>
     <StartupObject>ChessUI.Program</StartupObject>
+    <UseWPF>False</UseWPF>
   </PropertyGroup>
 
   <ItemGroup>

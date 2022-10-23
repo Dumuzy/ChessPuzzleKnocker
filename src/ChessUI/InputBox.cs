@@ -5,6 +5,7 @@ using AwiUtils;
 using ComboBox = System.Windows.Forms.ComboBox;
 using static System.Windows.Forms.DataFormats;
 using System.Linq;
+using System.IO;
 
 namespace ChessUI
 {
@@ -56,8 +57,12 @@ namespace ChessUI
                 tbNameOfSet.Text += $"-{tbLowerRating.Value}-{tbUpperRating.Value}";
             var ps = new PuzzleSet(tbNameOfSet.Text, Helper.ToInt(tbNumPuzzles.Text), filters, 
                 tbLowerRating.Value, tbUpperRating.Value, Helper.ToInt(tbStartAtNumber.Text));
-            ps.WriteSet();
-            DialogResult = DialogResult.OK;
+            if (ps.HasPuzzles)
+                ps.WriteSet();
+            else
+                MessageBox.Show("Sorry, could not create set, because I could not find \n" +
+                                Path.Combine(PuzzleSet.LichessCsvDirectory, PuzzleSet.LichessCsvFileName));
+            DialogResult = ps.HasPuzzles ? DialogResult.OK : DialogResult.Cancel;
             Close();
         }
 

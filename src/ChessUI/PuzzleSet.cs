@@ -9,6 +9,7 @@ using System.Xml.Linq;
 using ChessSharp;
 using AwiUtils;
 using static System.Windows.Forms.LinkLabel;
+using System.Windows.Forms;
 
 namespace ChessUI
 {
@@ -46,11 +47,14 @@ namespace ChessUI
         public PuzzleGame NextPuzzle()
         {
             PuzzleGame game = null;
-            if (currentPuzzleNum >= Puzzles.Count - 1)
-                RebasePuzzles();
-            if (Puzzles[currentPuzzleNum + 1].NumTried != CurrentRound - 1)
-                RebasePuzzles();
-            game = new PuzzleGame(Puzzles[++currentPuzzleNum].SLichessPuzzle);
+            if (HasPuzzles)
+            {
+                if (currentPuzzleNum >= Puzzles.Count - 1)
+                    RebasePuzzles();
+                if (Puzzles[currentPuzzleNum + 1].NumTried != CurrentRound - 1)
+                    RebasePuzzles();
+                game = new PuzzleGame(Puzzles[++currentPuzzleNum].SLichessPuzzle);
+            }
             return game;
         }
 
@@ -69,6 +73,8 @@ namespace ChessUI
         public void CurrentIsFinished() => ++Puzzles[currentPuzzleNum].NumTried;
 
         public void CurrentIsError() => ++Puzzles[currentPuzzleNum].NumError;
+
+        public bool HasPuzzles => !Puzzles.IsEmpty;
 
         public int NumTotal => Puzzles.Count;
         /// <summary> Number of puzzles done in the current round. </summary>
@@ -99,9 +105,11 @@ namespace ChessUI
         #region SearchPuzzles
         void SearchPuzzles()
         {
-           for(int i = 0; Puzzles.Count != NumPuzzlesWanted; ++i)
+            if (!GetLichessCsvFile())
+                return;
+            for (int i = 0; Puzzles.Count != NumPuzzlesWanted && i < 20; ++i)
             {
-                foreach (string line in File.ReadLines(@"lichess_db_puzzle.csv"))
+                foreach (string line in File.ReadLines(LichessCsvFileName))
                     if (IsAllowed(line))
                     {
                         Puzzles.Add(new Puzzle(line));
@@ -111,7 +119,7 @@ namespace ChessUI
                 // for debugging
                 foreach (var f in Filters)
                 {
-                    var num = Puzzles.Where(p => f.IsMatching(p.SLichessPuzzle)).Count();
+                    var num = Puzzles.Where(p => f.IsMatching(p.SLichessPuzzle.Split(',').ToLiro())).Count();
                     Debug.WriteLine($"Filter={f} Num={num}");
                 }
                 if (Puzzles.Count < NumPuzzlesWanted)
@@ -119,41 +127,54 @@ namespace ChessUI
                     if (i % 2 == 0)
                         this.LowerRating -= 50;
                     else
-                        this.UpperRating -= 50;
+                        this.UpperRating += 50;
                 }
             }
         }
 
         bool IsAllowed(string line)
         {
-            foreach (var filter in Filters)
-                if (filter.IsMatching(line))
-                    if (!filter.HasEnoughOfFilter(NumPuzzlesWanted) || HasEnoughOfAllFilters())
+            var lineParts = line.Split(',').ToLiro();
+            if (IsAllowedByRatingEtc(lineParts))
+                foreach (var filter in Filters)
+                    if (!filter.HasEnoughOfFilter(NumPuzzlesWanted) && filter.IsMatching(lineParts))
                     {
-                        // It is allowed by the filter. 
-                        if (IsAllowedByRatingEtc(line))
-                        {
-                            filter.IncNumSelected();
-                            return true;
-                        }
+                        filter.IncNumSelected();
+                        return true;
                     }
             return false;
         }
 
-        bool HasEnoughOfAllFilters()
+        bool IsAllowedByRatingEtc(Liro<string> lineParts)
         {
-            var hasNotEnoughOf = Filters.FirstOrDefault(f => !f.HasEnoughOfFilter(NumPuzzlesWanted));
-            return hasNotEnoughOf == null;
+            var rating = Helper.ToInt(lineParts[3]);
+            bool ok = rating >= LowerRating && rating <= UpperRating;
+            ok &= Helper.ToInt(lineParts[5]) > 50;  // Popularity
+            ok &= Helper.ToInt(lineParts[6]) > 20;  // NbPlays
+            return ok;
         }
 
-        bool IsAllowedByRatingEtc(string line)
+        public const string LichessCsvFileName = "lichess_db_puzzle.csv";
+        public static string LichessCsvDirectory => Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location);
+
+        bool GetLichessCsvFile()
         {
-            var parts = line.Split(',');
-            var rating = Helper.ToInt(parts[3]);
-            bool ok = rating >= LowerRating && rating <= UpperRating;
-            ok &= Helper.ToInt(parts[5]) > 50;  // Popularity
-            ok &= Helper.ToInt(parts[6]) > 20;  // NbPlays
-            return ok;
+            DownloadLichessCsvIfNeeded();
+            return File.Exists("LichessCsvFileName");
+        }
+
+        private void DownloadLichessCsvIfNeeded()
+        {
+            if (!File.Exists(PuzzleSet.LichessCsvFileName))
+            {
+                MessageBox.Show($@"
+                You must download 
+                    https://database.lichess.org/lichess_db_puzzle.csv.bz2 
+                now and extract it to 
+                    {LichessCsvDirectory}. 
+                Press OK when done.",
+                    "Attention", MessageBoxButtons.OKCancel);
+            }
         }
         #endregion SearchPuzzles
 
@@ -288,7 +309,7 @@ public class PuzzleFilter
             foreach (var f in filters)
                 f.Percentage = 10;
 
-        // Remove filters with percentage 0. 
+        filters.RemoveAll(f => f.Motifs.Count == 0);
         filters.RemoveAll(f => f.Percentage == 0);
 
         // Set realPercentage so that Sum(realPercentage) == 100.
@@ -305,14 +326,15 @@ public class PuzzleFilter
         if (creator.StartsWith("FIL="))
             creator = creator.Substring(4);
         var parts = creator.Trim().Split(':').ToLiro();
-        Motifs = parts[0].SplitToWords().ToLiro();
+        Motifs = parts[0].SplitToWords().Where(m => m != "--").ToLiro();
         Percentage = Helper.ToInt(parts[1]);
     }
 
-    public bool IsMatching(string lichessLine)
+    public bool IsMatching(Liro<string> lichessLineParts)
     {
+        var motifsInLine = lichessLineParts[7].SplitToWords();
         for (int i = 0; i < Motifs.Count; ++i)
-            if (!lichessLine.Contains(Motifs[i]))
+            if (!motifsInLine.Contains(Motifs[i]))
                 return false;
         return true;
     }

@@ -12,6 +12,7 @@ using ChessSharp;
 using ChessSharp.Pieces;
 using ChessSharp.SquareData;
 using AwiUtils;
+using System.Net;
 
 namespace ChessUI
 {
@@ -82,12 +83,7 @@ namespace ChessUI
             {
                 _puzzleSet = PuzzleSet.ReadPuzzleSet(_currPuzzleSetName);
                 if (_puzzleSet == null)
-                {
-                    MessageBox.Show($"Cannot find PuzzleSet {_currPuzzleSetName}. Creating new one.");
-                    _puzzleSet = new PuzzleSet(_currPuzzleSetName, 100,
-                        "fork masterVsMaster:70;masterVsMaster:15;hangingPiece:15;", 1800, 2150, 0);
-                    _puzzleSet.WriteSet();
-                }
+                    MessageBox.Show($"Cannot find PuzzleSet {_currPuzzleSetName}. You must create a new one.");
             }
         }
 
@@ -370,7 +366,7 @@ namespace ChessUI
 
         private void btNext_Click(object sender, EventArgs e)
         {
-            if (_puzzleSet != null)
+            if (_puzzleSet != null && _puzzleSet.HasPuzzles)
             {
                 if (!_isCurrentFinished)
                     _puzzleSet.CurrentIsError();
@@ -412,19 +408,34 @@ namespace ChessUI
             btNext_Click(this, null);
         }
 
-        private void SaveCurrentPzlName() => File.WriteAllText("ChessPuzzlePecker.ini", _currPuzzleSetName);
+        private void SaveCurrentPzlName() => File.WriteAllText(IniFileName, _currPuzzleSetName);
 
-        private void ReadCurrentPzlName() => cbPuzzleSets.SelectedItem = File.ReadAllText("ChessPuzzlePecker.ini");
+        private void ReadCurrentPzlName()
+        {
+            if (File.Exists(IniFileName))
+                cbPuzzleSets.SelectedItem = File.ReadAllText(IniFileName);
+        }
+
+        const string IniFileName = "ChessPuzzlePecker.ini";
+
 
         private void btCreatePuzleSet_Click(object sender, EventArgs e)
         {
+
+            if (_puzzleSet == null)
+                _puzzleSet = new PuzzleSet("MyPuzzles-1", 100,
+                    "fork master:70;masterVsMaster:10;hangingPiece:20;", 1800, 2150, 1000);
+
             var ib = new InputBox(_puzzleSet);
             var res = ib.ShowDialog();
             if (res == DialogResult.OK)
             {
+                _puzzleSet = null;
                 cbPuzzleSets.Items.Add(ib.tbNameOfSet.Text);
                 cbPuzzleSets.SelectedItem = ib.tbNameOfSet.Text;
             }
         }
+
+
     }
 }

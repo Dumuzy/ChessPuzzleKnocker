@@ -91,7 +91,7 @@ namespace ChessUI
         private void txUpperRating_TextChanged(object sender, EventArgs e)
         {
             var val = Helper.ToInt(txUpperRating.Text);
-            if (val >= 900 && val <= 2700)
+            if (val >= tbUpperRating.Minimum && val <= tbUpperRating.Maximum)
                 tbUpperRating.Value = val;
         }
 
@@ -103,7 +103,7 @@ namespace ChessUI
         private void txLowerRating_TextChanged(object sender, EventArgs e)
         {
             var val = Helper.ToInt(txLowerRating.Text);
-            if (val >= 900 && val <= 2700)
+            if (val >= tbLowerRating.Minimum && val <= tbLowerRating.Maximum)
                 tbLowerRating.Value = val;
         }
 

@@ -41,7 +41,7 @@ namespace ChessUI
             this.Filters = new Li<PuzzleFilter>();
             ReadSet();
             ShufflePuzzles();
-            this.Puzzles = Puzzles.OrderBy(p => p.NumTried).ThenByDescending(p => p.NumError).ToLi();
+            this.Puzzles = Puzzles.OrderBy(p => p.NumTried).ThenBy(p => p.NumCorrect).ToLi();
         }
 
         public PuzzleGame NextPuzzle()
@@ -51,7 +51,7 @@ namespace ChessUI
             {
                 if (currentPuzzleNum >= Puzzles.Count - 1)
                     RebasePuzzles();
-                if (Puzzles[currentPuzzleNum + 1].NumTried != CurrentRound - 1)
+                if (Puzzles[currentPuzzleNum + 1].NumCorrect != CurrentRound - 1)
                     RebasePuzzles();
                 game = new PuzzleGame(Puzzles[++currentPuzzleNum].SLichessPuzzle);
             }
@@ -63,35 +63,28 @@ namespace ChessUI
         {
             currentPuzzleNum = -1;
             ShufflePuzzles();
-            this.Puzzles = Puzzles.OrderBy(p => p.NumTried).ThenByDescending(p => p.NumError).ToLi();
+            this.Puzzles = Puzzles.OrderBy(p => p.NumCorrect).ThenByDescending(p => p.NumTried).ToLi();
         }
 
         public string CurrentLichessId => Puzzles[currentPuzzleNum].LichessId;
 
         public string CurrentRating => Puzzles[currentPuzzleNum].Rating;
 
-        public void CurrentIsFinished() => ++Puzzles[currentPuzzleNum].NumTried;
+        public void CurrentIsCorrect() => ++Puzzles[currentPuzzleNum].NumCorrect;
 
-        public void CurrentIsError() => ++Puzzles[currentPuzzleNum].NumError;
+        public void CurrentIsTried() => ++Puzzles[currentPuzzleNum].NumTried;
 
         public bool HasPuzzles => !Puzzles.IsEmpty;
 
         public int NumTotal => Puzzles.Count;
 
-        /// <summary> Number of puzzles done in the current round. </summary>
-        public int NumDone
-        {
-            get
-            {
-                var currentRoundIndex = Puzzles.Min(p => p.NumTried);
-                var num = NumTotal - Puzzles.Count(p => p.NumTried == currentRoundIndex);
-                return num;
-            }
-        }
+        public int CurrentPosition => currentPuzzleNum;
 
-        public int CurrentRound => Puzzles.Min(p => p.NumTried) + 1;
+        public bool IsRoundFinished(int round) => Puzzles.Count(p => p.NumCorrect >= round) == NumTotal;
 
-        public bool IsRoundFinished(int round) => Puzzles.Count(p => p.NumTried == round) == NumTotal;
+        public int CurrentRound { get; private set; } = 1;
+
+        public void IncCurrentRound() => ++CurrentRound;
 
         public override string ToString()
         {
@@ -201,6 +194,7 @@ namespace ChessUI
                         case "startPuzzleNumForCreation": StartPuzzleNumForCreation = Helper.ToInt(pp[1]); break;
                         case "lowerRating": LowerRating = Helper.ToInt(pp[1]); break;
                         case "upperRating": UpperRating = Helper.ToInt(pp[1]); break;
+                        case "currentRound": CurrentRound = Helper.ToInt(pp[1]); break;
                             // date ={ DateTime.Now}
                     }
                 }
@@ -227,6 +221,7 @@ startPuzzleNumForCreation={StartPuzzleNumForCreation}
 lowerRating={LowerRating}
 upperRating={UpperRating}
 date={DateTime.Now}
+currentRound={CurrentRound}
 ".SplitToLines('\n', '\r').ToLi();
             return lines;
         }
@@ -239,7 +234,10 @@ date={DateTime.Now}
         Li<Puzzle> Puzzles;
 
         public readonly Li<PuzzleFilter> Filters;
-        public int NumPuzzlesWanted, StartPuzzleNumForCreation, LowerRating, UpperRating;
+        public int LowerRating { get; private set; }
+        public int UpperRating { get; private set; }
+        public int NumPuzzlesWanted { get; private set; }
+        public int StartPuzzleNumForCreation { get; private set; }
 
         int currentPuzzleNum = -1;
         readonly string Name;
@@ -271,17 +269,17 @@ internal class Puzzle
 
     public string SLichessPuzzle { get; private set; }
 
-    public int NumTried { get; set; }
+    public int NumCorrect { get; set; }
 
-    public int NumError { get; set; }
+    public int NumTried { get; set; }
 
     public string LichessId => SLichessPuzzle.Split(',', 2)[0];
 
     public string Rating => SLichessPuzzle.Split(',')[3];
 
-    public override string ToString() => $"TT={NumTried} E={NumError} P={SLichessPuzzle}";
+    public override string ToString() => $"TT={NumTried} C={NumCorrect} E= P={SLichessPuzzle}";
 
-    public string ToDbString() => $"TT={NumTried};E={NumError};P={SLichessPuzzle}";
+    public string ToDbString() => $"TT={NumTried};C={NumCorrect};P={SLichessPuzzle}";
 
     public void Read(string dbString)
     {
@@ -291,8 +289,8 @@ internal class Puzzle
             var parts2 = p.Split('=', 2).ToLiro();
             switch (parts2[0])
             {
+                case "C": NumCorrect = Helper.ToInt(parts2[1]); break;
                 case "TT": NumTried = Helper.ToInt(parts2[1]); break;
-                case "E": NumError = Helper.ToInt(parts2[1]); break;
                 case "P": SLichessPuzzle = parts2[1]; break;
             }
         }

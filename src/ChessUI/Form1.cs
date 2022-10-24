@@ -13,7 +13,6 @@ using ChessSharp.Pieces;
 using ChessSharp.SquareData;
 using AwiUtils;
 using System.Net;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace ChessUI
 {
@@ -26,7 +25,8 @@ namespace ChessUI
         private PuzzleGame _gameBoard = new PuzzleGame("00143,r2q1rk1/5ppp/1np5/p1b5/2p1B3/P7/1P3PPP/R1BQ1RK1 b - - 1 17,d8f6 d1h5 h7h6 h5c5,1871,75,93,790,advantage middlegame short,https://lichess.org/jcuxlI63/black#34");
         private PuzzleSet _puzzleSet;
         string _currPuzzleSetName;
-        bool _isCurrentPuzzleFinished;
+        bool _isCurrPuzzleFinishedOk;
+        private Dictionary<string, DateTime> _puzzlesWithError = new Dictionary<string, DateTime>();
 
         class SquareTag
         {
@@ -221,7 +221,7 @@ namespace ChessUI
 
         private void SquaresLabels_Click(object sender, EventArgs e)
         {
-            if (_isCurrentPuzzleFinished)
+            if (_isCurrPuzzleFinishedOk)
                 return;
             Label selectedLabel = (Label)sender;
             // First click
@@ -230,7 +230,7 @@ namespace ChessUI
                 // Re-draw to remove previously colored labels.
                 DrawBoard(GetPlayerInCheck());
 
-                if ((selectedLabel.Tag as SquareTag).PieceCol != _gameBoard.WhoseTurn) 
+                if ((selectedLabel.Tag as SquareTag).PieceCol != _gameBoard.WhoseTurn)
                     return;
                 _selectedSourceSquare = (selectedLabel.Tag as SquareTag).Square;
                 var validDestinations = ChessUtilities.GetValidMovesOfSourceSquare(_selectedSourceSquare.Value, _gameBoard).Select(m => m.Destination).ToArray();
@@ -253,18 +253,20 @@ namespace ChessUI
                         _gameBoard.IsPromotionMove(_selectedSourceSquare, targetSquare) ?
                             (PawnPromotion)cbPromoteTo.SelectedItem : (PawnPromotion?)null);
                     if (_gameBoard.TryMove(tryMove))
-                        _isCurrentPuzzleFinished = _gameBoard.MakeMoveAndAnswer(MakeMove, tryMove);
+                        _isCurrPuzzleFinishedOk = _gameBoard.MakeMoveAndAnswer(MakeMove, tryMove);
                     else
-                        _puzzleSet.CurrentIsError();
-                    if (_isCurrentPuzzleFinished)
+                        _puzzlesWithError.Add(_puzzleSet.CurrentLichessId, DateTime.Now);
+                    if (_isCurrPuzzleFinishedOk)
                     {
                         var currentRound = _puzzleSet.CurrentRound;
                         lblPuzzleState.Text = PuzzleSetInfoDone;
-                        _puzzleSet.CurrentIsFinished();
+                        if (DoesCurrentPuzzleCountAsCorrect())
+                            _puzzleSet.CurrentIsCorrect();
                         lblWhoseTurn.Text = _puzzleSet.CurrentRating;
                         if (_puzzleSet.IsRoundFinished(currentRound))
                         {
                             MessageBox.Show($"Round #{currentRound} is finished. Fanfare.");
+                            _puzzleSet.IncCurrentRound();
                             _puzzleSet.RebasePuzzles();
                         }
                     }
@@ -276,8 +278,21 @@ namespace ChessUI
             }
         }
 
-        string PuzzleSetInfo => $"{_puzzleSet.NumDone + 1}/{_puzzleSet.NumTotal}  R {_puzzleSet.CurrentRound}";
+        string PuzzleSetInfo => $"{_puzzleSet.CurrentPosition + 1}/{_puzzleSet.NumTotal}  R {_puzzleSet.CurrentRound}";
         string PuzzleSetInfoDone => $"Done {PuzzleSetInfo}";
+
+        private bool DoesCurrentPuzzleCountAsCorrect()
+        {
+            bool ok = true;
+            // It doesn't count as correct, if an error has been made or help has been ordered a short time ago. 
+            if (_puzzlesWithError.TryGetValue(_puzzleSet.CurrentLichessId, out DateTime timestamp))
+            {
+                if (DateTime.Now - timestamp < TimeSpan.FromMinutes(10))
+                    ok = false;
+                _puzzlesWithError.Remove(_puzzleSet.CurrentLichessId);
+            }
+            return ok;
+        }
 
         private void DrawBoard(Player? playerInCheck = null)
         {
@@ -372,12 +387,11 @@ namespace ChessUI
         {
             if (_puzzleSet != null && _puzzleSet.HasPuzzles)
             {
-                if (!_isCurrentPuzzleFinished)
-                    _puzzleSet.CurrentIsError();
-                _isCurrentPuzzleFinished = false;
+                _isCurrPuzzleFinishedOk = false;
                 _gameBoard = _puzzleSet.NextPuzzle();
                 if (_gameBoard != null)
                 {
+                    _puzzleSet.CurrentIsTried();
                     SetSideOf();
                     DrawBoard();
                     lblPuzzleState.Text = PuzzleSetInfo;
@@ -391,8 +405,7 @@ namespace ChessUI
 
         private void btLichess_Click(object sender, EventArgs e)
         {
-            if (!_isCurrentPuzzleFinished)
-                _puzzleSet.CurrentIsError();
+            _puzzlesWithError.Add(_puzzleSet.CurrentLichessId, DateTime.Now);
             OpenWithDefaultApp("https://lichess.org/training/" + _puzzleSet.CurrentLichessId);
         }
 
@@ -408,7 +421,7 @@ namespace ChessUI
             _currPuzzleSetName = (string)cbPuzzleSets.SelectedItem;
 
             ReadPuzzles();
-            _isCurrentPuzzleFinished = true;
+            _isCurrPuzzleFinishedOk = true;
             SaveCurrentPzlName();
             btNext_Click(this, null);
         }

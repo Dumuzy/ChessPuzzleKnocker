@@ -105,7 +105,7 @@ namespace ChessUI
             }
 
             foreach (var c in new Control[] { cbFlipBoard, btLichess, btNext, lblWhoseTurn, lblPuzzleState,
-                cbPuzzleSets, cbPromoteTo, lblPromoteTo, btCreatePuzleSet, lblPuzzleId })
+                cbPuzzleSets, cbPromoteTo, lblPromoteTo, btCreatePuzleSet, lblPuzzleId, btAbout })
                 c.Location = AddDxDy(c.Location, (int)(9.5 * delta), 0);
         }
 
@@ -278,7 +278,7 @@ namespace ChessUI
             }
         }
 
-        string PuzzleSetInfo => $"{_puzzleSet.CurrentPosition + 1}/{_puzzleSet.NumTotal}  R {_puzzleSet.CurrentRound}";
+        string PuzzleSetInfo => $"{_puzzleSet.CurrentPosition + 1}/{_puzzleSet.NumTotal}  Round {_puzzleSet.CurrentRound}";
         string PuzzleSetInfoDone => $"Done {PuzzleSetInfo}";
 
         private bool DoesCurrentPuzzleCountAsCorrect()
@@ -450,6 +450,22 @@ namespace ChessUI
                 cbPuzzleSets.Items.Add(ib.tbNameOfSet.Text);
                 cbPuzzleSets.SelectedItem = ib.tbNameOfSet.Text;
             }
+        }
+
+        private void btAbout_Click(object sender, EventArgs e)
+        {
+            var t = $@"
+ChessPuzzlePecker
+A chess puzzle training program inspired by the Woodpecker method.
+See on GitHub  https://github.com/Dumuzy/ChessPuzzlePecker.
+Special thanks to https://lichess.org/, from where all the puzzle data is coming.
+You should download the puzzle data from there: 
+https://database.lichess.org/lichess_db_puzzle.csv.bz2 
+                    
+Greetings to http://schachclub-ittersbach.de/.
+                    ";
+            MessageBox.Show(t, "ChessPuzzlePecker");
+
         }
     }
 }

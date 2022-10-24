@@ -54,7 +54,15 @@ namespace ChessUI
             for (int i = 1; i <= 3; ++i)
                 filters += GetFiltersString(i);
             if (tbNameOfSet.Text.Length <= 1)
+            {
+                if (tbNameOfSet.Text.Length == 0)
+                {
+                    var motifs = filters.Replace("-","").Split(';').SelectMany(p => p.Split(':', 2)[0].SplitToWords()).ToLiro();
+                    if (motifs.Any())
+                        tbNameOfSet.Text = motifs[0];
+                }
                 tbNameOfSet.Text += $"-{tbLowerRating.Value}-{tbUpperRating.Value}";
+            }
             var ps = new PuzzleSet(tbNameOfSet.Text, Helper.ToInt(tbNumPuzzles.Text), filters, 
                 tbLowerRating.Value, tbUpperRating.Value, Helper.ToInt(tbStartAtNumber.Text));
             if (ps.HasPuzzles)

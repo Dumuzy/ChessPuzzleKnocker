@@ -118,6 +118,8 @@
             this.lblPromoteTo = new System.Windows.Forms.Label();
             this.btCreatePuzleSet = new System.Windows.Forms.Button();
             this.lblPuzzleId = new System.Windows.Forms.Label();
+            this.btAbout = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // lbl_A1
@@ -1010,11 +1012,35 @@
             this.lblPuzzleId.Text = "aBcWX";
             this.lblPuzzleId.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
+            // btAbout
+            // 
+            this.btAbout.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.btAbout.Location = new System.Drawing.Point(723, 9);
+            this.btAbout.Name = "btAbout";
+            this.btAbout.Size = new System.Drawing.Size(66, 23);
+            this.btAbout.TabIndex = 95;
+            this.btAbout.Text = "About";
+            this.btAbout.UseVisualStyleBackColor = true;
+            this.btAbout.Click += new System.EventHandler(this.btAbout_Click);
+            // 
+            // button2
+            // 
+            this.button2.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.button2.Location = new System.Drawing.Point(642, 9);
+            this.button2.Name = "btHelp";
+            this.button2.Size = new System.Drawing.Size(67, 23);
+            this.button2.TabIndex = 96;
+            this.button2.Text = "Help";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Visible = false;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(869, 622);
+            this.Controls.Add(this.button2);
+            this.Controls.Add(this.btAbout);
             this.Controls.Add(this.lblPuzzleId);
             this.Controls.Add(this.btCreatePuzleSet);
             this.Controls.Add(this.lblPromoteTo);
@@ -1072,6 +1098,7 @@
             this.Controls.Add(this.lbl_D5);
             this.Controls.Add(this.lbl_C5);
             this.Controls.Add(this.lbl_B5);
+            this.Controls.Add(this.label9);
             this.Controls.Add(this.lbl_A5);
             this.Controls.Add(this.lbl_H4);
             this.Controls.Add(this.lbl_G4);
@@ -1206,6 +1233,9 @@
         private System.Windows.Forms.Label lblPromoteTo;
         private System.Windows.Forms.Button btCreatePuzleSet;
         private System.Windows.Forms.Label lblPuzzleId;
+        private System.Windows.Forms.Button btAbout;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Button button2;
     }
 }
 

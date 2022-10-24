@@ -377,6 +377,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.Name = "InputBox";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Create a puzzle set";
             ((System.ComponentModel.ISupportInitialize)(this.tbUpperRating)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.tbLowerRating)).EndInit();

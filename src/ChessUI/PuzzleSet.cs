@@ -99,12 +99,13 @@ namespace ChessUI
         #region SearchPuzzles
         void SearchPuzzles()
         {
-            if (!GetLichessCsvFile())
+            var fileName = GetLichessCsvFile();
+            if (fileName == null)
                 return;
             for (int i = 0; Puzzles.Count != NumPuzzlesWanted && i < 20; ++i)
             {
                 int j = 0;
-                foreach (string line in File.ReadLines(LichessCsvFileName))
+                foreach (string line in File.ReadLines(fileName))
                     if (j++ >= StartPuzzleNumForCreation)
                         if (IsAllowed(line))
                         {
@@ -141,22 +142,46 @@ namespace ChessUI
             return false;
         }
 
-        bool IsAllowedByRatingEtc(Liro<string> lineParts)
+        bool IsAllowedByRatingEtc(IList<string> lineParts)
         {
             var rating = Helper.ToInt(lineParts[3]);
             bool ok = rating >= LowerRating && rating <= UpperRating;
-            ok &= Helper.ToInt(lineParts[5]) > 50;  // Popularity
-            ok &= Helper.ToInt(lineParts[6]) > 20;  // NbPlays
+            ok &= IsAllowedByPopularityAndNbPlays(lineParts);
             return ok;
         }
 
+        static public bool IsAllowedByPopularityAndNbPlays(IList<string> lineParts)
+        {
+            var popularity = Helper.ToInt(lineParts[5]);
+            var nbPlays = Helper.ToInt(lineParts[6]);
+            bool ok = popularity > 50 && nbPlays > 20;
+            if (!ok)
+                ok = popularity == 0 && nbPlays == 0 && lineParts[8] == "";   // it's a lichess_part line. 
+            return ok;
+        }
+        public const string LichessCsvPartBase = "lic_part_puzzle";
         public const string LichessCsvFileName = "lichess_db_puzzle.csv";
         public static string LichessCsvDirectory => Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location);
 
-        bool GetLichessCsvFile()
+        string GetLichessCsvFile()
         {
-            DownloadLichessCsvIfNeeded();
-            return File.Exists(LichessCsvFileName);
+            string fileName = null;
+            if (File.Exists(LichessCsvFileName))
+                fileName = LichessCsvFileName;
+            else 
+                 fileName = GetUncompressedGzCsv();
+            if(fileName == null)
+                DownloadLichessCsvIfNeeded();
+            if (File.Exists(LichessCsvFileName))
+                fileName = LichessCsvFileName;
+            return fileName;
+        }
+
+        private string GetUncompressedGzCsv()
+        {
+            PuzzleCompressor.UncompressAllCsvGzFiles(LichessCsvPartBase);
+            var licFiles = Directory.EnumerateFiles(".", LichessCsvPartBase + "*.csv");
+            return licFiles.FirstOrDefault();
         }
 
         private void DownloadLichessCsvIfNeeded()

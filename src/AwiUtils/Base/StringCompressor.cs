@@ -7,8 +7,8 @@ namespace AwiUtils
 {
     public static class StringCompressor
     {
-        /// <summary> Compresses the string. </summary>
-        public static string Compress(string text)
+        /// <summary> Compresses the string to a byte[]. </summary>
+        public static byte[] CompressToBytes(string text)
         {
             byte[] buffer = Encoding.UTF8.GetBytes(text);
             var memoryStream = new MemoryStream();
@@ -25,6 +25,12 @@ namespace AwiUtils
             var gZipBuffer = new byte[compressedData.Length + 4];
             Buffer.BlockCopy(compressedData, 0, gZipBuffer, 4, compressedData.Length);
             Buffer.BlockCopy(BitConverter.GetBytes(buffer.Length), 0, gZipBuffer, 0, 4);
+            return gZipBuffer;
+        }
+
+        public static string Compress(string text)
+        {
+            var gZipBuffer = CompressToBytes(text);
             return Convert.ToBase64String(gZipBuffer);
         }
 
@@ -32,6 +38,11 @@ namespace AwiUtils
         public static string Decompress(string compressedText)
         {
             byte[] gZipBuffer = Convert.FromBase64String(compressedText);
+            return DecompressFromBytes(gZipBuffer);
+        }
+
+        public static string DecompressFromBytes(byte[] gZipBuffer)
+        {
             using (var memoryStream = new MemoryStream())
             {
                 int dataLength = BitConverter.ToInt32(gZipBuffer, 0);

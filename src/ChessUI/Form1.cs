@@ -105,7 +105,7 @@ namespace ChessUI
             }
 
             foreach (var c in new Control[] { cbFlipBoard, btLichess, btNext, lblWhoseTurn, lblPuzzleState,
-                cbPuzzleSets, cbPromoteTo, lblPromoteTo, btCreatePuzleSet, lblPuzzleId, btAbout })
+                cbPuzzleSets, cbPromoteTo, lblPromoteTo, btCreatePuzleSet, lblPuzzleId, btAbout, btHelp })
                 c.Location = AddDxDy(c.Location, (int)(9.5 * delta), 0);
         }
 
@@ -465,6 +465,13 @@ https://database.lichess.org/lichess_db_puzzle.csv.bz2
 Greetings to http://schachclub-ittersbach.de/.
                     ";
             MessageBox.Show(t, "ChessPuzzlePecker");
+
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            PuzzleCompressor.CreateManyCompressedFiles(PuzzleSet.LichessCsvFileName, PuzzleSet.LichessCsvPartBase, true);
+            // PuzzleCompressor.UncompressAllCsvGzFiles(PuzzleSet.LichessCsvPartBase);
 
         }
     }

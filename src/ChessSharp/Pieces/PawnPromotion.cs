@@ -28,9 +28,19 @@ namespace ChessSharp.Pieces
         }
 
         static public PawnPromotion Get(char c) => charToPPDict["" + c];
-
         static Dictionary<string, PawnPromotion> charToPPDict;
     }
 
+    public class PawnPromotionEx
+    {
+        public PawnPromotionEx(PawnPromotion to, string name) 
+        {
+            To = to;
+            Name = name;
+        }
+        public PawnPromotion To { get; set; }
+        public string Name { get; set; }
+        public override string ToString() => Name;
+    }
 
 }

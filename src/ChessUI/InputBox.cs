@@ -11,6 +11,12 @@ namespace ChessUI
 {
     public partial class InputBox : Form
     {
+        static InputBox()
+        {
+            motifs = new Li<MotifEx>();
+            motifs.AddRange(motifsRaw.Select(m => new MotifEx(m)));
+        }
+
         public string UserInput { get; private set; }
 
         public InputBox(PuzzleSet p)
@@ -28,21 +34,23 @@ namespace ChessUI
                 initFilterControls(1, cbFilter2, cbFilter2_2, cbFilter2Percent, p.Filters);
                 initFilterControls(2, cbFilter3, cbFilter3_2, cbFilter3Percent, p.Filters);
             }
+            Form1.TranslateLabels(this, null);
         }
 
-        private void initFilterControls(int n, ComboBox cbFilter1, ComboBox cbFilter2, ComboBox cbPercent, 
+        private void initFilterControls(int n, ComboBox cbFilter1, ComboBox cbFilter2, ComboBox cbPercent,
             Li<PuzzleFilter> filters)
         {
-            cbFilter1.Items.AddRange(motifs.ToArray());
-            cbFilter2.Items.AddRange(motifs.ToArray());
+            var orderdMotifs = motifs.OrderBy(m => m.ToString()).ToArray();
+            cbFilter1.Items.AddRange(orderdMotifs);
+            cbFilter2.Items.AddRange(orderdMotifs);
             cbPercent.Items.AddRange(percentages);
             if (filters.Count > n)
             {
                 var fi = filters[n];
-                if(fi.Motifs.Count > 0)
-                    cbFilter1.SelectedItem = fi.Motifs[0];
+                if (fi.Motifs.Count > 0)
+                    cbFilter1.SelectedItem = motifs.First(m => m.Motif == fi.Motifs[0]);
                 if (fi.Motifs.Count > 1)
-                    cbFilter2.SelectedItem = fi.Motifs[1];
+                    cbFilter2.SelectedItem = motifs.First(m => m.Motif == fi.Motifs[0]);
                 cbPercent.SelectedItem = fi.Percentage.ToString();
             }
         }
@@ -57,13 +65,13 @@ namespace ChessUI
             {
                 if (tbNameOfSet.Text.Length == 0)
                 {
-                    var motifs = filters.Replace("-","").Split(';').SelectMany(p => p.Split(':', 2)[0].SplitToWords()).ToLiro();
+                    var motifs = filters.Replace("-", "").Split(';').SelectMany(p => p.Split(':', 2)[0].SplitToWords()).ToLiro();
                     if (motifs.Any())
                         tbNameOfSet.Text = motifs[0];
                 }
                 tbNameOfSet.Text += $"-{tbLowerRating.Value}-{tbUpperRating.Value}";
             }
-            var ps = new PuzzleSet(tbNameOfSet.Text, Helper.ToInt(tbNumPuzzles.Text), filters, 
+            var ps = new PuzzleSet(tbNameOfSet.Text, Helper.ToInt(tbNumPuzzles.Text), filters,
                 tbLowerRating.Value, tbUpperRating.Value, Helper.ToInt(tbStartAtNumber.Text));
             if (ps.HasPuzzles)
                 ps.WriteSet();
@@ -78,9 +86,9 @@ namespace ChessUI
         {
             string fi = "";
             var cb1 = Controls.OfType<ComboBox>().Where(m => m.Name == $"cbFilter{num}").First();
-            fi += (string)cb1.SelectedItem;
+            fi += (((MotifEx)cb1.SelectedItem)?.Motif ?? "");
             var cb2 = Controls.OfType<ComboBox>().Where(m => m.Name == $"cbFilter{num}_2").First();
-            fi += " " + (string)cb2.SelectedItem + ":";
+            fi += " " + (((MotifEx)cb2.SelectedItem)?.Motif ?? "") + ":";
             var cbp = Controls.OfType<ComboBox>().Where(m => m.Name == $"cbFilter{num}Percent").First();
             fi += (string)cbp.SelectedItem + ";";
             return fi;
@@ -115,71 +123,93 @@ namespace ChessUI
                 tbLowerRating.Value = val;
         }
 
-        static readonly string[] percentages = "10 20 30 40 50 60 70 80 90 100".Split();
-        static readonly Li<string> motifs = @"
+        static readonly Li<MotifEx> motifs;
+        static readonly string[] percentages = "0 10 20 30 40 50 60 70 80 90 100".Split();
+        static readonly Li<string> motifsRaw = @"
 --
-advancedPawn
-advantage
-anastasiaMate
-arabianMate
-attackingF2F7
-attraction
-backRankMate
-bishopEndgame
-bodenMate
-capturingDefender
-castling
-clearance
-crushing
-defensiveMove
-deflection
-discoveredAttack
-doubleBishopMate
-doubleCheck
-dovetailMate
-endgame
-enPassant
-equality
-exposedKing
-fork
-hangingPiece
-hookMate
-interference
-intermezzo
-kingsideAttack
-knightEndgame
-long
-master
-masterVsMaster
-mate
-mateIn1
-mateIn2
-mateIn3
-mateIn4
-mateIn5
-middlegame
-oneMove
-opening
-pawnEndgame
-pin
-promotion
-queenEndgame
-queenRookEndgame
-queensideAttack
-quietMove
-rookEndgame
-sacrifice
-short
-skewer
-smotheredMate
-superGM
-trappedPiece
-underPromotion
-veryLong
-xRayAttack
-zugzwang
-".SplitToWords().ToLi();
+advancedPawn, , Vorgerückter Bauer
+advantage,, Vorteil
+anastasiaMate,, Anastasias Matt
+arabianMate,, arabisches Matt
+attackingF2F7,, Angriff auf f2/f7
+attraction,, Hinlenkung
+backRankMate, , Grundreihenmatt
+bishopEndgame, , Läuferendspiel 
+bodenMate,, Bodens Matt
+capturingDefender,, schlage den Verteidiger
+castling,, Rochade
+clearance,, Öffnung
+crushing,, vernichtend
+defensiveMove,, Verteidigungszug
+deflection,, Ablenkung
+discoveredAttack,, Abzug
+doubleBishopMate,, Zwei-Läufer-Matt
+doubleCheck,, Doppelschach
+dovetailMate,, Taubenschwanzmatt
+endgame,, Endspiel
+enPassant,, en passant
+equality,, Gleichheit
+exposedKing,,exponierter König
+fork,, Gabel
+hangingPiece,, hängende Figur
+hookMate,, Hakenmatt
+interference, , Unterbrechung
+intermezzo,, Zwischenzug
+kingsideAttack,, Angriff am Königsflügel
+knightEndgame,, Springerendspiel
+long,, lang
+master,, Meister
+masterVsMaster,, Meister vs Meister
+mate,, Matt
+mateIn1,, Matt in 1
+mateIn2,, Matt in 2
+mateIn3,, Matt in 3
+mateIn4,, Matt in 4
+mateIn5,, Matt in 5
+middlegame,, Mittelspiel
+oneMove,, Einzüger
+opening,, Eröffnung
+pawnEndgame,, Bauernendspiel
+pin,, Fesselung
+promotion,, Umwandlung
+queenEndgame,, Damenendspiel
+queenRookEndgame,, Damen-Turm-Endspiel
+queensideAttack,, Angriff am Damenflügel
+quietMove,, stiller Zug
+rookEndgame,, Turmendspiel
+sacrifice,, Opfer
+short,, kurz
+skewer,, Spieß
+smotheredMate,, ersticktes Matt
+superGM,, SuperGM
+trappedPiece,, gefangene Figur
+underPromotion,, Unterverwandlung
+veryLong,, sehr lang
+xRayAttack,, Röntgenangriff
+zugzwang,, Zugzwang
+".SplitToLines().ToLi();
 
 
+    }
+
+    class MotifEx
+    {
+        public MotifEx(string line)
+        {
+            var p = line.Split(',').Select(pp => pp.Trim()).ToLi();
+            NameEn = NameDe = Motif = p[0];
+            if (p.Count > 1)
+            {
+                NameEn = p[1] != "" ? p[1] : p[0];
+                if (p.Count > 2)
+                    NameDe = p[2] != "" ? p[2] : p[0];
+            }
+        }
+
+        public readonly string Motif, NameEn, NameDe;
+        public override string ToString()
+        {
+            return Form1.Language == "DE" ? NameDe : NameEn;
+        }
     }
 }

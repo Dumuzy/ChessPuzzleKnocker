@@ -11,7 +11,7 @@ namespace ChessUI
     {
         static public void CreateManyCompressedFiles(string inputFile, string outputFileBase, bool shallGzipFile)
         {
-            foreach (var part in new int[] { 1200, 600, 300, 10, 20, 40, 75, 150 })
+            foreach (var part in new int[] { 1200, 600, 300, 150, 75, 40, 20, 10, })
                 Compress(inputFile, outputFileBase, NumPuzzlesInLichessDB / part, shallGzipFile);
 
         }

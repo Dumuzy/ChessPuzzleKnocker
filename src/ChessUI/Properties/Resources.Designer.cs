@@ -19,7 +19,7 @@ namespace ChessUI.Properties {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class Resources {
@@ -57,6 +57,33 @@ namespace ChessUI.Properties {
             }
             set {
                 resourceCulture = value;
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Über.
+        /// </summary>
+        internal static string About {
+            get {
+                return ResourceManager.GetString("About", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Läufer.
+        /// </summary>
+        internal static string Bishop {
+            get {
+                return ResourceManager.GetString("Bishop", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Schwarz.
+        /// </summary>
+        internal static string Black {
+            get {
+                return ResourceManager.GetString("Black", resourceCulture);
             }
         }
         
@@ -117,6 +144,195 @@ namespace ChessUI.Properties {
             get {
                 object obj = ResourceManager.GetObject("BlackRook", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Abbrechen.
+        /// </summary>
+        internal static string Cancel {
+            get {
+                return ResourceManager.GetString("Cancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Korrekt!.
+        /// </summary>
+        internal static string Correct_ {
+            get {
+                return ResourceManager.GetString("Correct!", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Neuer Puzzle-Satz.
+        /// </summary>
+        internal static string Create_a_puzzle_set {
+            get {
+                return ResourceManager.GetString("Create a puzzle set", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Neuer Puzzle-Satz.
+        /// </summary>
+        internal static string Create_Puzzle_Set {
+            get {
+                return ResourceManager.GetString("Create Puzzle Set", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Filter.
+        /// </summary>
+        internal static string Filter_for {
+            get {
+                return ResourceManager.GetString("Filter for", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hilfe.
+        /// </summary>
+        internal static string Help {
+            get {
+                return ResourceManager.GetString("Help", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to König.
+        /// </summary>
+        internal static string King {
+            get {
+                return ResourceManager.GetString("King", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Springer.
+        /// </summary>
+        internal static string Knight {
+            get {
+                return ResourceManager.GetString("Knight", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Untergrenze Rating.
+        /// </summary>
+        internal static string Lower_puzzle_rating {
+            get {
+                return ResourceManager.GetString("Lower puzzle rating", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Name des neuen Satzes.
+        /// </summary>
+        internal static string Name_of_new_puzzle_set {
+            get {
+                return ResourceManager.GetString("Name of new puzzle set", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nächstes.
+        /// </summary>
+        internal static string Next {
+            get {
+                return ResourceManager.GetString("Next", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Anzahl der Puzzles.
+        /// </summary>
+        internal static string Number_of_puzzles {
+            get {
+                return ResourceManager.GetString("Number of puzzles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bauer.
+        /// </summary>
+        internal static string Pawn {
+            get {
+                return ResourceManager.GetString("Pawn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Umwandeln in.
+        /// </summary>
+        internal static string Promote_to {
+            get {
+                return ResourceManager.GetString("Promote to", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dame.
+        /// </summary>
+        internal static string Queen {
+            get {
+                return ResourceManager.GetString("Queen", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Turm.
+        /// </summary>
+        internal static string Rook {
+            get {
+                return ResourceManager.GetString("Rook", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Runde.
+        /// </summary>
+        internal static string Round {
+            get {
+                return ResourceManager.GetString("Round", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Starte bei Nummer.
+        /// </summary>
+        internal static string Start_at_number {
+            get {
+                return ResourceManager.GetString("Start at number", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Drehe Brett.
+        /// </summary>
+        internal static string Turn_board {
+            get {
+                return ResourceManager.GetString("Turn board", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Obergrenze Rating.
+        /// </summary>
+        internal static string Upper_puzzle_rating {
+            get {
+                return ResourceManager.GetString("Upper puzzle rating", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Weiß.
+        /// </summary>
+        internal static string White {
+            get {
+                return ResourceManager.GetString("White", resourceCulture);
             }
         }
         

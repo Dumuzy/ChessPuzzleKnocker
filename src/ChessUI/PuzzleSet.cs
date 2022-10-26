@@ -99,27 +99,33 @@ namespace ChessUI
         #region SearchPuzzles
         void SearchPuzzles()
         {
+            var puzzles = new Dictionary<string, Puzzle>();
+
             var fileName = GetLichessCsvFile();
             if (fileName == null)
                 return;
-            for (int i = 0; Puzzles.Count != NumPuzzlesWanted && i < 20; ++i)
+            for (int i = 0; puzzles.Count != NumPuzzlesWanted && i < 20; ++i)
             {
                 int j = 0;
                 foreach (string line in File.ReadLines(fileName))
                     if (j++ >= StartPuzzleNumForCreation)
                         if (IsAllowed(line))
                         {
-                            Puzzles.Add(new Puzzle(line));
-                            if (Puzzles.Count >= NumPuzzlesWanted)
-                                break;
+                            var pu = new Puzzle(line);
+                            if (!puzzles.ContainsKey(pu.LichessId))
+                            {
+                                puzzles.Add(pu.LichessId, pu);
+                                if (puzzles.Count >= NumPuzzlesWanted)
+                                    break;
+                            }
                         }
                 // for debugging
                 foreach (var f in Filters)
                 {
-                    var num = Puzzles.Where(p => f.IsMatching(p.SLichessPuzzle.Split(',').ToLiro())).Count();
+                    var num = puzzles.Values.Where(p => f.IsMatching(p.SLichessPuzzle.Split(',').ToLiro())).Count();
                     Debug.WriteLine($"Filter={f} Num={num}");
                 }
-                if (Puzzles.Count < NumPuzzlesWanted)
+                if (puzzles.Count < NumPuzzlesWanted)
                 {
                     if (i % 2 == 0 && LowerRating >= 550)
                         LowerRating -= 50;
@@ -127,10 +133,13 @@ namespace ChessUI
                         UpperRating += 50;
                 }
             }
+            this.Puzzles = puzzles.Values.ToLi();
         }
 
         bool IsAllowed(string line)
         {
+            if (line.StartsWith("#")) // comment line
+                return false;
             var lineParts = line.Split(',').ToLiro();
             if (IsAllowedByRatingEtc(lineParts))
                 foreach (var filter in Filters)
@@ -168,32 +177,34 @@ namespace ChessUI
             string fileName = null;
             if (File.Exists(LichessCsvFileName))
                 fileName = LichessCsvFileName;
-            else 
-                 fileName = GetUncompressedGzCsv();
-            if(fileName == null)
+            else
+                fileName = GetUncompressedGzCsv();
+            if (fileName == null)
+            {
                 DownloadLichessCsvIfNeeded();
-            if (File.Exists(LichessCsvFileName))
-                fileName = LichessCsvFileName;
+                if (File.Exists(LichessCsvFileName))
+                    fileName = LichessCsvFileName;
+            }
             return fileName;
         }
 
         private string GetUncompressedGzCsv()
         {
             PuzzleCompressor.UncompressAllCsvGzFiles(LichessCsvPartBase);
-            var licFiles = Directory.EnumerateFiles(".", LichessCsvPartBase + "*.csv");
-            return licFiles.FirstOrDefault();
+            var licFiles = Directory.EnumerateFiles(".", LichessCsvPartBase + "*.csv").Select(f => new FileInfo(f));
+            licFiles.OrderByDescending(f => f.Length);
+            return licFiles.FirstOrDefault()?.Name;
         }
 
         private void DownloadLichessCsvIfNeeded()
         {
             if (!File.Exists(LichessCsvFileName))
             {
-                MessageBox.Show($@"
-                You must download 
-                    https://database.lichess.org/lichess_db_puzzle.csv.bz2 
-                now and extract it to 
-                    {LichessCsvDirectory}. 
-                Press OK when done.",
+                MessageBox.Show($@"You must download 
+    https://database.lichess.org/lichess_db_puzzle.csv.bz2 
+now and extract it to 
+    {LichessCsvDirectory}. 
+Press OK when done.",
                     "Attention", MessageBoxButtons.OKCancel);
             }
         }
@@ -320,6 +331,8 @@ internal class Puzzle
             }
         }
     }
+
+    public override int GetHashCode() => (LichessId + Rating).GetHashCode();
 }
 
 

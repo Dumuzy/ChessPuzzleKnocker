@@ -13,6 +13,8 @@ using ChessSharp.Pieces;
 using ChessSharp.SquareData;
 using AwiUtils;
 using System.Net;
+using ChessUI.Properties;
+using System.CodeDom;
 
 namespace ChessUI
 {
@@ -27,6 +29,8 @@ namespace ChessUI
         string _currPuzzleSetName;
         bool _isCurrPuzzleFinishedOk;
         private Dictionary<string, DateTime> _puzzlesWithError = new Dictionary<string, DateTime>();
+        static public string Language { get; set; } = "EN";
+
 
         class SquareTag
         {
@@ -44,9 +48,10 @@ namespace ChessUI
         {
             InitializeComponent();
             this.Text = "ChessPuzzlePecker";
-            cbFlipBoard.Text = "Flip board";
             _squareLabels = Controls.OfType<Label>().Where(m => Regex.IsMatch(m.Name, "lbl_[A-H][1-8]")).ToArray();
             _sideLabels = Controls.OfType<Label>().Where(m => Regex.IsMatch(m.Name, "^label[A-H1-8]$")).ToLiro();
+
+            TranslateLabels();
 
             foreach (var lbl in _squareLabels)
             {
@@ -57,11 +62,11 @@ namespace ChessUI
             this.ResizeForm(0.7);
 
             foreach (PawnPromotion p in Enum.GetValues(typeof(PawnPromotion)))
-                cbPromoteTo.Items.Add(p);
-            cbPromoteTo.SelectedItem = PawnPromotion.Queen;
+                cbPromoteTo.Items.Add(new PawnPromotionEx(p, Res(p.ToString())));
+            cbPromoteTo.SelectedItem = cbPromoteTo.Items.Cast<PawnPromotionEx>().First(p => p.To == PawnPromotion.Queen);
 
             FillPuzzleSetsComboBox();
-            ReadCurrentPzlName();
+            ReadIniFile();
         }
 
         void ReadPuzzles()
@@ -73,6 +78,55 @@ namespace ChessUI
                     MessageBox.Show($"Cannot find PuzzleSet {_currPuzzleSetName}.");
             }
         }
+
+        #region Translation
+        void TranslateLabels()
+        {
+            var controlsNotToTranslate = _sideLabels.ToLi().Concat(_squareLabels);
+            TranslateLabels(this, controlsNotToTranslate);
+        }
+
+        static public void TranslateLabels(Form form, IEnumerable<Control> controlsNotToTranslate)
+        {
+            var controlsToTranslate = new Li<Control>();
+            controlsToTranslate.AddRange(form.Controls.OfType<Label>());
+            if (controlsNotToTranslate != null)
+                controlsToTranslate = controlsToTranslate.Except(controlsNotToTranslate).ToLi();
+            controlsToTranslate.AddRange(form.Controls.OfType<Button>());
+            controlsToTranslate.AddRange(form.Controls.OfType<CheckBox>());
+            controlsToTranslate.Add(form);
+            foreach (var c in controlsToTranslate)
+            {
+                var t = Res(c.Text);
+                if (t != c.Text)
+                {
+                    if(Language == "DE")
+                        de2En[t] = c.Text;
+                    c.Text = t;
+                }
+            }
+        }
+
+        // Dictionary which is used for translation de -> en. Not the nicest solution. 
+        static Dictionary<string, string> de2En = new Dictionary<string, string>();
+
+        static public string Res(string english)
+        {
+            string s;
+            if (Language == "EN")
+            {
+                if (!de2En.TryGetValue(english, out s))
+                    s = english;
+            }
+            else
+            {
+                s = (Language == "DE") ? Resources.ResourceManager.GetString(english) : null;
+                if (string.IsNullOrEmpty(s))
+                    s = english;
+            }
+            return s;
+        }
+        #endregion Translation
 
         private void ResizeForm(double faktor)
         {
@@ -104,8 +158,9 @@ namespace ChessUI
                 lbl.Location = AddDxDy(lbl.Location, dx, dy);
             }
 
-            foreach (var c in new Control[] { cbFlipBoard, btLichess, btNext, lblWhoseTurn, lblPuzzleState,
-                cbPuzzleSets, cbPromoteTo, lblPromoteTo, btCreatePuzleSet, lblPuzzleId, btAbout, btHelp })
+            foreach (var c in new Control[] { cbFlipBoard, btLichess, btNext, lblWhoseTurn, lblPuzzleNum,
+                cbPuzzleSets, cbPromoteTo, lblPromoteTo, btCreatePuzleSet, lblPuzzleId, btAbout, btHelp,
+                cbLanguage, lblRoundText, lblRound, lblPuzzleState})
                 c.Location = AddDxDy(c.Location, (int)(9.5 * delta), 0);
         }
 
@@ -219,6 +274,9 @@ namespace ChessUI
             return null;
         }
 
+        private PawnPromotion? GetPromotion(Square? from, Square to) => _gameBoard.
+            IsPromotionMove(from, to) ? ((PawnPromotionEx)cbPromoteTo.SelectedItem).To : (PawnPromotion?)null;
+
         private void SquaresLabels_Click(object sender, EventArgs e)
         {
             if (_isCurrPuzzleFinishedOk)
@@ -250,8 +308,7 @@ namespace ChessUI
                 if (validDestinations.Contains(targetSquare))
                 {
                     var tryMove = new Move(_selectedSourceSquare.Value, targetSquare, _gameBoard.WhoseTurn,
-                        _gameBoard.IsPromotionMove(_selectedSourceSquare, targetSquare) ?
-                            (PawnPromotion)cbPromoteTo.SelectedItem : (PawnPromotion?)null);
+                        GetPromotion(_selectedSourceSquare, targetSquare));
                     if (_gameBoard.TryMove(tryMove))
                         _isCurrPuzzleFinishedOk = _gameBoard.MakeMoveAndAnswer(MakeMove, tryMove);
                     else
@@ -259,7 +316,7 @@ namespace ChessUI
                     if (_isCurrPuzzleFinishedOk)
                     {
                         var currentRound = _puzzleSet.CurrentRound;
-                        lblPuzzleState.Text = PuzzleSetInfoDone;
+                        SetInfoLabels(true);
                         if (DoesCurrentPuzzleCountAsCorrect())
                             _puzzleSet.CurrentIsCorrect();
                         lblWhoseTurn.Text = _puzzleSet.CurrentRating;
@@ -278,8 +335,15 @@ namespace ChessUI
             }
         }
 
-        string PuzzleSetInfo => $"{_puzzleSet.CurrentPosition + 1}/{_puzzleSet.NumTotal}  Round {_puzzleSet.CurrentRound}";
-        string PuzzleSetInfoDone => $"Done {PuzzleSetInfo}";
+        void SetInfoLabels(bool? ok)
+        {
+            lblPuzzleNum.Text = $"{_puzzleSet.CurrentPosition + 1}/{_puzzleSet.NumTotal}";
+            lblRound.Text = _puzzleSet.CurrentRound.ToString();
+            if(!ok.HasValue)
+                lblPuzzleState.Text = "";
+            else if (ok == true)
+                lblPuzzleState.Text = Res("Correct!");
+        }
 
         private bool DoesCurrentPuzzleCountAsCorrect()
         {
@@ -361,8 +425,7 @@ namespace ChessUI
             try
             {
                 Player player = _gameBoard.WhoseTurn;
-                PawnPromotion? pawnPromotion = _gameBoard.IsPromotionMove(source, destination) ?
-                    (PawnPromotion)cbPromoteTo.SelectedItem : (PawnPromotion?)null;
+                PawnPromotion? pawnPromotion = GetPromotion(source, destination);
 
                 var move = new Move(source, destination, player, pawnPromotion);
                 if (!_gameBoard.IsValidMove(move))
@@ -375,7 +438,7 @@ namespace ChessUI
                 DrawBoard(GetPlayerInCheck());
 
                 Player whoseTurn = _gameBoard.WhoseTurn;
-                lblWhoseTurn.Text = whoseTurn.ToString();
+                lblWhoseTurn.Text = Res(whoseTurn.ToString());
             }
             catch (Exception exception)
             {
@@ -394,8 +457,8 @@ namespace ChessUI
                     _puzzleSet.CurrentIsTried();
                     SetSideOf();
                     DrawBoard();
-                    lblPuzzleState.Text = PuzzleSetInfo;
-                    lblWhoseTurn.Text = _gameBoard.WhoseTurn.ToString();
+                    SetInfoLabels(null);
+                    lblWhoseTurn.Text = Res(_gameBoard.WhoseTurn.ToString());
                     lblPuzzleId.Text = _puzzleSet.CurrentLichessId;
                 }
                 else
@@ -422,17 +485,35 @@ namespace ChessUI
 
             ReadPuzzles();
             _isCurrPuzzleFinishedOk = true;
-            SaveCurrentPzlName();
+            WriteIniFile();
             btNext_Click(this, null);
         }
 
-        private void SaveCurrentPzlName() => File.WriteAllText(IniFileName, _currPuzzleSetName);
+        private void WriteIniFile()
+        {
+            if (!isReadingIniFile)
+            {
+                var iniLines = $@"
+                    PuzzleSet={_currPuzzleSetName}
+                    Language={cbLanguage.SelectedItem}".SplitToLines();
+                File.WriteAllLines(IniFileName, iniLines);
+            }
+        }
 
-        private void ReadCurrentPzlName()
+        private void ReadIniFile()
         {
             if (File.Exists(IniFileName))
-                cbPuzzleSets.SelectedItem = File.ReadAllText(IniFileName);
+            {
+                isReadingIniFile = true;
+                var lines = File.ReadAllLines(IniFileName).ToLi();
+                cbPuzzleSets.SelectedItem = lines[0].Split('=')[1];
+                if (lines.Count >= 2)
+                    cbLanguage.SelectedItem = lines[1].Split('=')[1];
+                isReadingIniFile = false;
+            }
         }
+
+        private bool isReadingIniFile;
 
         const string IniFileName = "ChessPuzzlePecker.ini";
 
@@ -474,5 +555,14 @@ Greetings to http://schachclub-ittersbach.de/.
             // PuzzleCompressor.UncompressAllCsvGzFiles(PuzzleSet.LichessCsvPartBase);
 
         }
+
+        private void cbLanguage_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Form1.Language = (string)cbLanguage.SelectedItem;
+            WriteIniFile();
+            // Changing the language happens extremely seldom.
+            TranslateLabels();
+        }
+
     }
 }

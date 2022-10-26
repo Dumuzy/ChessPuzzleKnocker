@@ -111,7 +111,7 @@
             this.label8 = new System.Windows.Forms.Label();
             this.cbFlipBoard = new System.Windows.Forms.CheckBox();
             this.btNext = new System.Windows.Forms.Button();
-            this.lblPuzzleState = new System.Windows.Forms.Label();
+            this.lblPuzzleNum = new System.Windows.Forms.Label();
             this.btLichess = new System.Windows.Forms.Button();
             this.cbPuzzleSets = new System.Windows.Forms.ComboBox();
             this.cbPromoteTo = new System.Windows.Forms.ComboBox();
@@ -120,6 +120,10 @@
             this.lblPuzzleId = new System.Windows.Forms.Label();
             this.btAbout = new System.Windows.Forms.Button();
             this.btHelp = new System.Windows.Forms.Button();
+            this.cbLanguage = new System.Windows.Forms.ComboBox();
+            this.lblPuzzleState = new System.Windows.Forms.Label();
+            this.lblRoundText = new System.Windows.Forms.Label();
+            this.lblRound = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // lbl_A1
@@ -922,9 +926,9 @@
             this.cbFlipBoard.AutoSize = true;
             this.cbFlipBoard.Location = new System.Drawing.Point(642, 197);
             this.cbFlipBoard.Name = "cbFlipBoard";
-            this.cbFlipBoard.Size = new System.Drawing.Size(79, 19);
+            this.cbFlipBoard.Size = new System.Drawing.Size(84, 19);
             this.cbFlipBoard.TabIndex = 86;
-            this.cbFlipBoard.Text = "Flip board";
+            this.cbFlipBoard.Text = "Turn board";
             this.cbFlipBoard.UseVisualStyleBackColor = true;
             this.cbFlipBoard.CheckedChanged += new System.EventHandler(this.cbFlipBoard_CheckedChanged);
             // 
@@ -939,15 +943,15 @@
             this.btNext.UseVisualStyleBackColor = true;
             this.btNext.Click += new System.EventHandler(this.btNext_Click);
             // 
-            // lblPuzzleState
+            // lblPuzzleNum
             // 
-            this.lblPuzzleState.AutoSize = true;
-            this.lblPuzzleState.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.lblPuzzleState.Location = new System.Drawing.Point(642, 139);
-            this.lblPuzzleState.Name = "lblPuzzleState";
-            this.lblPuzzleState.Size = new System.Drawing.Size(13, 21);
-            this.lblPuzzleState.TabIndex = 88;
-            this.lblPuzzleState.Text = ".";
+            this.lblPuzzleNum.AutoSize = true;
+            this.lblPuzzleNum.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.lblPuzzleNum.Location = new System.Drawing.Point(642, 139);
+            this.lblPuzzleNum.Name = "lblPuzzleNum";
+            this.lblPuzzleNum.Size = new System.Drawing.Size(13, 21);
+            this.lblPuzzleNum.TabIndex = 88;
+            this.lblPuzzleNum.Text = ".";
             // 
             // btLichess
             // 
@@ -983,7 +987,7 @@
             // 
             this.lblPromoteTo.AutoSize = true;
             this.lblPromoteTo.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.lblPromoteTo.Location = new System.Drawing.Point(642, 228);
+            this.lblPromoteTo.Location = new System.Drawing.Point(639, 228);
             this.lblPromoteTo.Name = "lblPromoteTo";
             this.lblPromoteTo.Size = new System.Drawing.Size(67, 15);
             this.lblPromoteTo.TabIndex = 92;
@@ -1015,9 +1019,9 @@
             // btAbout
             // 
             this.btAbout.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.btAbout.Location = new System.Drawing.Point(723, 9);
+            this.btAbout.Location = new System.Drawing.Point(690, 9);
             this.btAbout.Name = "btAbout";
-            this.btAbout.Size = new System.Drawing.Size(66, 23);
+            this.btAbout.Size = new System.Drawing.Size(52, 23);
             this.btAbout.TabIndex = 95;
             this.btAbout.Text = "About";
             this.btAbout.UseVisualStyleBackColor = true;
@@ -1028,17 +1032,65 @@
             this.btHelp.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.btHelp.Location = new System.Drawing.Point(642, 9);
             this.btHelp.Name = "btHelp";
-            this.btHelp.Size = new System.Drawing.Size(67, 23);
+            this.btHelp.Size = new System.Drawing.Size(42, 23);
             this.btHelp.TabIndex = 96;
             this.btHelp.Text = "Help";
             this.btHelp.UseVisualStyleBackColor = true;
+            this.btHelp.Visible = false;
             this.btHelp.Click += new System.EventHandler(this.button2_Click);
+            // 
+            // cbLanguage
+            // 
+            this.cbLanguage.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.cbLanguage.FormattingEnabled = true;
+            this.cbLanguage.Items.AddRange(new object[] {
+            "DE",
+            "EN"});
+            this.cbLanguage.Location = new System.Drawing.Point(748, 9);
+            this.cbLanguage.Name = "cbLanguage";
+            this.cbLanguage.Size = new System.Drawing.Size(43, 23);
+            this.cbLanguage.TabIndex = 97;
+            this.cbLanguage.SelectedIndexChanged += new System.EventHandler(this.cbLanguage_SelectedIndexChanged);
+            // 
+            // lblPuzzleState
+            // 
+            this.lblPuzzleState.AutoSize = true;
+            this.lblPuzzleState.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.lblPuzzleState.Location = new System.Drawing.Point(642, 374);
+            this.lblPuzzleState.Name = "lblPuzzleState";
+            this.lblPuzzleState.Size = new System.Drawing.Size(13, 21);
+            this.lblPuzzleState.TabIndex = 98;
+            this.lblPuzzleState.Text = ".";
+            // 
+            // lblRoundText
+            // 
+            this.lblRoundText.AutoSize = true;
+            this.lblRoundText.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.lblRoundText.Location = new System.Drawing.Point(723, 139);
+            this.lblRoundText.Name = "lblRoundText";
+            this.lblRoundText.Size = new System.Drawing.Size(56, 21);
+            this.lblRoundText.TabIndex = 99;
+            this.lblRoundText.Text = "Round";
+            // 
+            // lblRound
+            // 
+            this.lblRound.AutoSize = true;
+            this.lblRound.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.lblRound.Location = new System.Drawing.Point(776, 139);
+            this.lblRound.Name = "lblRound";
+            this.lblRound.Size = new System.Drawing.Size(13, 21);
+            this.lblRound.TabIndex = 100;
+            this.lblRound.Text = ".";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(869, 622);
+            this.Controls.Add(this.lblRound);
+            this.Controls.Add(this.lblRoundText);
+            this.Controls.Add(this.lblPuzzleState);
+            this.Controls.Add(this.cbLanguage);
             this.Controls.Add(this.btHelp);
             this.Controls.Add(this.btAbout);
             this.Controls.Add(this.lblPuzzleId);
@@ -1047,7 +1099,7 @@
             this.Controls.Add(this.cbPromoteTo);
             this.Controls.Add(this.cbPuzzleSets);
             this.Controls.Add(this.btLichess);
-            this.Controls.Add(this.lblPuzzleState);
+            this.Controls.Add(this.lblPuzzleNum);
             this.Controls.Add(this.btNext);
             this.Controls.Add(this.cbFlipBoard);
             this.Controls.Add(this.label8);
@@ -1225,7 +1277,7 @@
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.CheckBox cbFlipBoard;
         private System.Windows.Forms.Button btNext;
-        private System.Windows.Forms.Label lblPuzzleState;
+        private System.Windows.Forms.Label lblPuzzleNum;
         private System.Windows.Forms.Button btLichess;
         private System.Windows.Forms.ComboBox cbPuzzleSets;
         private System.Windows.Forms.ComboBox cbPromoteTo;
@@ -1234,6 +1286,10 @@
         private System.Windows.Forms.Label lblPuzzleId;
         private System.Windows.Forms.Button btAbout;
         private System.Windows.Forms.Button btHelp;
+        private System.Windows.Forms.ComboBox cbLanguage;
+        private System.Windows.Forms.Label lblPuzzleState;
+        private System.Windows.Forms.Label lblRoundText;
+        private System.Windows.Forms.Label lblRound;
     }
 }
 

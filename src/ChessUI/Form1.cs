@@ -15,6 +15,7 @@ using AwiUtils;
 using System.Net;
 using ChessUI.Properties;
 using System.CodeDom;
+using System.Text;
 
 namespace ChessUI
 {
@@ -100,7 +101,7 @@ namespace ChessUI
                 var t = Res(c.Text);
                 if (t != c.Text)
                 {
-                    if(Language == "DE")
+                    if (Language == "DE")
                         de2En[t] = c.Text;
                     c.Text = t;
                 }
@@ -312,7 +313,7 @@ namespace ChessUI
                     if (_gameBoard.TryMove(tryMove))
                         _isCurrPuzzleFinishedOk = _gameBoard.MakeMoveAndAnswer(MakeMove, tryMove);
                     else
-                        _puzzlesWithError.Add(_puzzleSet.CurrentLichessId, DateTime.Now);
+                        _puzzlesWithError.TryAdd(_puzzleSet.CurrentLichessId, DateTime.Now);
                     if (_isCurrPuzzleFinishedOk)
                     {
                         var currentRound = _puzzleSet.CurrentRound;
@@ -337,9 +338,9 @@ namespace ChessUI
 
         void SetInfoLabels(bool? ok)
         {
-            lblPuzzleNum.Text = $"{_puzzleSet.CurrentPosition + 1}/{_puzzleSet.NumTotal}";
+            lblPuzzleNum.Text = $"{_puzzleSet.NumCorrect(_puzzleSet.CurrentRound) + 1}/{_puzzleSet.NumTotal}";
             lblRound.Text = _puzzleSet.CurrentRound.ToString();
-            if(!ok.HasValue)
+            if (!ok.HasValue)
                 lblPuzzleState.Text = "";
             else if (ok == true)
                 lblPuzzleState.Text = Res("Correct!");
@@ -468,7 +469,7 @@ namespace ChessUI
 
         private void btLichess_Click(object sender, EventArgs e)
         {
-            _puzzlesWithError.Add(_puzzleSet.CurrentLichessId, DateTime.Now);
+            _puzzlesWithError.TryAdd(_puzzleSet.CurrentLichessId, DateTime.Now);
             OpenWithDefaultApp("https://lichess.org/training/" + _puzzleSet.CurrentLichessId);
         }
 

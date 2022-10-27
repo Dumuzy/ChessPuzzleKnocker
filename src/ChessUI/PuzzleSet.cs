@@ -80,7 +80,9 @@ namespace ChessUI
 
         public int CurrentPosition => currentPuzzleNum;
 
-        public bool IsRoundFinished(int round) => Puzzles.Count(p => p.NumCorrect >= round) == NumTotal;
+        public bool IsRoundFinished(int round) => NumCorrect(round) == NumTotal;
+
+        public int NumCorrect(int round) => Puzzles.Count(p => p.NumCorrect >= round);
 
         public int CurrentRound { get; private set; } = 1;
 

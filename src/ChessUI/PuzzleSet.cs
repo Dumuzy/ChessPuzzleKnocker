@@ -10,6 +10,7 @@ using ChessSharp;
 using AwiUtils;
 using static System.Windows.Forms.LinkLabel;
 using System.Windows.Forms;
+using System.Net;
 
 namespace ChessUI
 {
@@ -180,7 +181,9 @@ namespace ChessUI
             if (File.Exists(LichessCsvFileName))
                 fileName = LichessCsvFileName;
             else
-                fileName = GetUncompressedGzCsv();
+                fileName = GetUncompressedCsvGz();
+            if (fileName == null)
+                fileName = TryDownloadLichessPart();
             if (fileName == null)
             {
                 DownloadLichessCsvIfNeeded();
@@ -190,12 +193,33 @@ namespace ChessUI
             return fileName;
         }
 
-        private string GetUncompressedGzCsv()
+        private string GetUncompressedCsvGz()
         {
-            PuzzleCompressor.UncompressAllCsvGzFiles(LichessCsvPartBase);
+            PuzzleCompressor.DecompressAllCsvGzFiles(LichessCsvPartBase);
             var licFiles = Directory.EnumerateFiles(".", LichessCsvPartBase + "*.csv").Select(f => new FileInfo(f));
             licFiles.OrderByDescending(f => f.Length);
             return licFiles.FirstOrDefault()?.Name;
+        }
+
+        private string TryDownloadLichessPart()
+        {
+            try
+            {
+                var licPartUrls = @"
+                        https://github.com/Dumuzy/ChessPuzzlePecker/blob/master/part-gzs/lic_part_puzzle-150000.csv.gz
+                        http://schachclub-ittersbach.de/wordpress/wp-content/uploads/2022/10/lic_part_puzzle-100000.csv.gz"
+                        .SplitToLines();
+                foreach (var url in licPartUrls)
+                {
+                    var client = new WebClient();
+                    var fn = Path.GetFileName(url);
+                    client.DownloadFile(url, fn);
+                    if (File.Exists(fn))
+                        break;
+                }
+            }
+            catch (Exception) { }
+            return GetUncompressedCsvGz();
         }
 
         private void DownloadLichessCsvIfNeeded()

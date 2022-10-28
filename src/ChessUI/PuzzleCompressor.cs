@@ -11,14 +11,14 @@ namespace ChessUI
     {
         static public void CreateManyCompressedFiles(string inputFile, string outputFileBase, bool shallGzipFile)
         {
-            foreach (var part in new int[] { 1200, 600, 300, 150, 75, 40, 20, 10, })
+            foreach (var part in new int[] { 750, 300, 150, 75, 30, 15, 3})
                 Compress(inputFile, outputFileBase, NumPuzzlesInLichessDB / part, shallGzipFile);
 
         }
 
         static public void Compress(string inputFile, string outputFileBase, int numPuzzles, bool shallGzipFile)
         {
-            if (numPuzzles <= 0 || numPuzzles * 4 > NumPuzzlesInLichessDB)
+            if (numPuzzles <= 0 || numPuzzles * 3 > NumPuzzlesInLichessDB)
                 throw new Exception($"numPuzzles={numPuzzles} unsupprted");
             Dictionary<string, string> takenPuzzles = new Dictionary<string, string>();
             do
@@ -49,28 +49,15 @@ namespace ChessUI
             var fileName = $"{outputFileBase}-{numPuzzles}.csv";
             File.WriteAllLines(fileName, lines);
             if (shallGzipFile)
-            {
-                var text = File.ReadAllText(fileName);
-                var compressed = StringCompressor.CompressToBytes(text);
-                File.WriteAllBytes(fileName + ".gz", compressed);
-            }
+                StringCompressor.CompressFile(fileName, true);
         }
         const int NumPuzzlesInLichessDB = 1500 * 1000;
 
-        static public void UncompressAllCsvGzFiles(string fileBase)
+        static public void DecompressAllCsvGzFiles(string fileBase)
         {
             var files = Directory.EnumerateFiles(".", fileBase + "*.csv.gz");
             foreach (var f in files)
-            {
-                var newFilename = Path.GetFileNameWithoutExtension(f);
-                if (!File.Exists(newFilename))
-                {
-                    var bytes = File.ReadAllBytes(f);
-                    var uncompressed = StringCompressor.DecompressFromBytes(bytes);
-                    File.WriteAllText(newFilename, uncompressed);
-                    File.Delete(f);
-                }
-            }
+                StringCompressor.DecompressFile(f, true);
         }
 
 

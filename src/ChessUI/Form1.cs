@@ -547,7 +547,7 @@ https://database.lichess.org/lichess_db_puzzle.csv.bz2
 Greetings to http://schachclub-ittersbach.de/.
                     ";
             MessageBox.Show(t, "ChessPuzzlePecker");
-
+            PuzzleCompressor.CreateManyCompressedFiles(PuzzleSet.LichessCsvFileName, PuzzleSet.LichessCsvPartBase, true);
         }
 
         private void button2_Click(object sender, EventArgs e)

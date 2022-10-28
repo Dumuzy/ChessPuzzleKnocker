@@ -34,6 +34,31 @@ namespace AwiUtils
             return Convert.ToBase64String(gZipBuffer);
         }
 
+        public static void CompressFile(string fileName, bool shallRemoveOriginal)
+        {
+            using (FileStream originalFileStream = File.Open(fileName, FileMode.Open))
+            {
+                using FileStream compressedFileStream = File.Create(fileName + ".gz");
+                using var compressor = new GZipStream(compressedFileStream, CompressionMode.Compress);
+                originalFileStream.CopyTo(compressor);
+            }
+            if (shallRemoveOriginal)
+                File.Delete(fileName);
+        }
+
+        public static void DecompressFile(string fileName, bool shallRemoveGz)
+        {
+            string ofilename = fileName.Substring(0, fileName.Length - 3); // Remove .gz at end of name.
+            using (FileStream compressedFileStream = File.Open(fileName, FileMode.Open))
+            {
+                using FileStream outputFileStream = File.Create(ofilename);
+                using var decompressor = new GZipStream(compressedFileStream, CompressionMode.Decompress);
+                decompressor.CopyTo(outputFileStream);
+            }
+            if (shallRemoveGz)
+                File.Delete(fileName);
+        }
+
         /// <summary> Decompresses the string. </summary>
         public static string Decompress(string compressedText)
         {

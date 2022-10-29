@@ -52,6 +52,7 @@ namespace ChessUI
             _squareLabels = Controls.OfType<Label>().Where(m => Regex.IsMatch(m.Name, "lbl_[A-H][1-8]")).ToArray();
             _sideLabels = Controls.OfType<Label>().Where(m => Regex.IsMatch(m.Name, "^label[A-H1-8]$")).ToLiro();
 
+            ReadIniFile();      // inifile is read twice, second tim for selected pzl, first time for language.
             TranslateLabels();
 
             foreach (var lbl in _squareLabels)
@@ -67,7 +68,7 @@ namespace ChessUI
             cbPromoteTo.SelectedItem = cbPromoteTo.Items.Cast<PawnPromotionEx>().First(p => p.To == PawnPromotion.Queen);
 
             FillPuzzleSetsComboBox();
-            ReadIniFile();
+            ReadIniFile();      // inifile is read twice, second tim for selected pzl, first time for language.
         }
 
         void ReadPuzzles()

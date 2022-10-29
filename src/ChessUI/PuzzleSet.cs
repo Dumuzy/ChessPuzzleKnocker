@@ -203,22 +203,22 @@ namespace ChessUI
 
         private string TryDownloadLichessPart()
         {
-            try
+            var licPartUrls = @"
+                http://schachclub-ittersbach.de/wordpress/wp-content/uploads/2022/10/lic_part_puzzle-100000.csv.gz"
+                    .SplitToLines();
+            foreach (var url in licPartUrls)
             {
-                var licPartUrls = @"
-                        https://github.com/Dumuzy/ChessPuzzlePecker/blob/master/part-gzs/lic_part_puzzle-150000.csv.gz
-                        http://schachclub-ittersbach.de/wordpress/wp-content/uploads/2022/10/lic_part_puzzle-100000.csv.gz"
-                        .SplitToLines();
-                foreach (var url in licPartUrls)
+                try
                 {
                     var client = new WebClient();
-                    var fn = Path.GetFileName(url);
+                    string fn = Path.GetFileName(url);
                     client.DownloadFile(url, fn);
                     if (File.Exists(fn))
                         break;
                 }
+
+                catch (Exception) { }
             }
-            catch (Exception) { }
             return GetUncompressedCsvGz();
         }
 

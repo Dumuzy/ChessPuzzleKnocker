@@ -50,7 +50,7 @@ namespace ChessUI
                 if (fi.Motifs.Count > 0)
                     cbFilter1.SelectedItem = motifs.First(m => m.Motif == fi.Motifs[0]);
                 if (fi.Motifs.Count > 1)
-                    cbFilter2.SelectedItem = motifs.First(m => m.Motif == fi.Motifs[0]);
+                    cbFilter2.SelectedItem = motifs.First(m => m.Motif == fi.Motifs[1]);
                 cbPercent.SelectedItem = fi.Percentage.ToString();
             }
         }

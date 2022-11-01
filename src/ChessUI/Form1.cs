@@ -523,7 +523,8 @@ namespace ChessUI
         {
             if (_puzzleSet == null)
                 _puzzleSet = new PuzzleSet("MyPuzzles-1", 100,
-                    "fork master:70;masterVsMaster:10;hangingPiece:20;", 1800, 2150, 1000);
+                    "fork master:70;masterVsMaster:10;hangingPiece:20;", 1800, 2150, 1000,
+                    PuzzleDbProvider.GetLichessCsvFile);
 
             var ib = new InputBox(_puzzleSet);
             var res = ib.ShowDialog();
@@ -542,20 +543,19 @@ ChessPuzzlePecker
 A chess puzzle training program inspired by the Woodpecker method.
 See on GitHub  https://github.com/Dumuzy/ChessPuzzlePecker.
 Special thanks to https://lichess.org/, from where all the puzzle data is coming.
-You should download the puzzle data from there: 
+You could download more puzzle data from there: 
 https://database.lichess.org/lichess_db_puzzle.csv.bz2 
                     
 Greetings to http://schachclub-ittersbach.de/.
                     ";
             MessageBox.Show(t, "ChessPuzzlePecker");
-            PuzzleCompressor.CreateManyCompressedFiles(PuzzleSet.LichessCsvFileName, PuzzleSet.LichessCsvPartBase, true);
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-            PuzzleCompressor.CreateManyCompressedFiles(PuzzleSet.LichessCsvFileName, PuzzleSet.LichessCsvPartBase, true);
             // PuzzleCompressor.UncompressAllCsvGzFiles(PuzzleSet.LichessCsvPartBase);
-
+            // PuzzleCompressor.CreateManyCompressedFiles(PuzzleDbProvider.LichessCsvFileName,
+            //    PuzzleDbProvider.LichessCsvPartBase, true);
         }
 
         private void cbLanguage_SelectedIndexChanged(object sender, EventArgs e)

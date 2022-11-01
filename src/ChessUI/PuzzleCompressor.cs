@@ -51,7 +51,6 @@ namespace ChessUI
             if (shallGzipFile)
                 StringCompressor.CompressFile(fileName, true);
         }
-        const int NumPuzzlesInLichessDB = 1500 * 1000;
 
         static public void DecompressAllCsvGzFiles(string fileBase)
         {
@@ -62,5 +61,6 @@ namespace ChessUI
 
 
         static Random rand = new Random();
+        const int NumPuzzlesInLichessDB = 1500 * 1000;
     }
 }

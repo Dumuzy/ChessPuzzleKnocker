@@ -21,7 +21,7 @@ namespace ChessUI
         /// of motifB1, the rest will be of motifC1 and motifC2.
         /// </param>
         public PuzzleSet(string name, int numPuzzles, string filters, int lowerRating, int upperRating,
-            int startPuzzleNumForCreation)
+            int startPuzzleNumForCreation, Func<string> getPuzzleDbFileFunc)
         {
             this.Name = name;
             this.NumPuzzlesWanted = numPuzzles;
@@ -30,6 +30,7 @@ namespace ChessUI
             this.UpperRating = upperRating;
             this.Filters = PuzzleFilter.CreateFilters(filters);
             this.Puzzles = new Li<Puzzle>();
+            this.DbFileName = getPuzzleDbFileFunc();
             SearchPuzzles();
         }
 
@@ -104,7 +105,7 @@ namespace ChessUI
         {
             var puzzles = new Dictionary<string, Puzzle>();
 
-            var fileName = GetLichessCsvFile();
+            var fileName = DbFileName;
             if (fileName == null)
                 return;
             for (int i = 0; puzzles.Count != NumPuzzlesWanted && i < 20; ++i)
@@ -170,69 +171,6 @@ namespace ChessUI
             if (!ok)
                 ok = popularity == 0 && nbPlays == 0 && lineParts[8] == "";   // it's a lichess_part line. 
             return ok;
-        }
-        public const string LichessCsvPartBase = "lic_part_puzzle";
-        public const string LichessCsvFileName = "lichess_db_puzzle.csv";
-        public static string LichessCsvDirectory => Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location);
-
-        string GetLichessCsvFile()
-        {
-            string fileName = null;
-            if (File.Exists(LichessCsvFileName))
-                fileName = LichessCsvFileName;
-            else
-                fileName = GetUncompressedCsvGz();
-            if (fileName == null)
-                fileName = TryDownloadLichessPart();
-            if (fileName == null)
-            {
-                DownloadLichessCsvIfNeeded();
-                if (File.Exists(LichessCsvFileName))
-                    fileName = LichessCsvFileName;
-            }
-            return fileName;
-        }
-
-        private string GetUncompressedCsvGz()
-        {
-            PuzzleCompressor.DecompressAllCsvGzFiles(LichessCsvPartBase);
-            var licFiles = Directory.EnumerateFiles(".", LichessCsvPartBase + "*.csv").Select(f => new FileInfo(f));
-            licFiles.OrderByDescending(f => f.Length);
-            return licFiles.FirstOrDefault()?.Name;
-        }
-
-        private string TryDownloadLichessPart()
-        {
-            var licPartUrls = @"
-                http://schachclub-ittersbach.de/wordpress/wp-content/uploads/2022/10/lic_part_puzzle-100000.csv.gz"
-                    .SplitToLines();
-            foreach (var url in licPartUrls)
-            {
-                try
-                {
-                    var client = new WebClient();
-                    string fn = Path.GetFileName(url);
-                    client.DownloadFile(url, fn);
-                    if (File.Exists(fn))
-                        break;
-                }
-
-                catch (Exception) { }
-            }
-            return GetUncompressedCsvGz();
-        }
-
-        private void DownloadLichessCsvIfNeeded()
-        {
-            if (!File.Exists(LichessCsvFileName))
-            {
-                MessageBox.Show($@"You must download 
-    https://database.lichess.org/lichess_db_puzzle.csv.bz2 
-now and extract it to 
-    {LichessCsvDirectory}. 
-Press OK when done.",
-                    "Attention", MessageBoxButtons.OKCancel);
-            }
         }
         #endregion SearchPuzzles
 
@@ -302,7 +240,7 @@ currentRound={CurrentRound}
         public int StartPuzzleNumForCreation { get; private set; }
 
         int currentPuzzleNum = -1;
-        readonly string Name;
+        readonly string Name, DbFileName;
         string FileName => SFileName(Name);
 
         static string SFileName(string name) => Helper.MakeFilenameSafe(name) + ".pzl";

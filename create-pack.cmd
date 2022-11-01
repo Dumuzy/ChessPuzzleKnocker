@@ -1,5 +1,6 @@
 
-set tempdir=C:\tmp\cpp\ChessPuzzlePecker
+set temp0=C:\tmp\cpp\
+set tempdir=%temp0%ChessPuzzlePecker
 
 
 md %tempdir%
@@ -21,3 +22,6 @@ cd %tempdir%\..
 
 del /Q %tempdir%\*.*
 rd %tempdir%
+
+echo off
+echo "ChessPuzzlePecker.zip created in %temp0%"

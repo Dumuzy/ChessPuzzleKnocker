@@ -72,12 +72,11 @@ namespace ChessUI
                 tbNameOfSet.Text += $"-{tbLowerRating.Value}-{tbUpperRating.Value}";
             }
             var ps = new PuzzleSet(tbNameOfSet.Text, Helper.ToInt(tbNumPuzzles.Text), filters,
-                tbLowerRating.Value, tbUpperRating.Value, Helper.ToInt(tbStartAtNumber.Text));
+                tbLowerRating.Value, tbUpperRating.Value, Helper.ToInt(tbStartAtNumber.Text),
+                PuzzleDbProvider.GetLichessCsvFile);
             if (ps.HasPuzzles)
                 ps.WriteSet();
-            else
-                MessageBox.Show("Sorry, could not create set, because I could not find \n" +
-                                Path.Combine(PuzzleSet.LichessCsvDirectory, PuzzleSet.LichessCsvFileName));
+
             DialogResult = ps.HasPuzzles ? DialogResult.OK : DialogResult.Cancel;
             Close();
         }

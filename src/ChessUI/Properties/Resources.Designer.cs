@@ -202,6 +202,15 @@ namespace ChessUI.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Tip.
+        /// </summary>
+        internal static string Hint {
+            get {
+                return ResourceManager.GetString("Hint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to König.
         /// </summary>
         internal static string King {

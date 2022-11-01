@@ -329,6 +329,7 @@ namespace ChessUI
                             _puzzleSet.RebasePuzzles();
                         }
                     }
+                    _helpState = 0;
                     _puzzleSet.WriteSet();
                 }
                 else
@@ -462,6 +463,7 @@ namespace ChessUI
                     SetInfoLabels(null);
                     lblWhoseTurn.Text = Res(_gameBoard.WhoseTurn.ToString());
                     lblPuzzleId.Text = _puzzleSet.CurrentLichessId;
+                    _helpState = 0;
                 }
                 else
                     SystemSounds.Beep.Play();
@@ -551,13 +553,6 @@ Greetings to http://schachclub-ittersbach.de/.
             MessageBox.Show(t, "ChessPuzzlePecker");
         }
 
-        private void button2_Click(object sender, EventArgs e)
-        {
-            // PuzzleCompressor.UncompressAllCsvGzFiles(PuzzleSet.LichessCsvPartBase);
-            // PuzzleCompressor.CreateManyCompressedFiles(PuzzleDbProvider.LichessCsvFileName,
-            //    PuzzleDbProvider.LichessCsvPartBase, true);
-        }
-
         private void cbLanguage_SelectedIndexChanged(object sender, EventArgs e)
         {
             Form1.Language = (string)cbLanguage.SelectedItem;
@@ -566,5 +561,23 @@ Greetings to http://schachclub-ittersbach.de/.
             TranslateLabels();
         }
 
+        private void btHelp_Click(object sender, EventArgs e)
+        {
+            var currMove = _gameBoard.HasMove ? _gameBoard.CurrMove : null;
+            if (currMove != null)
+            {
+                _puzzlesWithError.TryAdd(_puzzleSet.CurrentLichessId, DateTime.Now);
+                Label lbl = _squareLabels.First(m => (m.Tag as SquareTag).Square == currMove.Source);
+                lbl.BackColor = Color.Yellow;
+                if (_helpState > 0)
+                {
+                    Label lbl2 = _squareLabels.First(m => (m.Tag as SquareTag).Square == currMove.Destination);
+                    lbl2.BackColor = Color.Yellow;
+                }
+                _helpState++;
+            }
+        }
+
+        private int _helpState;
     }
 }

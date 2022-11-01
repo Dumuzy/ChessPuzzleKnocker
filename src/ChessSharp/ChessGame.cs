@@ -481,7 +481,8 @@ namespace ChessSharp
 
         public bool HasMove => puzzleMoveNum < puzzle.Moves.Count;
 
-        private Move CurrMove => puzzle.Moves[puzzleMoveNum];
+        public Move CurrMove => puzzle.Moves[puzzleMoveNum];
+
         int puzzleMoveNum = 0;
     }
 }

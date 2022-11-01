@@ -163,6 +163,9 @@
   <data name="Help" xml:space="preserve">
     <value>Hilfe</value>
   </data>
+  <data name="Hint" xml:space="preserve">
+    <value>Tip</value>
+  </data>
   <data name="King" xml:space="preserve">
     <value>König</value>
   </data>

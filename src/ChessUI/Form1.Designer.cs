@@ -119,11 +119,11 @@
             this.btCreatePuzleSet = new System.Windows.Forms.Button();
             this.lblPuzzleId = new System.Windows.Forms.Label();
             this.btAbout = new System.Windows.Forms.Button();
-            this.btHelp = new System.Windows.Forms.Button();
             this.cbLanguage = new System.Windows.Forms.ComboBox();
             this.lblPuzzleState = new System.Windows.Forms.Label();
             this.lblRoundText = new System.Windows.Forms.Label();
             this.lblRound = new System.Windows.Forms.Label();
+            this.btHelp = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // lbl_A1
@@ -956,9 +956,9 @@
             // btLichess
             // 
             this.btLichess.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.btLichess.Location = new System.Drawing.Point(642, 314);
+            this.btLichess.Location = new System.Drawing.Point(642, 306);
             this.btLichess.Name = "btLichess";
-            this.btLichess.Size = new System.Drawing.Size(149, 39);
+            this.btLichess.Size = new System.Drawing.Size(72, 39);
             this.btLichess.TabIndex = 89;
             this.btLichess.Text = "Lichess";
             this.btLichess.UseVisualStyleBackColor = true;
@@ -1027,18 +1027,6 @@
             this.btAbout.UseVisualStyleBackColor = true;
             this.btAbout.Click += new System.EventHandler(this.btAbout_Click);
             // 
-            // btHelp
-            // 
-            this.btHelp.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.btHelp.Location = new System.Drawing.Point(642, 9);
-            this.btHelp.Name = "btHelp";
-            this.btHelp.Size = new System.Drawing.Size(42, 23);
-            this.btHelp.TabIndex = 96;
-            this.btHelp.Text = "Help";
-            this.btHelp.UseVisualStyleBackColor = true;
-            this.btHelp.Visible = false;
-            this.btHelp.Click += new System.EventHandler(this.button2_Click);
-            // 
             // cbLanguage
             // 
             this.cbLanguage.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
@@ -1082,16 +1070,27 @@
             this.lblRound.TabIndex = 100;
             this.lblRound.Text = ".";
             // 
+            // btHelp
+            // 
+            this.btHelp.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.btHelp.Location = new System.Drawing.Point(720, 306);
+            this.btHelp.Name = "btHelp";
+            this.btHelp.Size = new System.Drawing.Size(71, 39);
+            this.btHelp.TabIndex = 101;
+            this.btHelp.Text = "Hint";
+            this.btHelp.UseVisualStyleBackColor = true;
+            this.btHelp.Click += new System.EventHandler(this.btHelp_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(869, 622);
+            this.Controls.Add(this.btHelp);
             this.Controls.Add(this.lblRound);
             this.Controls.Add(this.lblRoundText);
             this.Controls.Add(this.lblPuzzleState);
             this.Controls.Add(this.cbLanguage);
-            this.Controls.Add(this.btHelp);
             this.Controls.Add(this.btAbout);
             this.Controls.Add(this.lblPuzzleId);
             this.Controls.Add(this.btCreatePuzleSet);
@@ -1285,11 +1284,11 @@
         private System.Windows.Forms.Button btCreatePuzleSet;
         private System.Windows.Forms.Label lblPuzzleId;
         private System.Windows.Forms.Button btAbout;
-        private System.Windows.Forms.Button btHelp;
         private System.Windows.Forms.ComboBox cbLanguage;
         private System.Windows.Forms.Label lblPuzzleState;
         private System.Windows.Forms.Label lblRoundText;
         private System.Windows.Forms.Label lblRound;
+        private System.Windows.Forms.Button btHelp;
     }
 }
 

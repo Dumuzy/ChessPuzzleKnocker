@@ -436,6 +436,8 @@ namespace ChessSharp
             return !HasMove;
         }
 
+        /// <summary> Checks if the move m is the correct move for the puzzle. </summary>
+        /// <returns> True, if it is the correct move. False otherwise. </returns>
         public bool TryMove(Move m)
         {
             bool isOk = IsCorrectMove(m.Source, m.Destination, m.PromoteTo);

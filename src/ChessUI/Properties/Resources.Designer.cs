@@ -404,5 +404,14 @@ namespace ChessPuzzlePecker.Properties {
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Falsch!.
+        /// </summary>
+        internal static string Wrong_ {
+            get {
+                return ResourceManager.GetString("Wrong!", resourceCulture);
+            }
+        }
     }
 }

@@ -312,9 +312,16 @@ namespace ChessUI
                     var tryMove = new Move(_selectedSourceSquare.Value, targetSquare, _gameBoard.WhoseTurn,
                         GetPromotion(_selectedSourceSquare, targetSquare));
                     if (_gameBoard.TryMove(tryMove))
+                    {
                         _isCurrPuzzleFinishedOk = _gameBoard.MakeMoveAndAnswer(MakeMove, tryMove);
+                        SetInfoLabels(null);
+                    }
                     else
+                    {
                         _puzzlesWithError.TryAdd(_puzzleSet.CurrentLichessId, DateTime.Now);
+                        SetNormalSquareColor(_selectedSourceSquare.Value);
+                        SetInfoLabels(false);
+                    }
                     if (_isCurrPuzzleFinishedOk)
                     {
                         var currentRound = _puzzleSet.CurrentRound;
@@ -346,6 +353,8 @@ namespace ChessUI
                 lblPuzzleState.Text = "";
             else if (ok == true)
                 lblPuzzleState.Text = Res("Correct!");
+            else if (ok == false)
+                lblPuzzleState.Text = Res("Wrong!");
         }
 
         private bool DoesCurrentPuzzleCountAsCorrect()
@@ -361,10 +370,37 @@ namespace ChessUI
             return ok;
         }
 
+        /// <summary> Sets the backcolor of the square to its normal value. </summary>
+        /// <returns> The label for the square. </returns>
+        Label SetNormalSquareColor(Square sq)
+        {
+            var c = (((int)(sq.File) + (int)(sq.Rank)) % 2 == 0) ? darkColor : lightColor;
+            return SetSquareColor(sq, c);
+        }
+
+        /// <returns> The label for the square. </returns>
+        Label SetSquareColor(Square sq, Color c)
+        {
+            Label lbl = _squareLabels.First(m => (m.Tag as SquareTag).Square == sq);
+            if (c != lbl.BackColor)
+                lbl.BackColor = c;
+            return lbl;
+        }
+
+        /// <summary> Adds an RGB amount to the color of the square. </summary>
+        void AddToSquareColor(Square sq, int r, int g, int b)
+        {
+            var lbl = _squareLabels.First(lbl => (lbl.Tag as SquareTag).Square == sq);
+            var c = lbl.BackColor;
+            var nc = Color.FromArgb(Math.Min(c.R + r, 255), Math.Min(c.G + g, 255), Math.Min(c.B + b, 255));
+            lbl.BackColor = nc;
+        }
+
+        static readonly Color darkColor = Color.FromArgb(181, 136, 99);
+        static readonly Color lightColor = Color.FromArgb(240, 217, 181);
+
         private void DrawBoard(Player? playerInCheck = null)
         {
-            var lightColor = Color.FromArgb(240, 217, 181);
-            var darkColor = Color.FromArgb(181, 136, 99);
             for (var i = 0; i < 8; i++)
             {
                 for (var j = 0; j < 8; j++)
@@ -372,11 +408,8 @@ namespace ChessUI
                     var file = (Linie)i;
                     var rank = (Rank)j;
                     var square = new Square(file, rank);
-                    Label lbl = _squareLabels.First(m => (m.Tag as SquareTag).Square == square);
+                    Label lbl = SetNormalSquareColor(square);
                     Piece piece = _gameBoard[file, rank];
-                    var newColor = ((i + j) % 2 == 0) ? darkColor : lightColor;
-                    if (newColor != lbl.BackColor)
-                        lbl.BackColor = newColor;
                     if (piece == null)
                     {
                         if (lbl.BackgroundImage != null)
@@ -399,10 +432,7 @@ namespace ChessUI
                 // draw special colors for last move.
                 var last = _gameBoard.Moves.Last();
                 foreach (var sq in new Square[] { last.Source, last.Destination })
-                {
-                    var sqLabel = _squareLabels.First(lbl => (lbl.Tag as SquareTag).Square == sq);
-                    AddToBackColor(sqLabel, 0, 35, 0);
-                }
+                    AddToSquareColor(sq, 0, 35, 0);
             }
 
             if (playerInCheck != null)
@@ -411,16 +441,8 @@ namespace ChessUI
                 Square checkedKingSquare = _gameBoard.Board.SelectMany(x => x)
                     .Select((p, i) => new { Piece = p, Square = new Square((ChessSharp.SquareData.Linie)(i % 8), (Rank)(i / 8)) })
                     .First(m => m.Piece is King && m.Piece.Owner == playerInCheck).Square;
-                var checkLabel = _squareLabels.First(lbl => (lbl.Tag as SquareTag).Square == checkedKingSquare);
-                AddToBackColor(checkLabel, 20, -40, -40);
+                AddToSquareColor(checkedKingSquare, 20, -40, -40);
             }
-        }
-
-        void AddToBackColor(System.Windows.Forms.Label lbl, int r, int g, int b)
-        {
-            var c = lbl.BackColor;
-            var nc = Color.FromArgb(Math.Min(c.R + r, 255), Math.Min(c.G + g, 255), Math.Min(c.B + b, 255));
-            lbl.BackColor = nc;
         }
 
         private void MakeMove(Square source, Square destination)
@@ -567,13 +589,9 @@ Greetings to http://schachclub-ittersbach.de/.
             if (currMove != null)
             {
                 _puzzlesWithError.TryAdd(_puzzleSet.CurrentLichessId, DateTime.Now);
-                Label lbl = _squareLabels.First(m => (m.Tag as SquareTag).Square == currMove.Source);
-                lbl.BackColor = Color.Yellow;
+                SetSquareColor(currMove.Source, Color.Yellow);
                 if (_helpState > 0)
-                {
-                    Label lbl2 = _squareLabels.First(m => (m.Tag as SquareTag).Square == currMove.Destination);
-                    lbl2.BackColor = Color.Yellow;
-                }
+                    SetSquareColor(currMove.Destination, Color.Yellow);
                 _helpState++;
             }
         }

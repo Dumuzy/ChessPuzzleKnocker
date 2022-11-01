@@ -13,7 +13,7 @@ using ChessSharp.Pieces;
 using ChessSharp.SquareData;
 using AwiUtils;
 using System.Net;
-using ChessUI.Properties;
+using ChessPuzzlePecker.Properties;
 using System.CodeDom;
 using System.Text;
 
@@ -387,7 +387,7 @@ namespace ChessUI
                     }
                     else
                     {
-                        lbl.BackgroundImage = (Image)Properties.Resources.ResourceManager.
+                        lbl.BackgroundImage = (Image)ChessPuzzlePecker.Properties.Resources.ResourceManager.
                             GetObject($"{piece.Owner}{piece.GetType().Name}");
                         (lbl.Tag as SquareTag).PieceCol = piece.Owner;
                     }

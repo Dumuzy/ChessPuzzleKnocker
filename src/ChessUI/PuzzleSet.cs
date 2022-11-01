@@ -104,24 +104,21 @@ namespace ChessUI
         void SearchPuzzles()
         {
             var puzzles = new Dictionary<string, Puzzle>();
-
+            var startPuzzleNum = StartPuzzleNumForCreation;
             var fileName = DbFileName;
             if (fileName == null)
                 return;
-            for (int i = 0; puzzles.Count != NumPuzzlesWanted && i < 20; ++i)
+            for (int i = 0; puzzles.Count != NumPuzzlesWanted && i < 3; ++i)
             {
                 int j = 0;
                 foreach (string line in File.ReadLines(fileName))
-                    if (j++ >= StartPuzzleNumForCreation)
-                        if (IsAllowed(line))
+                    if (j++ >= startPuzzleNum)
+                        if (IsAllowed(line, puzzles))
                         {
                             var pu = new Puzzle(line);
-                            if (!puzzles.ContainsKey(pu.LichessId))
-                            {
-                                puzzles.Add(pu.LichessId, pu);
-                                if (puzzles.Count >= NumPuzzlesWanted)
-                                    break;
-                            }
+                            puzzles.Add(pu.LichessId, pu);
+                            if (puzzles.Count >= NumPuzzlesWanted)
+                                break;
                         }
                 // for debugging
                 foreach (var f in Filters)
@@ -135,19 +132,21 @@ namespace ChessUI
                         LowerRating -= 50;
                     else if (i % 2 == 1 && UpperRating <= 3150)
                         UpperRating += 50;
+                    startPuzzleNum = 0;
                 }
             }
             this.Puzzles = puzzles.Values.ToLi();
         }
 
-        bool IsAllowed(string line)
+        bool IsAllowed(string line, Dictionary<string, Puzzle> puzzles)
         {
             if (line.StartsWith("#")) // comment line
                 return false;
             var lineParts = line.Split(',').ToLiro();
             if (IsAllowedByRatingEtc(lineParts))
                 foreach (var filter in Filters)
-                    if (!filter.HasEnoughOfFilter(NumPuzzlesWanted) && filter.IsMatching(lineParts))
+                    if (!filter.HasEnoughOfFilter(NumPuzzlesWanted) && filter.IsMatching(lineParts)
+                        && !puzzles.ContainsKey(lineParts[0]))
                     {
                         filter.IncNumSelected();
                         return true;
@@ -349,7 +348,7 @@ public class PuzzleFilter
 
     public bool HasEnoughOfFilter(int numTotal) => numTotal * realPercentage / 100 <= NumSelected;
 
-    public override string ToString() => $"{Motifs}:{Percentage}";
+    public override string ToString() => $"{Motifs}:{Percentage}%:{NumSelected}#";
 
     public string ToDbString() => $"FIL={string.Join(' ', Motifs)}:{Percentage}";
 

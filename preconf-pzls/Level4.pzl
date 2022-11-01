@@ -4,110 +4,110 @@ numPuzzlesWanted=100
 startPuzzleNumForCreation=2000
 lowerRating=1800
 upperRating=2150
-date=24.10.2022 20:04:49
+date=01.11.2022 16:24:55
 currentRound=1
 [Filters]
-FIL=fork masterVsMaster:70
+FIL=fork:70
 FIL=masterVsMaster:20
 FIL=hangingPiece:10
 [Puzzles]
-TT=0;C=0;P=05cfE,r3kb1r/p1pb1ppp/2n2n2/1B2p1N1/8/2N5/PPPP1PqP/R1BQKR2 w Qkq - 2 9,d1e2 g2g5,1826,82,73,42,advantage hangingPiece oneMove opening,https://lichess.org/lUgxJsAr#17
-TT=0;C=0;P=05keZ,3r1r1k/pQ3p1p/2n3p1/8/2B3q1/1P6/P1P4P/1R3R1K b - - 1 24,d8d2 b7c6 g4h4 c6f6 h4f6 f1f6,1810,83,84,42,advantage hangingPiece long middlegame,https://lichess.org/17MtAFTG/black#48
-TT=0;C=0;P=05lsL,8/p7/2p2bpk/Q4n2/1P3r2/7P/4B1K1/8 w - - 5 45,a5a7 f6d4 a7c7 f4f2,2025,76,89,127,crushing endgame master masterVsMaster short,https://lichess.org/0codLTfK#89
-TT=0;C=0;P=06xLG,r3k2r/p1p2p2/PpPp1n2/1P1P4/3QPpb1/1N6/1B3KBq/R7 b kq - 1 26,f6h5 d4h8 e8e7 b2f6 h5f6 h8h2,2017,77,89,355,crushing hangingPiece long middlegame,https://lichess.org/BM9YqfUa/black#52
-TT=0;C=0;P=07dzz,5rk1/ppq2pp1/7p/2bQN3/6P1/2B4P/PPb2P2/4R1K1 w - - 0 24,e5d7 c7g3 d5g2 c5f2,1945,79,80,75,crushing kingsideAttack master masterVsMaster middlegame pin short,https://lichess.org/M2lBjTsu#47
-TT=0;C=0;P=099Q6,5k2/ppRr4/4R1pp/8/8/1P3P1P/P4PBK/3q4 w - - 2 37,e6f6 f8g7 c7d7 d1d7 f6g6 g7g6,2134,76,92,656,crushing defensiveMove endgame long master masterVsMaster,https://lichess.org/2QFjwzpo#73
-TT=0;C=0;P=09Yot,r1bqk3/pp3pb1/3pp1p1/2p1n1B1/4P1n1/2PP4/PP2BP1K/RN1QNR2 w q - 1 13,h2g2 d8g5 e2g4 e5g4,1843,75,83,166,crushing hangingPiece opening short,https://lichess.org/LsD5qCB2#25
-TT=0;C=0;P=09bY8,3r1rk1/ppp2p2/2n5/8/4N1bP/3q4/PP4n1/R1Q1R2K b - - 5 25,d3e4 e1e4 d8d1 h1g2 g4f3 g2f3,2047,93,76,29,advantage hangingPiece long middlegame,https://lichess.org/1kuldDIi/black#50
-TT=0;C=0;P=09huL,8/5pkp/1Bp3p1/8/5P1P/2n3PK/4q3/Q7 b - - 2 51,g7h6 a1c3 e2f1 h3h2,1894,75,91,385,advantage endgame hangingPiece short,https://lichess.org/DSp7asX6/black#102
-TT=0;C=0;P=09iHB,r5k1/pp4pp/6q1/3pPr2/2p5/5N2/PP1Q2K1/3R1R2 w - - 4 24,g2f2 f5f3 f2f3 a8f8,2018,75,98,811,attraction crushing master masterVsMaster middlegame sacrifice short,https://lichess.org/q5U7MZUd#47
-TT=0;C=0;P=09o3s,3r2k1/1p3ppp/p2Nr3/2pQ4/4P1q1/4K3/PP3PP1/R1BR4 w - - 5 24,d5c5 g4d1 c1d2 d1a1,1917,74,91,175,crushing hangingPiece middlegame short,https://lichess.org/piWx8eIp#47
-TT=0;C=0;P=0AkKC,5r2/4Npkn/pqbp2p1/4p1b1/2P5/4NPP1/PP2PK2/R2Q3R w - - 2 25,h1h7 g7h7 d1b3 b6b3 a2b3 g5e7,1949,74,93,1319,advantage hangingPiece long middlegame,https://lichess.org/luDxI0RK#49
-TT=0;C=0;P=0BN01,r2q1r1k/ppp1b1pp/3pBn2/4p3/3nP3/2NPB3/PPPQ1PPP/R3K2R w KQ - 5 11,c3d5 d4e6 d5e7 d8e7,1942,76,84,87,advantage hangingPiece middlegame short,https://lichess.org/EbT146Zb#21
-TT=0;C=0;P=0BTPz,r5k1/p1pb2pp/1pp5/3nP1N1/3Q2qB/2P5/PP4PP/5RK1 w - - 2 20,d4d3 g4h4 d3f3 d5f6,2089,86,84,41,advantage defensiveMove hangingPiece middlegame short,https://lichess.org/gtBZqhnt#39
-TT=0;C=0;P=0DGk8,4Q3/2B3kp/5bp1/1p3b2/1N1q4/P6P/5PP1/6K1 w - - 4 35,b4c6 d4d1 g1h2 f5d7 e8e4 d1c1,2145,138,56,25,advantage endgame long master masterVsMaster,https://lichess.org/pgWrBynh#69
-TT=0;C=0;P=0LU3v,8/6p1/5k1p/R4prP/5KP1/5P2/8/8 b - - 13 57,f5g4 a5g5 h6g5 f4g4 f6e5 g4g5,1919,76,89,66,crushing endgame long master masterVsMaster rookEndgame zugzwang,https://lichess.org/w2CxA7Th/black#114
-TT=0;C=0;P=0M8qe,8/1p4rk/p3R2b/P2pP3/3B1Ppp/2P4P/q7/3Q3K w - - 0 41,f4f5 h6f4 d4g1 d5d4 e6d6 f4e5 d6d4 e5d4,2148,122,67,37,crushing endgame master masterVsMaster veryLong,https://lichess.org/yZGdlZ0m#81
-TT=0;C=0;P=0RjH9,8/5p2/2b1k1pP/1p6/1Pp1PK1P/2N2n2/2P5/8 b - - 0 39,f3e5 h6h7 g6g5 f4g5,1921,75,91,160,advancedPawn crushing endgame master masterVsMaster short superGM,https://lichess.org/KILIBH5o/black#78
-TT=0;C=0;P=0Rsvk,6k1/6p1/4p2p/3qP2P/2p5/P2rQ1P1/5P1K/2R5 w - - 5 39,e3f4 d3f3 c1c4 f3f4,2041,78,90,207,crushing endgame master masterVsMaster short,https://lichess.org/yzfNJPvh#77
-TT=0;C=0;P=0UNw7,r2r4/ppk1qp1p/2p5/2n1b3/5NQP/2PB4/PP4K1/R1B1R3 b - - 0 28,c5d3 f4d3 d8d3 e1e5 e7e5 c1f4,2001,83,83,76,advantage long master masterVsMaster middlegame pin sacrifice superGM,https://lichess.org/9ZJ3Exya/black#56
-TT=0;C=0;P=0aFn0,4rrk1/3q1pp1/2p3pn/pp2P3/1b5R/1P1B2Q1/1BP3PP/5R1K b - - 4 36,b4e7 h4h6 g7h6 d3g6,2107,75,85,334,advantage master masterVsMaster middlegame short,https://lichess.org/pfigfGOE/black#72
-TT=0;C=0;P=0aT73,r3qrk1/pb1pb1pp/1p2p3/4P3/4Nn2/2BB4/PP2QPPP/R4RK1 w - - 1 17,e2e3 e8g6 e3f4 f8f4,1900,76,90,187,crushing master masterVsMaster middlegame short,https://lichess.org/UUyQhpoN#33
-TT=0;C=0;P=0k93m,6k1/1R5p/p3Pp1r/8/5P1p/8/1P6/6K1 b - - 0 39,f6f5 b7b8 g8g7 e6e7,1816,74,98,660,advancedPawn crushing endgame master masterVsMaster rookEndgame short,https://lichess.org/B5vPjjwl/black#78
-TT=0;C=0;P=0n1i4,4b3/6nk/p2R2pp/4P3/P2p1PP1/2Q2K2/1P2B3/6q1 w - - 0 41,c3d4 e8c6 d6c6 g1d4,1829,75,93,408,crushing deflection endgame master masterVsMaster short,https://lichess.org/QCmYOuep#81
-TT=0;C=0;P=0rtHG,rbb1r1k1/1pq2pp1/p4n1p/2P1N3/1P2B3/P7/1B2QPPP/3R1RK1 b - - 0 19,e8e5 b2e5 c7e5 d1d8,1822,76,86,97,crushing kingsideAttack master masterVsMaster middlegame short,https://lichess.org/XY47HOFR/black#38
-TT=0;C=0;P=0xA2k,4b3/3k2p1/1q2p1p1/6Q1/1pB1P3/pPbN1P2/P1P5/1K6 b - - 8 34,b6d4 c4b5 d7c8 b5e8,1997,77,87,126,crushing deflection endgame master masterVsMaster short skewer superGM,https://lichess.org/BidhnDYe/black#68
-TT=0;C=0;P=0yBCG,3k4/5R2/3Bp3/p1KpPbP1/5P1r/P7/8/8 b - - 2 46,h4f4 c5c6 f4c4 d6c5,2000,95,66,25,crushing defensiveMove endgame master masterVsMaster short,https://lichess.org/W9p5eXKV/black#92
-TT=0;C=0;P=12pKv,2r1kb1r/4pp2/p2Q1n1p/1p1N1qp1/4R3/5PB1/PPP2P1P/2KR4 b k - 0 19,f6e4 d5c7 c8c7 d6d8,1949,75,92,87,master masterVsMaster mate mateIn2 middlegame sacrifice short,https://lichess.org/NdzgnQ5s/black#38
-TT=0;C=0;P=16hgq,r4rk1/p5pp/1np1Pp2/8/5B2/6Q1/2P1q2P/2KR2R1 b - - 1 25,g7g6 g3g6 h7g6 g1g6 g8h8 g6h6 h8g7 d1g1 e2g4 g1g4,2010,75,98,883,master masterVsMaster mate mateIn5 middlegame sacrifice veryLong,https://lichess.org/tFFl7Tsx/black#50
-TT=0;C=0;P=1AlNk,2q4r/3n4/p1r2n1p/2b2kp1/5N2/7Q/PP3P1P/R3R1K1 b - - 1 30,f6g4 h3d3 f5f4 d3e4,1898,75,97,978,master masterVsMaster mate mateIn2 middlegame sacrifice short,https://lichess.org/s7AffGoe/black#60
-TT=0;C=0;P=1O23T,r5k1/pp1q1p2/2p3p1/P2n2r1/2B1p2p/Q1P1P2P/1P3PP1/R2R2K1 w - - 2 23,g1f1 d5e3 f2e3 d7f5 f1g1 f5h3 d1d2 h3e3 d2f2 h4h3,1810,78,85,158,crushing fork master masterVsMaster middlegame pin sacrifice superGM veryLong,https://lichess.org/pLbBqUIL#45
-TT=0;C=0;P=1oFim,4n2k/2K3pp/pp2P3/8/b2rP1Bp/P7/1P3QP1/1qN4R w - - 1 37,c7b7 b1e4 b7a7 e8f6,2107,76,89,92,crushing fork master masterVsMaster middlegame short,https://lichess.org/FAYcQ9XI#73
-TT=0;C=0;P=3NC6o,6k1/1p1n4/2pq1pp1/p5N1/P4P2/1PQ2KP1/2P1r3/7R b - - 5 32,e2d2 g5e4 d2c2 c3c2,2133,91,80,59,crushing endgame fork master masterVsMaster short superGM,https://lichess.org/oc146oUx/black#64
-TT=0;C=0;P=3WMBL,1rb1rbk1/2p2qpp/2p2p2/p3nN2/2P1NQ1P/PP6/1B1R1PP1/3R2K1 b - - 6 29,e5g6 f5h6 g7h6 e4f6 f7f6 f4f6,1950,78,84,62,crushing deflection fork long master masterVsMaster middlegame sacrifice,https://lichess.org/31GKU6P2/black#58
-TT=0;C=0;P=3htPz,r7/1k2b2p/p1n1Np2/1pP2r2/1P6/R1B5/4K2P/R7 b - - 1 42,a8e8 e6g7 e7c5 g7e8,2052,79,86,93,advantage fork master masterVsMaster middlegame short superGM,https://lichess.org/HQ2nNtvG/black#84
-TT=0;C=0;P=45L2J,q4n2/3knBb1/1p6/pNp2pP1/P1Pp4/1P4B1/4Q3/6K1 b - - 5 42,a8e4 f7e8 d7d8 g3c7 d8e8 b5d6 e8d7 d6e4,1896,74,94,686,crushing exposedKing fork master masterVsMaster middlegame sacrifice veryLong,https://lichess.org/qjxRcxJx/black#84
-TT=0;C=0;P=46JiB,3q2r1/2p1n2k/1p1p3p/1P1P1pn1/1P3N2/6rP/2Q1R1B1/3R3K w - - 4 32,e2e7 d8e7 c2f5 h7h8 f4g6 g8g6 f5g6 g3g2 g6h6 g5h7 h1g2 e7e2 g2g3 e2d1,2105,82,85,83,crushing exposedKing fork master masterVsMaster middlegame veryLong,https://lichess.org/LgdRoEeF#63
-TT=0;C=0;P=4d2Qz,1rbr2k1/1p3p2/p2pp1p1/6B1/P2qP3/3B4/1P2Q1PP/5R1K b - - 1 24,c8d7 g5f6 d4f6 f1f6,1925,81,79,41,crushing fork master masterVsMaster middlegame short,https://lichess.org/5Mn7iuYW/black#48
-TT=0;C=0;P=6grvD,r4r2/4ppk1/3p3p/2pPn1p1/1q2Pn2/1PN1BP2/P1Q3PP/R4RK1 w - - 3 24,g2g3 b4c3 c2c3 f4e2 g1h1 e2c3,1892,75,86,54,advantage attraction fork long master masterVsMaster middlegame sacrifice,https://lichess.org/ZiMXrigl#47
-TT=0;C=0;P=6mcaK,r1b2rk1/p2n1p1p/4pb1B/3p3N/1n1P2Q1/qP3N2/Pp4PP/1K1R1B1R b - - 4 20,g8h8 h6g7 f6g7 g4g7,1899,76,97,386,fork master masterVsMaster mate mateIn2 middlegame short,https://lichess.org/FHLmZ85Y/black#40
-TT=0;C=0;P=6uoax,2r1r1k1/1p1qppbp/3pb1p1/p2N4/P3P2Q/1BP4P/1P4P1/3R1R1K b - - 0 20,b7b5 d5b6 d7c7 b3e6 f7e6 b6c8,1946,86,87,26,advantage discoveredAttack fork long master masterVsMaster middlegame,https://lichess.org/bLXn2Uvc/black#40
-TT=0;C=0;P=7X1Tb,4r1k1/1p3ppb/p2p3p/6nP/P7/1Bq1N1Q1/2P2PP1/3R2K1 w - - 0 31,d1d6 g5e4 b3f7 g8f7,1978,77,89,82,advantage fork master masterVsMaster middlegame short,https://lichess.org/bO8t1qH4#61
-TT=0;C=0;P=7mDjQ,3r1rk1/p3bppp/1qp3b1/1p1nP3/P1nN4/2PN1BB1/2Q2PPP/R2R2K1 b - - 0 22,d5c3 d4c6 c3d1 c6e7,2101,114,64,63,advantage fork master masterVsMaster middlegame short superGM,https://lichess.org/yKxxwN6W/black#44
-TT=0;C=0;P=7saht,r7/pp4pR/1k1pN3/3r4/3P4/4nK2/PP6/2R5 b - - 1 28,e3f5 e6c7 d5d4 c7a8,1808,94,85,25,advantage endgame fork master masterVsMaster short,https://lichess.org/Xi8sVg6o/black#56
-TT=0;C=0;P=80xJi,3rr3/pp3pk1/1q4p1/4P3/1n1pBP2/1P1R2P1/P2Q4/3R2K1 w - - 6 42,d3d4 d8d4 d2d4 e8d8 d4b6 d8d1 g1f2 a7b6,2085,78,91,196,crushing exposedKing fork intermezzo master masterVsMaster middlegame sacrifice skewer veryLong,https://lichess.org/RsF9ZmOl#83
-TT=0;C=0;P=8QHk8,5k2/b7/3pr1p1/3N4/4B3/2B4P/2P3QK/1q6 b - - 2 33,e6e4 g2f3 f8g8 d5f6,1870,75,93,429,crushing endgame fork master masterVsMaster short superGM,https://lichess.org/jP3lmCYr/black#66
-TT=0;C=0;P=8tjhM,r5k1/p1q4p/1pb2pr1/2p5/8/2PB1NbQ/PP4P1/R4K1R b - - 2 25,c7g7 h3e6 g7f7 e6c6,2080,74,93,1068,crushing fork master masterVsMaster middlegame short,https://lichess.org/XzjsVAQ3/black#50
-TT=0;C=0;P=AmAxw,r2r2k1/pN1qbp2/1pn2npp/8/2B4P/PP2P1N1/1B1P1PP1/R2QK2R w KQ - 3 20,d1f3 d7d2 e1f1 d2b2 a1e1 c6e5 b7d8 e5f3,2024,77,90,127,advantage fork master masterVsMaster middlegame superGM veryLong,https://lichess.org/eVBk8Mv9#39
-TT=0;C=0;P=B3Qpm,4r1k1/q4p1n/3p3N/1r1P1p2/1p2PQ1p/7P/1P4PK/5R2 b - - 1 31,g8g7 h6f5 g7h8 f5d6 a7b8 d6f7,2056,84,80,31,crushing fork long master masterVsMaster middlegame,https://lichess.org/FNJZEGwz/black#62
-TT=0;C=0;P=Bi103,b7/p2Q2pp/kp2p3/1PppN3/3P4/P1P1q2P/6PK/8 b - - 0 32,a6a5 d7a7 a5b5 a3a4,2020,75,96,932,endgame fork master masterVsMaster mate mateIn2 short,https://lichess.org/DgDm4LnD/black#64
-TT=0;C=0;P=Bp69s,2rq2k1/pb3pp1/1p3n1p/2bp1N2/2P5/1N4P1/PPQ2PBP/4R1K1 b - - 0 21,d5c4 b3c5 b7g2 f5e7 g8h8 e7c8,2044,74,96,1064,advantage fork long master masterVsMaster middlegame superGM,https://lichess.org/jrKmRuXJ/black#42
-TT=0;C=0;P=C75Rm,4r1k1/p1qn1r1p/Q3B1p1/p3p3/4P3/1RP1b1P1/5P1P/4R1K1 w - - 0 25,e1e3 d7c5 e6f7 c7f7 a6a5 c5b3,1802,94,74,54,advantage fork long master masterVsMaster middlegame sacrifice superGM,https://lichess.org/qJjAbW90#49
-TT=0;C=0;P=CMJGJ,2Q5/2p3k1/1p4p1/p1p2nP1/P1Pr1K2/8/1P6/8 w - - 17 52,f4e5 d4e4 e5e4 f5d6 e4d5 d6c8 d5c6 c8d6,1970,73,96,794,attraction crushing endgame fork master masterVsMaster sacrifice veryLong,https://lichess.org/dvJdTTBV#103
-TT=0;C=0;P=CiC0P,2r5/1bq2k1p/4pnp1/p1Nnp1Q1/N7/2PB1P2/1P4P1/2K4R b - - 4 26,b7c6 h1h7 f6h7 g5g6 f7f8 c5e6,2016,74,98,385,crushing deflection fork long master masterVsMaster middlegame sacrifice,https://lichess.org/XdvBf6JO/black#52
-TT=0;C=0;P=CkPGZ,R7/5ppk/7p/4n3/1r6/5BP1/1P1R1PKP/1r6 w - - 7 31,a8a2 b1g1 g2g1 e5f3 g1f1 f3d2,1838,75,95,1274,advantage attraction deflection endgame fork long master masterVsMaster sacrifice superGM,https://lichess.org/AbLUyUvh#61
-TT=0;C=0;P=CuHc4,8/8/1k6/4P3/1pB1nP2/1Pb3K1/3p4/3RrR2 w - - 1 50,g3g4 e1d1 f1d1 e4f2 g4g5 f2d1,1832,76,98,711,attraction crushing endgame fork long master masterVsMaster,https://lichess.org/8qxcWukr#99
-TT=0;C=0;P=Dnkpl,8/4R1p1/4n2p/2pNrpkP/2P5/8/5KP1/8 b - - 8 44,g5h5 e7e6 e5e6 d5f4 h5g4 f4e6,1848,75,92,400,advantage attraction endgame fork long master masterVsMaster sacrifice superGM,https://lichess.org/ihCdxlmK/black#88
-TT=0;C=0;P=E0p5Z,qr3rk1/1b1n1pbp/pB4p1/4p1N1/P7/1QP2P2/1P1N2PP/3R1RK1 w - - 1 22,b6c7 b7d5 b3a3 a8a7 g1h1 a7c7,2116,77,85,151,advantage fork long master masterVsMaster middlegame,https://lichess.org/uAZP9oET#43
-TT=0;C=0;P=FNisI,8/4ppkp/5b2/5Rp1/PBQ1K1P1/5P1r/6q1/8 b - - 3 32,h7h5 b4e7 g2b2 e7f6 b2f6 f5f6,1851,75,93,229,crushing endgame fork long master masterVsMaster,https://lichess.org/wYIB76py/black#64
-TT=0;C=0;P=Fevw0,3r2k1/1pp2ppp/pq6/4Q3/8/1P3PN1/1Pb3PP/4R2K b - - 2 23,g7g6 g3h5 g6h5 e5g5 c2g6 g5d8,1971,77,93,204,advantage endgame fork long master masterVsMaster quietMove sacrifice,https://lichess.org/hmalZ3kg/black#46
-TT=0;C=0;P=FjY2p,2rq1r2/p6k/bpn1RPp1/3p1nQp/7P/2N3P1/PP3PB1/3R2K1 b - - 0 22,d8d7 g2d5 c6d4 d1d4 f5d4 e6e7 d7e7 f6e7,2083,76,97,94,advancedPawn crushing fork master masterVsMaster middlegame veryLong,https://lichess.org/yXROzCyj/black#44
-TT=0;C=0;P=GCe92,8/7k/7p/P2q1pp1/3N2n1/3Q4/6P1/4K3 b - - 3 45,h7g6 d3f5 d5f5 d4f5 g6f5 a5a6,2096,75,95,968,advantage endgame fork long master masterVsMaster sacrifice,https://lichess.org/RdmpAjB5/black#90
-TT=0;C=0;P=GOqQK,5q1k/6p1/1pQ4p/8/8/P1P3PP/3nr1B1/3R2K1 w - - 2 34,c6b6 e2g2 g1g2 f8f3 g2h2 f3e2,2067,114,79,45,advantage attraction endgame exposedKing fork long master masterVsMaster sacrifice superGM,https://lichess.org/sULpbYtf#67
-TT=0;C=0;P=GYwMt,r2q1rk1/pppn3p/3pQ1p1/6N1/5P2/2N5/PPP3PP/R5K1 b - - 0 17,g8g7 e6h3 d7f6 g5e6 g7h8 e6d8,2058,74,95,642,crushing fork long master masterVsMaster middlegame,https://lichess.org/cm3ZtmZB/black#34
-TT=0;C=0;P=Hhs3i,r3r3/1pqb1pkp/p3p1p1/2n5/7Q/2P2N2/P1P2PPP/3RRBK1 b - - 1 26,d7c6 h4d4 f7f6 d4c5,1877,77,76,86,advantage fork master masterVsMaster middlegame short superGM,https://lichess.org/YoqM5FwU/black#52
-TT=0;C=0;P=IPWgy,r3r1k1/ppp2p2/3p2pb/3N1qn1/2PPp1n1/1P2P1Pp/PB1N1P1P/3QRRK1 b - - 5 22,a8c8 d1g4 f5g4 d5f6 g8h8 f6g4,1913,76,86,121,advantage attraction fork long master masterVsMaster middlegame sacrifice,https://lichess.org/HLUs90Nl/black#44
-TT=0;C=0;P=IbYHl,r3k1r1/pb1n1p2/4p2p/2P1P2q/1pB1N3/5RB1/PPQ1KPn1/R7 b q - 0 23,d7e5 e4f6 e8e7 f6h5 b7f3 e2f1 g8g3 h5g3,1954,75,93,335,crushing fork master masterVsMaster middlegame veryLong,https://lichess.org/XTzo5rM1/black#46
-TT=0;C=0;P=IoPsN,6R1/ppk2p2/3b3p/5q2/5P2/2N1r2P/PP2Q2K/8 w - - 2 30,c3b5 c7d7 e2e3 d6f4 e3f4 f5f4,1845,101,65,23,advantage defensiveMove endgame fork long master masterVsMaster sacrifice,https://lichess.org/2988xNZb#59
-TT=0;C=0;P=J1xAu,r3r3/3q2k1/pp1P4/2p3p1/P3NnP1/4QP2/1P6/R4RK1 b - - 2 32,d7d6 e4d6 e8e3 d6f5 g7f6 f5e3,1865,75,92,466,crushing exposedKing fork long master masterVsMaster middlegame,https://lichess.org/Bc3jY2tW/black#64
-TT=0;C=0;P=J6J41,5r2/4nrk1/b2p1np1/p1qPp2p/2p1P2P/2N1N1P1/PPR2RK1/4QB2 w - - 3 27,g2h2 c5e3 e1e3 f6g4 h2g1 g4e3,1817,94,85,30,attraction crushing fork long master masterVsMaster middlegame sacrifice,https://lichess.org/OBCthYci#53
-TT=0;C=0;P=KEhz4,5r2/kpp5/pbq5/7p/2N3pP/PQ1R2P1/KPP5/8 b - - 7 34,f8f3 c4e5 c6e8 e5f3 g4f3 d3f3,1839,75,97,1405,crushing endgame fork long master masterVsMaster superGM,https://lichess.org/7xOlsusn/black#68
-TT=0;C=0;P=KMmo8,2r2bk1/5p1p/5p2/p1qN1Q2/1p4P1/2p2P1P/P1R2PK1/8 b - - 3 43,f8g7 f5c8 c5c8 d5e7 g8f8 e7c8,2027,78,90,177,advantage attraction endgame fork long master masterVsMaster sacrifice,https://lichess.org/UP4VYc3Y/black#86
-TT=0;C=0;P=MBNjP,8/5R2/3NP3/P2p4/6k1/5nP1/r7/5K2 w - - 1 52,f7f3 g4f3 f1e1 a2e2 e1d1 e2e6,1904,74,97,1170,crushing endgame fork long master masterVsMaster superGM,https://lichess.org/WBcUp7z9#103
-TT=0;C=0;P=MaUub,r4k2/pp6/7Q/3p4/2q5/8/1PP2rPP/2KR4 b - - 4 25,f8e7 h6e3 e7d6 e3f2,2067,76,86,146,advantage endgame fork master masterVsMaster short,https://lichess.org/0d3mmZ35/black#50
-TT=0;C=0;P=OrJfX,2b2rk1/4Q2p/p5pP/1p1pP3/3P1p2/4q3/PP4RK/8 b - - 5 43,f8f7 e7e8 f7f8 g2g6 h7g6 e8g6 g8h8 g6g7,1872,75,92,207,endgame fork master masterVsMaster mate mateIn4 sacrifice superGM veryLong,https://lichess.org/Xg8DyzA8/black#86
-TT=0;C=0;P=PKjOA,2n2r2/p1P3rk/3NQ1pp/2P2p2/4pP2/q5P1/7P/2R1R1K1 b - - 4 31,g7c7 d6b5 a3c1 e1c1,1970,76,91,258,crushing fork master masterVsMaster middlegame short,https://lichess.org/emQ74UmR/black#62
-TT=0;C=0;P=Pl1YX,8/1p6/p2pnB2/1k2pQP1/4P2q/1P3KN1/1r6/3R4 w - - 21 41,d1d3 e6d4 d3d4 b2b3 f3e2 h4h2 f5f2 b3b2 d4d2 b2d2 e2d2 h2f2,1870,90,70,21,attraction crushing deflection fork master masterVsMaster middlegame sacrifice veryLong,https://lichess.org/WDM4WSky#81
-TT=0;C=0;P=Q0lcv,3q1rk1/5pp1/2p4p/2N5/3P1R2/3r4/6Q1/5RK1 b - - 5 36,d3d4 c5e6 f7e6 f4f8 d8f8 f1f8 g8f8 g2f2 f8e8 f2d4,1831,74,97,1017,attraction crushing fork master masterVsMaster middlegame veryLong,https://lichess.org/NeMox49P/black#72
-TT=0;C=0;P=QojNy,4r1k1/1b3p1p/ppn2qp1/3p4/3P4/1P4P1/PB1Q1PBP/1R4K1 w - - 0 21,g2d5 f6f5 b1e1 e8e1 d2e1 f5d5,1982,74,97,811,advantage fork long master masterVsMaster middlegame,https://lichess.org/Yvx5hYZx#41
-TT=0;C=0;P=QuMHp,4rnk1/1p3pb1/p1np2p1/q2N3p/2P2P2/1P3N1P/PB1Q2P1/3R2K1 b - - 1 21,a5a2 b2g7 a2d2 d5f6 g8g7 f6e8,2069,74,97,1082,crushing fork intermezzo long master masterVsMaster middlegame sacrifice,https://lichess.org/VGKqxcXG/black#42
-TT=0;C=0;P=R5Pr1,5rk1/R4Rpp/8/4b3/p7/5BP1/r4P1P/6K1 b - - 0 28,f8f7 a7a8 e5b8 a8b8 f7f8 f3d5 g8h8 b8f8,2061,77,91,148,backRankMate deflection endgame fork master masterVsMaster mate mateIn4 veryLong,https://lichess.org/0v27ReGI/black#56
-TT=0;C=0;P=R60km,4r3/pp2b2Q/1kp5/2qp4/1P3N2/8/P1P3PP/5R1K b - - 0 26,c5b4 f4d5 c6d5 h7g6 b6a5 g6e8,2084,121,77,37,advantage endgame fork long master masterVsMaster sacrifice,https://lichess.org/EdT9rLL4/black#52
-TT=0;C=0;P=SV7sX,2b1r1k1/2p2r1p/2P3q1/3PB2n/P6R/4N1P1/4P1B1/4Q1K1 w - - 1 36,g2e4 g6g5 e3c4 e8e5 c4e5 g5e5,2006,78,90,108,advantage fork long master masterVsMaster middlegame,https://lichess.org/sdtRd7UP#71
-TT=0;C=0;P=Sk5nA,5k2/2Nb1p2/1q2p3/2bpQp1P/5P2/3B4/p1P3P1/R2K4 w - - 4 40,h5h6 c5d4 e5d4 b6d4,2096,77,96,802,crushing fork master masterVsMaster middlegame short,https://lichess.org/4UjovclJ#79
-TT=0;C=0;P=Sr1zT,2r3k1/5p1p/3p2p1/5qPn/4pP2/1PB5/P4Q1P/5RK1 w - - 3 35,f2d4 f5g4 g1h1 h5g3 h2g3 g4h3 h1g1 h3g3,2023,77,91,645,crushing endgame fork master masterVsMaster sacrifice veryLong,https://lichess.org/A9Mc8M1F#69
-TT=0;C=0;P=TA95C,3Rbk2/ppQn2b1/4p3/2q2r2/4p3/2P5/P1P1BPP1/4K2R w K - 9 29,c7d7 g7c3 e1d1 f5d5 d7d5 e6d5,2026,78,90,101,crushing fork long master masterVsMaster middlegame,https://lichess.org/b0wdhPxd#57
-TT=0;C=0;P=TQQBn,2rk1b2/p4pp1/2nB4/5q1r/8/Q6p/PP3P1P/K2R3R b - - 0 24,f8d6 a3d6 d8e8 h1e1 c6e5 e1e5 f5e5 d6d7 e8f8 d7c8,1855,84,81,33,crushing exposedKing fork master masterVsMaster middlegame veryLong,https://lichess.org/g9xrmVPG/black#48
-TT=0;C=0;P=Tu0xo,6k1/p6p/5rp1/2PQp3/1P3p1P/P1N3Pq/5P2/6K1 b - - 1 39,f6f7 c3e4 f4g3 d5f7 g8f7 e4g5 f7e7 g5h3,2101,75,95,723,attraction crushing endgame fork master masterVsMaster quietMove sacrifice veryLong,https://lichess.org/uz6BsfWb/black#78
-TT=0;C=0;P=UiGFm,1rq3k1/4p2p/3p1ppP/2pPbPP1/4P1Q1/2NrN3/1P4K1/2B2R2 w - - 3 38,f5g6 c8g4 e3g4 d3g3 g2f2 g3g4,1836,75,97,1235,advantage exposedKing fork long master masterVsMaster middlegame,https://lichess.org/BgWDvxVj#75
-TT=0;C=0;P=Vg4jE,5k2/p3pp1p/q1pB1bp1/8/N1P1Q3/1P1r3P/P2rRPP1/1R4K1 b - - 0 24,e7d6 e2d2 d3d2 e4f4 a6a5 f4f6,2027,80,83,43,crushing fork long master masterVsMaster middlegame,https://lichess.org/OpYqWMyx/black#48
-TT=0;C=0;P=VyaVa,r6k/3R4/6Q1/P1P5/2q5/8/5PPP/b4K2 w - - 1 36,f1e1 a1c3 e1d1 c4a4 d1e2 a4d7,2015,81,86,56,crushing endgame fork long master masterVsMaster,https://lichess.org/9IRoAdrz#71
-TT=0;C=0;P=WRt0u,8/2q1kpb1/5Np1/pp2p1Pr/4Bn2/2P5/PP3Q2/1K1R4 b - - 11 44,h5g5 d1d7 c7d7 f6d7,2023,75,95,692,advantage fork master masterVsMaster middlegame short,https://lichess.org/giG8LA0I/black#88
-TT=0;C=0;P=WVUg7,r1b1kb2/1p3p2/p3p1p1/2pPP3/1qBn1NPr/7P/PP3P2/R1BQR1K1 w q - 1 23,c4f1 b4e1 d1e1 d4f3 g1g2 f3e1,1861,74,95,876,advantage attraction fork long master masterVsMaster middlegame sacrifice,https://lichess.org/RJvx6QY5#45
-TT=0;C=0;P=XN5zF,4rrk1/1p3b2/p5p1/3pn3/7q/3B2R1/PP1QNPP1/4R1K1 w - - 4 27,g3h3 h4h3 g2h3 e5f3 g1g2 f3d2,1808,76,90,321,crushing fork long master masterVsMaster middlegame sacrifice,https://lichess.org/r8X2TJcO#53
-TT=0;C=0;P=Y96CX,3r4/pb3pk1/6p1/2p3r1/2N2q1p/2PPRPN1/PP2QPKP/4R3 w - - 2 31,e3e7 b7f3 e2f3 h4h3 g2f1 f4f3,2042,75,95,840,crushing deflection fork long master masterVsMaster middlegame sacrifice superGM,https://lichess.org/2t38CvTu#61
-TT=0;C=0;P=YfUzb,8/5k1R/p7/P5b1/3n2P1/4nP2/5K2/1Q1q4 b - - 1 53,f7e6 b1g6 e6e5 g6g5 e3f5 h7e7 e5d6 g5f6,2107,107,84,37,crushing endgame exposedKing fork master masterVsMaster pin veryLong,https://lichess.org/qLrS2v0n/black#106
-TT=0;C=0;P=b3OAF,r1k5/1R3p2/3p1qp1/3p1p2/n7/5P2/P1P3PP/2K2Q1R w - - 0 29,f1b5 f6g5 c1b1 a4c3 b1b2 c3b5,2099,74,95,742,crushing endgame fork long master masterVsMaster,https://lichess.org/CrEeyHrz#57
-TT=0;C=0;P=cUDCN,r4rk1/bppbq1pp/P1np1n2/1B2p3/4P3/2PQ1N2/3N1PPP/1RB2RK1 b - - 2 17,b7a6 b5c6 d7c6 d3c4 g8h8 c4c6,2098,75,96,452,advantage fork long master masterVsMaster middlegame,https://lichess.org/WmhaMf1R/black#34
-TT=0;C=0;P=cvn5n,r2q1rk1/2p4p/p3p1p1/5n2/1p4Q1/4B2P/PbB2PP1/3RR1K1 b - - 3 20,f5e3 g4e6 g8h8 d1d8,1965,75,99,291,crushing fork master masterVsMaster middlegame short superGM,https://lichess.org/TF8TXY8F/black#40
-TT=0;C=0;P=dNNpX,3qnrk1/pp2ppb1/3p3B/6QR/3rP1b1/2N5/PPP5/2K3R1 b - - 0 20,g4h5 h6g7 d4d1 c3d1,1900,74,95,1212,crushing fork master masterVsMaster middlegame short,https://lichess.org/99yrmiUJ/black#40
+TT=0;C=0;P=06IaP,4r1k1/2qn1ppp/p2p1P2/2pP2P1/P1Pp1R1Q/1r5P/1P4BK/1R6 b - - 0 28,d7e5 g2e4 e5g6 e4g6 f7g6 f6f7 c7f7 f4f7,2078,,,,advancedPawn crushing fork middlegame veryLong,
+TT=0;C=0;P=06OYA,r4rk1/1p1b1ppp/p3p3/PPqpP3/3n4/2NQ4/2P2PPP/R1B2RK1 w - - 1 17,b5b6 c5c3 d3c3 d4e2 g1h1 e2c3,1817,,,,attraction crushing fork long middlegame sacrifice,
+TT=0;C=0;P=06Twx,r1b1k2r/6b1/1np1p2p/pN3pq1/3P4/PQ1BP1P1/1P3PPR/2K4R b kq - 0 20,a5a4 b5c7 e8f7 b3b6,1869,,,,crushing discoveredAttack fork middlegame short,
+TT=0;C=0;P=06Vhm,6k1/2p1n2p/1bn3p1/3p2Pb/2p1p2q/2Q1P3/1B3PBN/5NK1 b - - 1 25,e7f5 c3h8 g8f7 h8f6 f7e8 f6c6,2127,,,,crushing fork long middlegame,
+TT=0;C=0;P=06YkJ,1r3rk1/6p1/pN1q3p/Pp1P2b1/1Bp1bp2/7P/1P1QR1P1/3R2K1 b - - 0 32,f4f3 b4d6 f3e2 d2e2,1865,,,,crushing fork middlegame short,
+TT=0;C=0;P=06xLG,r3k2r/p1p2p2/PpPp1n2/1P1P4/3QPpb1/1N6/1B3KBq/R7 b kq - 1 26,f6h5 d4h8 e8e7 b2f6 h5f6 h8h2,2017,,,,crushing hangingPiece long middlegame,
+TT=0;C=0;P=06xcR,8/1r3ppk/1pN2b1p/1P1PpN2/4P2P/6R1/5PPK/1r6 b - - 8 34,b1b5 f5d6 b5d5 e4d5,2032,,,,advantage endgame fork short,
+TT=0;C=0;P=06ydp,3r2k1/1b3pbp/1N4p1/3P1p2/1Q6/6P1/qP3PBP/4R1K1 w - - 1 34,b4c4 a2a5 b2b4 a5b6,2040,,,,advantage fork master middlegame short,
+TT=0;C=0;P=06zlu,1kr4r/1p1n1p2/p4p2/3p1P2/1Q1N2P1/1P5P/PK2R1q1/3R4 b - - 17 33,g2h3 b4d6 b8a8 d6d7 h3c3 b2b1,1827,,,,crushing fork long middlegame,
+TT=0;C=0;P=07AeA,7k/6p1/2Bp3p/3P3q/4Q1r1/1r6/3R1P2/4KR2 w - - 1 42,e4e8 h5e8 c6e8 g4e4 d2e2 b3b1 e1d2 b1b2,2023,,,,crushing fork middlegame veryLong,
+TT=0;C=0;P=07ESM,r1b3k1/1p4bp/6n1/3Pp2q/4P1p1/P2Q1p2/1P1N1BPP/2R2RK1 w - - 0 25,g2f3 g6f4 f3g4 h5g4 d3g3 f4e2 g1h1 e2g3,1890,,,,crushing fork master middlegame veryLong,
+TT=0;C=0;P=07JmE,4rrk1/1b1p1pp1/p6p/1p4q1/2nN2R1/2P4P/PPB2QP1/R6K b - - 4 27,g5e3 g4g7 g8g7 d4f5 g7g8 f5e3,2020,,,,advantage attraction fork long middlegame sacrifice,
+TT=0;C=0;P=07REZ,1k1r1bnr/pbp1q1p1/1p5p/4P3/QpP5/3PB1P1/P5BP/RN1R2K1 w - - 6 19,a2a3 e7e5 e3b6 c7b6,1921,,,,crushing fork middlegame short,
+TT=0;C=0;P=07aAH,2q3k1/p4pp1/8/1Q4Pp/5P2/4bR1b/PP2P2K/8 b - - 1 29,c8g4 b5e8 g8h7 e8e4,2091,,,,crushing endgame fork short,
+TT=0;C=0;P=07dzz,5rk1/ppq2pp1/7p/2bQN3/6P1/2B4P/PPb2P2/4R1K1 w - - 0 24,e5d7 c7g3 d5g2 c5f2,1945,,,,crushing kingsideAttack master masterVsMaster middlegame pin short,
+TT=0;C=0;P=07iSx,1n2k3/1bpp2rB/1p1bp2p/2q5/p3NP2/8/PPP3PP/R2Q1R1K w - - 5 18,e4c5 b7g2 h1g1 d6c5 f1f2 g2f3 g1f1 f3d1,2138,,,,crushing discoveredAttack fork intermezzo middlegame pin veryLong,
+TT=0;C=0;P=08DLo,4k3/2q3p1/7p/3pP1bP/1p6/pP1Q4/Pr2N3/K4R2 w - - 0 37,d3d5 b2a2 a1a2 c7c2 a2a1 c2b2,1867,,,,attraction endgame fork long mate mateIn3 sacrifice,
+TT=0;C=0;P=08Tv6,r1bq1n1r/pp1k1pNp/2pbpn2/6B1/B2P4/8/PPP2PPP/R2QK1NR w KQ - 3 11,g7h5 d8a5 g5d2 a5h5 d1h5 f6h5,1987,,,,advantage fork long opening,
+TT=0;C=0;P=097hI,r1b2rk1/1ppp1ppp/p7/4P3/B3n2q/2bQ4/PPP2PPP/R1B2RK1 w - - 0 12,b2c3 e4c5 d3d4 h4d4 c3d4 c5a4,1800,,,,advantage capturingDefender fork long middlegame,
+TT=0;C=0;P=099Q6,5k2/ppRr4/4R1pp/8/8/1P3P1P/P4PBK/3q4 w - - 2 37,e6f6 f8g7 c7d7 d1d7 f6g6 g7g6,2134,,,,crushing defensiveMove endgame long master masterVsMaster,
+TT=0;C=0;P=09C9J,r1b3k1/pp4rp/2p3q1/3pP2n/2P2p2/2BRPPP1/PP2NK1Q/5R2 w - - 0 23,d3d4 f4g3 e2g3 g6g3 h2g3 h5g3,2136,,,,advantage fork long middlegame,
+TT=0;C=0;P=09Yot,r1bqk3/pp3pb1/3pp1p1/2p1n1B1/4P1n1/2PP4/PP2BP1K/RN1QNR2 w q - 1 13,h2g2 d8g5 e2g4 e5g4,1843,,,,crushing hangingPiece opening short,
+TT=0;C=0;P=09bY8,3r1rk1/ppp2p2/2n5/8/4N1bP/3q4/PP4n1/R1Q1R2K b - - 5 25,d3e4 e1e4 d8d1 h1g2 g4f3 g2f3,2047,,,,advantage hangingPiece long middlegame,
+TT=0;C=0;P=09cNZ,1k6/1rr1pp1p/6p1/qR1pP3/8/3Q3P/5PP1/1R4K1 b - - 1 27,c7c1 g1h2 b7b5 b1b5 a5b5 d3b5,1949,,,,crushing defensiveMove endgame exposedKing fork long,
+TT=0;C=0;P=09frX,3r4/4R1b1/1R2Bp2/7k/4P1pN/P1r5/2n2P1P/2B3K1 w - - 2 23,e7g7 d8d1 g1g2 c2e1 g2f1 e1f3 f1e2 d1e1,2043,,,,discoveredAttack fork hookMate mate mateIn4 middlegame veryLong,
+TT=0;C=0;P=09huL,8/5pkp/1Bp3p1/8/5P1P/2n3PK/4q3/Q7 b - - 2 51,g7h6 a1c3 e2f1 h3h2,1894,,,,advantage endgame hangingPiece short,
+TT=0;C=0;P=09iHB,r5k1/pp4pp/6q1/3pPr2/2p5/5N2/PP1Q2K1/3R1R2 w - - 4 24,g2f2 f5f3 f2f3 a8f8,2018,,,,attraction crushing master masterVsMaster middlegame sacrifice short,
+TT=0;C=0;P=09o3s,3r2k1/1p3ppp/p2Nr3/2pQ4/4P1q1/4K3/PP3PP1/R1BR4 w - - 5 24,d5c5 g4d1 c1d2 d1a1,1917,,,,crushing hangingPiece middlegame short,
+TT=0;C=0;P=0AOu4,r3r1k1/p4pp1/2p2nn1/3p1Nq1/3P4/7Q/P4PPP/1R1BR1K1 w - - 7 25,d1c2 e8e1 b1e1 g5d2 h3e3 d2c2,2104,,,,crushing fork long middlegame,
+TT=0;C=0;P=0AP1F,2q1r1k1/5pp1/8/p2B1N2/1p4Pp/8/PB3PP1/3R2K1 b - - 1 28,g7g6 d5f7 g8f7 f5d6 f7e7 d6c8,1950,,,,advantage attraction endgame fork long sacrifice,
+TT=0;C=0;P=0APqD,3rk1nr/2Qp1pbp/4p1p1/2p3N1/B3P3/2q5/P4PPP/R4RK1 b k - 5 20,g7h6 g5f7 e8f7 c7d8,2027,,,,advantage attackingF2F7 deflection fork middlegame short,
+TT=0;C=0;P=0AZNv,6k1/2r3pp/5qn1/1Q2b3/1P3p2/P4N1P/1P3PP1/3R2K1 b - - 0 28,e5b2 b5b8 g6f8 b8c7,1825,,,,crushing fork middlegame short,
+TT=0;C=0;P=0Acau,8/5p1k/1pQ4p/p2P2p1/Pb1B1n2/1B3P1P/6PK/4q3 b - - 6 34,f4e2 b3c2 h7g8 c6e8 b4f8 c2h7 g8h7 e8f7 f8g7 f7g7,2024,,,,attraction deflection endgame fork mate mateIn5 sacrifice veryLong,
+TT=0;C=0;P=0AjBq,2b2rk1/2q3p1/n1p2b1p/1pP1Np2/1P1Pp3/2N3P1/2B3PP/1Q2R1K1 w - - 2 24,e5g6 f6d4 g1h1 d4c3 c2b3 f8f7,1916,,,,crushing defensiveMove fork long middlegame,
+TT=0;C=0;P=0AkKC,5r2/4Npkn/pqbp2p1/4p1b1/2P5/4NPP1/PP2PK2/R2Q3R w - - 2 25,h1h7 g7h7 d1b3 b6b3 a2b3 g5e7,1949,,,,advantage hangingPiece long middlegame,
+TT=0;C=0;P=0Alp4,r4rk1/1p2q1pp/p4n2/4n3/2P1p1b1/1P4P1/P1N1QPBP/R3NRK1 w - - 2 18,f2f3 e4f3 e1f3 e5f3 g2f3 e7e2 f3e2 g4e2,2033,,,,advantage fork middlegame veryLong xRayAttack,
+TT=0;C=0;P=0ApbD,2r3k1/p5p1/2q5/6B1/3n4/3Q3P/P1p2PP1/4RK2 w - - 0 30,d3d4 c6b5 f1g1 b5g5,1875,,,,advantage endgame fork short,
+TT=0;C=0;P=0B6zI,r3k2r/ppp2ppp/2qpb3/2bN4/4P3/1QB5/PP3PPP/R4RK1 b kq - 0 15,e8g8 d5e7 g8h8 c3g7,2012,,,,advantage fork middlegame short,
+TT=0;C=0;P=0B9f6,2r2rk1/1Q3p1p/3p4/3B4/p2P1R1q/P3P2P/3n2PK/8 b - - 0 33,h4h5 d5f7 f8f7 b7c8,1924,,,,crushing deflection fork middlegame short,
+TT=0;C=0;P=0BN01,r2q1r1k/ppp1b1pp/3pBn2/4p3/3nP3/2NPB3/PPPQ1PPP/R3K2R w KQ - 5 11,c3d5 d4e6 d5e7 d8e7,1942,,,,advantage hangingPiece middlegame short,
+TT=0;C=0;P=0BTPz,r5k1/p1pb2pp/1pp5/3nP1N1/3Q2qB/2P5/PP4PP/5RK1 w - - 2 20,d4d3 g4h4 d3f3 d5f6,2089,,,,advantage defensiveMove hangingPiece middlegame short,
+TT=0;C=0;P=0BWZK,1n1rrq1k/7p/5pbN/pp1B4/2pP1Q2/P1N4P/1P3P1K/6R1 b - - 2 33,f8d6 f4d6 d8d6 g1g6 h7g6 h6f7 h8g7 f7d6,1975,,,,advantage fork middlegame sacrifice veryLong,
+TT=0;C=0;P=0BfDy,r1b2rk1/ppp2ppp/1b1p2qn/n5N1/2BPPR1Q/2P5/PP4PP/RNB3K1 w - - 3 12,g5f7 a5c4 f7h6 g7h6 f4f8 g8f8,2038,,,,advantage hangingPiece long opening,
+TT=0;C=0;P=0C7U8,2kn2nr/ppp2pQp/4p3/8/1b2PB2/2N5/PPP2q1P/2K2B1R w - - 0 13,g7h8 f2f4 c1b1 f4f3 f1g2 f3g2,2089,,,,advantage hangingPiece long middlegame,
+TT=0;C=0;P=0CN5u,r6k/p4Qpp/1q4n1/2B5/1P6/2b4P/P4PP1/R5K1 b - - 0 26,b6b5 f7f3 a8g8 f3c3,1959,,,,crushing fork middlegame short,
+TT=0;C=0;P=0CRwi,r2qk2r/ppp2ppp/2nbpn2/3pNb2/3P1B2/P3P3/1PPN1PPP/R2QKB1R b KQkq - 3 7,c6e5 d4e5 g7g5 f4g3 d6e7 e5f6,1910,,,,advantage fork long opening quietMove,
+TT=0;C=0;P=0CYXe,r1bq1r1k/2p1nppp/p2P4/1p2p1B1/1b2P3/1BN5/PP3PPP/R2Q1RK1 b - - 0 14,c7d6 g5e7 d8e7 c3d5 e7g5 d5b4,2116,,,,advantage fork long middlegame,
+TT=0;C=0;P=0CbQn,rn1q1rk1/p1p2p2/1p2p1pp/4P2P/4Q3/P1nP1N2/1P3PP1/R3K2R w KQ - 0 16,e4a8 d8d3 b2c3 d3c3 e1e2 b8c6 a8f8 g8f8,1957,,,,advantage fork middlegame veryLong,
+TT=0;C=0;P=0ChqP,r1r3k1/p2q1ppp/2n1p3/1B1n4/3P1B2/2Q1PP2/5P1P/R1R3K1 w - - 3 19,b5c6 d5c3 c6d7 c3e2 g1g2 c8c1 a1c1 e2c1,1853,,,,advantage discoveredAttack fork middlegame veryLong,
+TT=0;C=0;P=0CljN,r5k1/6p1/6qp/3pB2R/P2Q4/8/5P2/5K2 b - - 1 35,g6h5 d4d5 g8h7 d5e4 h5g6 e4a8,2096,,,,crushing endgame fork long,
+TT=0;C=0;P=0DGk8,4Q3/2B3kp/5bp1/1p3b2/1N1q4/P6P/5PP1/6K1 w - - 4 35,b4c6 d4d1 g1h2 f5d7 e8e4 d1c1,2145,,,,advantage endgame long master masterVsMaster,
+TT=0;C=0;P=0DNDW,r3rbk1/5p1p/p5p1/4n3/4NQ2/6Pq/1P3P1P/R1B2RK1 b - - 5 28,e5g4 f4g4 h3g4 e4f6 g8h8 f6g4,1804,,,,advantage attraction fork long middlegame sacrifice,
+TT=0;C=0;P=0DRqu,5rk1/p2rb1pp/2Q5/3p1R2/5P2/1P5P/P2q2B1/5R1K b - - 0 27,d7d8 c6e6 g8h8 e6e7,1968,,,,crushing fork middlegame short,
+TT=0;C=0;P=0Dj9u,rnb1k2r/1p3ppp/p7/8/3qn3/4B2P/P1Q2PP1/RN2KB1R b KQkq - 1 12,d4a1 c2c8 e8e7 c8b7 b8d7 b7e4,2123,,,,advantage fork hangingPiece long opening,
+TT=0;C=0;P=0DjLB,2b2k1Q/2b5/2B1p3/2P3q1/6n1/7p/5P2/6RK b - - 1 29,f8e7 h8e8 e7f6 e8f8,1911,,,,crushing fork middlegame short,
+TT=0;C=0;P=0Dq9x,4r3/1Q4bk/2pq3p/p1r5/4pp1N/P6P/1PP2PP1/4RR1K b - - 0 30,c5c2 b7g7 h7g7 h4f5 g7g8 f5d6,1835,,,,advantage attraction fork long middlegame sacrifice,
+TT=0;C=0;P=0Dwaa,r2qkbQ1/ppp1pr2/2n5/3p4/3P4/5N1B/PPb1PP2/RNB1K3 b Qq - 1 12,c2f5 h3f5 f7f5 g8g6 e8d7 g6f5,1811,,,,advantage attraction fork long opening,
+TT=0;C=0;P=0EAuG,r2qkb1r/pp1n1ppp/3pb3/1B2pN2/4P3/5P2/PPP3PP/R1BQK2R w KQkq - 4 12,f5d6 f8d6 d1d6 d8a5 b2b4 a5b5 c1g5 d7f6,1928,,,,advantage exposedKing fork opening veryLong,
+TT=0;C=0;P=0EFEY,3r1qk1/pb4pp/4p2r/2p1N3/2PnR3/1P5P/P1BQ1PP1/R5K1 w - - 3 25,e4f4 f8f4 d2f4 d4e2 g1h2 e2f4,1868,,,,attraction crushing fork long middlegame sacrifice,
+TT=0;C=0;P=0EMXo,r1bqk2r/pppnppbp/2n3p1/4P1N1/2B5/8/PPP1QPPP/RNB1K2R b KQkq - 2 8,c6e5 c4f7 e5f7 g5e6 d7e5 e6d8,1970,,,,advantage attackingF2F7 fork long opening sacrifice trappedPiece,
+TT=0;C=0;P=0EP86,5rk1/prp3np/2p3p1/3pP3/1qbR4/1BN5/PPP2QPP/2K1R3 w - - 0 20,f2h4 g7f5 d4c4 f5h4 c4b4 b7b4,2127,,,,advantage fork long middlegame,
+TT=0;C=0;P=0Eg9P,1Q6/8/8/8/5nN1/P4K2/3k4/5q2 w - - 2 71,g4f2 f1g2 f3f4 g2h2 f4e4 h2b8,2029,,,,crushing endgame exposedKing fork long sacrifice skewer,
+TT=0;C=0;P=0Ek8D,1k5b/ppp1Qq2/1n4bp/1P1p1rp1/P7/2Pn1PB1/3N2PP/R3R1K1 b - - 2 29,d3e1 g3c7 b8a8 e7d8 b6c8 d8c8,1948,,,,fork long mate mateIn3 middlegame,
+TT=0;C=0;P=0FGc3,2b5/6kp/1R4p1/2P5/5P2/4n3/B1r4P/3R2K1 w - - 1 34,d1d8 c2g2 g1h1 g2a2,1961,,,,advantage endgame fork short,
+TT=0;C=0;P=0FLJt,r5k1/4bppp/1q1p4/1Pn1p3/1BQpP3/8/5PPP/1R1R2K1 b - - 0 27,c5e4 c4d5 a8c8 d5e4,1823,,,,advantage fork middlegame short,
+TT=0;C=0;P=0FNVQ,rn3rk1/p1q3pp/1p3n2/3p1p2/P2PpN2/Q1PbP1PP/3B1PB1/1R2K2R b K - 4 17,d3b1 a3f8 g8f8 f4e6 f8e8 e6c7,1879,,,,advantage attraction fork long middlegame sacrifice,
+TT=0;C=0;P=0FRXk,2rr4/2q1kp2/p3pNp1/1p1P2Pp/1n5P/4QP2/PP6/1K1R2NR w - - 1 26,g1e2 c7c2 b1a1 c2d1 h1d1 b4c2 a1b1 c2e3,1868,,,,crushing fork middlegame sacrifice veryLong,
+TT=0;C=0;P=0G2yN,r4rk1/4b1pp/2pppn1P/2p5/q1P1PB2/1N1P4/PP2Q1P1/1K1R3R w - - 1 21,h6g7 a4a2 b1c2 f8b8,1815,,,,advantage fork middlegame short,
+TT=0;C=0;P=0GIFn,r2q1k1r/ppp2Pp1/8/8/5N2/3P2pP/PP2PbB1/1RB1nQ1K b - - 3 18,e1g2 f4e6 f8f7 e6d8,1932,,,,crushing fork middlegame short,
+TT=0;C=0;P=0GTCx,r1b1k1nN/4p2p/p5p1/1p6/4Pq2/P1NR3P/1PP2PP1/1K5R b q - 2 18,f4e5 d3d8 e8d8 h8f7 d8e8 f7e5,1819,,,,advantage attraction fork long middlegame sacrifice,
+TT=0;C=0;P=0GWAi,r5k1/1p2b1pp/p2pq3/4pN2/1P6/P2Q4/6PP/5RK1 b - - 2 27,a8c8 d3d5 e6d5 f5e7 g8h8 e7d5,2039,,,,advantage attraction deflection endgame fork long sacrifice,
+TT=0;C=0;P=0GX8D,5k2/4r1bp/4P3/5pP1/8/pP1P4/N7/1K2R3 w - - 2 44,a2b4 g7c3 e1f1 c3b4,1867,,,,advantage endgame fork short,
+TT=0;C=0;P=0Gdmy,rnb3k1/p1p3pp/1q3n2/7Q/2P5/3P4/PP3RPP/R1B3K1 w - - 3 15,h5e5 b6f2 g1f2 f6g4 f2g3 g4e5,1904,,,,attraction crushing fork long middlegame sacrifice,
+TT=0;C=0;P=0H7Ku,r2r2k1/p3bppp/1qp5/4B1PP/2p1P3/1P1P4/P2K1PQ1/R6R w - - 0 24,b3c4 b6a5 d2e2 a5e5,2049,,,,advantage fork middlegame short,
+TT=0;C=0;P=0HLZI,k3r3/p2q4/Pp1B4/1N1n2p1/4p2p/1Q2Pr1P/5PK1/7R b - - 1 42,d7f7 b3d5 f7d5 b5c7 a8b8 c7d5,1833,,,,advantage attraction discoveredAttack fork long middlegame sacrifice,
+TT=0;C=0;P=0HRG8,q1r3k1/4B1bp/2Np2p1/1p6/1P6/3P3P/6Q1/5RK1 w - - 1 32,c6a5 a8a7 d3d4 a7e7,2077,,,,advantage fork middlegame short,
+TT=0;C=0;P=0HUAi,2kr3r/1pp2pp1/p1bq1n1p/3p4/3N3P/2PBP3/PPQ2PP1/2KR3R b - - 5 17,f6g4 d4c6 d6c6 d3f5 c8b8 f5g4,2061,,,,advantage fork long middlegame,
+TT=0;C=0;P=0IYOy,3r2k1/p1p3p1/2p2pP1/2B5/1P5N/P4RQ1/6K1/2qr4 w - - 0 37,g3c7 c1g5 c7g3 d8d2 c5f2 d2f2 f3f2 d1g1 g2g1 g5g3,2107,,,,advantage attraction deflection exposedKing fork middlegame pin sacrifice veryLong,
+TT=0;C=0;P=0Inj5,2rq2r1/p2n4/2b1pk2/2pp1pN1/5P1Q/PP2P3/2P3PP/R4RK1 b - - 2 21,f6e7 h4h7 e7d6 g5f7 d6c7 f7d8,2041,,,,crushing fork long middlegame,
+TT=0;C=0;P=0Iwbx,rnb1k2r/pp2bppp/2p5/3q4/3P1B2/5N2/PPP3PP/R2QKB1R w KQkq - 0 9,b2b3 d5e4 f1e2 e4f4,1829,,,,advantage fork opening short,
+TT=0;C=0;P=0Iyt0,r1b3k1/p4B1p/6p1/2p1b3/4P1Pq/2N5/PPP3P1/R2Q2K1 b - - 0 17,g8f7 d1d5 f7g7 d5e5,1977,,,,crushing fork middlegame short,
+TT=0;C=0;P=0JIyx,1k3r2/1p6/3P4/2N3p1/1q6/p2P2p1/6Qb/2RK4 b - - 3 35,a3a2 c5d7 b8a7 g2a2 b4a5 a2a5,2002,,,,anastasiaMate endgame fork long mate mateIn3,
+TT=0;C=0;P=0JbQy,r5k1/p1p2qb1/2Pp2pp/3R1p2/1P3B2/5nPP/P1Q2P2/3R3K w - - 4 35,h1g2 f7d5 d1d5 f3e1 g2f1 e1c2,1937,,,,advantage fork long middlegame sacrifice,
+TT=0;C=0;P=0Jjg3,8/pp1k2p1/2p1p1p1/4P1N1/5PP1/P3n3/1PP4r/2K3R1 w - - 3 26,g1g3 h2h1 c1d2 e3f1 d2e2 f1g3,1871,,,,crushing endgame fork long,
+TT=0;C=0;P=0LU3v,8/6p1/5k1p/R4prP/5KP1/5P2/8/8 b - - 13 57,f5g4 a5g5 h6g5 f4g4 f6e5 g4g5,1919,,,,crushing endgame long master masterVsMaster rookEndgame zugzwang,
+TT=0;C=0;P=0M8qe,8/1p4rk/p3R2b/P2pP3/3B1Ppp/2P4P/q7/3Q3K w - - 0 41,f4f5 h6f4 d4g1 d5d4 e6d6 f4e5 d6d4 e5d4,2148,,,,crushing endgame master masterVsMaster veryLong,
+TT=0;C=0;P=0RjH9,8/5p2/2b1k1pP/1p6/1Pp1PK1P/2N2n2/2P5/8 b - - 0 39,f3e5 h6h7 g6g5 f4g5,1921,,,,advancedPawn crushing endgame master masterVsMaster short superGM,
+TT=0;C=0;P=0Rsvk,6k1/6p1/4p2p/3qP2P/2p5/P2rQ1P1/5P1K/2R5 w - - 5 39,e3f4 d3f3 c1c4 f3f4,2041,,,,crushing endgame master masterVsMaster short,
+TT=0;C=0;P=0UNw7,r2r4/ppk1qp1p/2p5/2n1b3/5NQP/2PB4/PP4K1/R1B1R3 b - - 0 28,c5d3 f4d3 d8d3 e1e5 e7e5 c1f4,2001,,,,advantage long master masterVsMaster middlegame pin sacrifice superGM,
+TT=0;C=0;P=0aFn0,4rrk1/3q1pp1/2p3pn/pp2P3/1b5R/1P1B2Q1/1BP3PP/5R1K b - - 4 36,b4e7 h4h6 g7h6 d3g6,2107,,,,advantage master masterVsMaster middlegame short,
+TT=0;C=0;P=0aT73,r3qrk1/pb1pb1pp/1p2p3/4P3/4Nn2/2BB4/PP2QPPP/R4RK1 w - - 1 17,e2e3 e8g6 e3f4 f8f4,1900,,,,crushing master masterVsMaster middlegame short,
+TT=0;C=0;P=0k93m,6k1/1R5p/p3Pp1r/8/5P1p/8/1P6/6K1 b - - 0 39,f6f5 b7b8 g8g7 e6e7,1816,,,,advancedPawn crushing endgame master masterVsMaster rookEndgame short,
+TT=0;C=0;P=0n1i4,4b3/6nk/p2R2pp/4P3/P2p1PP1/2Q2K2/1P2B3/6q1 w - - 0 41,c3d4 e8c6 d6c6 g1d4,1829,,,,crushing deflection endgame master masterVsMaster short,
+TT=0;C=0;P=0rtHG,rbb1r1k1/1pq2pp1/p4n1p/2P1N3/1P2B3/P7/1B2QPPP/3R1RK1 b - - 0 19,e8e5 b2e5 c7e5 d1d8,1822,,,,crushing kingsideAttack master masterVsMaster middlegame short,
+TT=0;C=0;P=0xA2k,4b3/3k2p1/1q2p1p1/6Q1/1pB1P3/pPbN1P2/P1P5/1K6 b - - 8 34,b6d4 c4b5 d7c8 b5e8,1997,,,,crushing deflection endgame master masterVsMaster short skewer superGM,
+TT=0;C=0;P=0yBCG,3k4/5R2/3Bp3/p1KpPbP1/5P1r/P7/8/8 b - - 2 46,h4f4 c5c6 f4c4 d6c5,2000,,,,crushing defensiveMove endgame master masterVsMaster short,
+TT=0;C=0;P=12pKv,2r1kb1r/4pp2/p2Q1n1p/1p1N1qp1/4R3/5PB1/PPP2P1P/2KR4 b k - 0 19,f6e4 d5c7 c8c7 d6d8,1949,,,,master masterVsMaster mate mateIn2 middlegame sacrifice short,
+TT=0;C=0;P=16hgq,r4rk1/p5pp/1np1Pp2/8/5B2/6Q1/2P1q2P/2KR2R1 b - - 1 25,g7g6 g3g6 h7g6 g1g6 g8h8 g6h6 h8g7 d1g1 e2g4 g1g4,2010,,,,master masterVsMaster mate mateIn5 middlegame sacrifice veryLong,
+TT=0;C=0;P=1AlNk,2q4r/3n4/p1r2n1p/2b2kp1/5N2/7Q/PP3P1P/R3R1K1 b - - 1 30,f6g4 h3d3 f5f4 d3e4,1898,,,,master masterVsMaster mate mateIn2 middlegame sacrifice short,
+TT=0;C=0;P=1DqfK,8/1p3pk1/3N4/p1P2PP1/P7/1r6/6K1/8 b - - 0 48,b7b6 c5c6 b3c3 c6c7,1998,,,,advancedPawn crushing endgame master masterVsMaster short superGM,

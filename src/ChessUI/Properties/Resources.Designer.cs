@@ -148,6 +148,16 @@ namespace ChessPuzzlePecker.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Campephilus_principalisAYP026B {
+            get {
+                object obj = ResourceManager.GetObject("Campephilus_principalisAYP026B", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Abbrechen.
         /// </summary>
         internal static string Cancel {

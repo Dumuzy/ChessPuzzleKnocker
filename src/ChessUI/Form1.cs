@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
@@ -8,14 +7,12 @@ using System.Linq;
 using System.Media;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
+using AwiUtils;
+using ChessPuzzlePecker;
+using ChessPuzzlePecker.Properties;
 using ChessSharp;
 using ChessSharp.Pieces;
 using ChessSharp.SquareData;
-using AwiUtils;
-using System.Net;
-using ChessPuzzlePecker.Properties;
-using System.CodeDom;
-using System.Text;
 
 namespace ChessUI
 {
@@ -562,17 +559,11 @@ namespace ChessUI
 
         private void btAbout_Click(object sender, EventArgs e)
         {
-            var t = $@"
-ChessPuzzlePecker
-A chess puzzle training program inspired by the Woodpecker method.
-See on GitHub  https://github.com/Dumuzy/ChessPuzzlePecker.
-Special thanks to https://lichess.org/, from where all the puzzle data is coming.
-You could download more puzzle data from there: 
-https://database.lichess.org/lichess_db_puzzle.csv.bz2 
-                    
-Greetings to http://schachclub-ittersbach.de/.
-                    ";
-            MessageBox.Show(t, "ChessPuzzlePecker");
+
+            // MessageBox.Show(t, "ChessPuzzlePecker");
+
+            new AboutBox().ShowDialog();
+
         }
 
         private void cbLanguage_SelectedIndexChanged(object sender, EventArgs e)

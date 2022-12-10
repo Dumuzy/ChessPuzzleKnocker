@@ -117,45 +117,39 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="About" xml:space="preserve">
-    <value>Über</value>
-  </data>
-  <data name="Bishop" xml:space="preserve">
-    <value>Läufer</value>
-  </data>
-  <data name="Black" xml:space="preserve">
-    <value>Schwarz</value>
-  </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="BlackBishop" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\BlackBishop.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="BlackKing" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\BlackKing.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="BlackKnight" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\BlackKnight.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="BlackPawn" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\BlackPawn.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="BlackQueen" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\BlackQueen.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="BlackRook" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\BlackRook.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Cancel" xml:space="preserve">
-    <value>Abbrechen</value>
-  </data>
-  <data name="Correct!" xml:space="preserve">
-    <value>Korrekt!</value>
+  <data name="Lower puzzle rating" xml:space="preserve">
+    <value>Untergrenze Rating</value>
   </data>
   <data name="Create a puzzle set" xml:space="preserve">
     <value>Neuer Puzzle-Satz</value>
   </data>
-  <data name="Create Puzzle Set" xml:space="preserve">
-    <value>Neuer Puzzle-Satz</value>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="WhiteRook" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\WhiteRook.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="WhiteQueen" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\WhiteQueen.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Knight" xml:space="preserve">
+    <value>Springer</value>
+  </data>
+  <data name="Correct!" xml:space="preserve">
+    <value>Korrekt!</value>
+  </data>
+  <data name="Turn board" xml:space="preserve">
+    <value>Drehe Brett</value>
+  </data>
+  <data name="Wrong!" xml:space="preserve">
+    <value>Falsch!</value>
+  </data>
+  <data name="Round" xml:space="preserve">
+    <value>Runde</value>
+  </data>
+  <data name="WhiteKnight" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\WhiteKnight.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BlackQueen" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BlackQueen.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Filter for" xml:space="preserve">
     <value>Filter</value>
@@ -163,73 +157,82 @@
   <data name="Help" xml:space="preserve">
     <value>Hilfe</value>
   </data>
-  <data name="Hint" xml:space="preserve">
-    <value>Tip</value>
+  <data name="BlackKnight" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BlackKnight.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="King" xml:space="preserve">
     <value>König</value>
   </data>
-  <data name="Knight" xml:space="preserve">
-    <value>Springer</value>
-  </data>
-  <data name="Lower puzzle rating" xml:space="preserve">
-    <value>Untergrenze Rating</value>
-  </data>
-  <data name="Name of new puzzle set" xml:space="preserve">
-    <value>Name des neuen Satzes</value>
-  </data>
-  <data name="Next" xml:space="preserve">
-    <value>Nächstes</value>
-  </data>
   <data name="Number of puzzles" xml:space="preserve">
     <value>Anzahl der Puzzles</value>
   </data>
-  <data name="Pawn" xml:space="preserve">
-    <value>Bauer</value>
+  <data name="BlackKing" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BlackKing.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Promote to" xml:space="preserve">
-    <value>Umwandeln in</value>
+  <data name="Bishop" xml:space="preserve">
+    <value>Läufer</value>
   </data>
-  <data name="Queen" xml:space="preserve">
-    <value>Dame</value>
+  <data name="Black" xml:space="preserve">
+    <value>Schwarz</value>
   </data>
-  <data name="Rook" xml:space="preserve">
-    <value>Turm</value>
-  </data>
-  <data name="Round" xml:space="preserve">
-    <value>Runde</value>
-  </data>
-  <data name="Start at number" xml:space="preserve">
-    <value>Starte bei Nummer</value>
-  </data>
-  <data name="Turn board" xml:space="preserve">
-    <value>Drehe Brett</value>
+  <data name="Hint" xml:space="preserve">
+    <value>Tip</value>
   </data>
   <data name="Upper puzzle rating" xml:space="preserve">
     <value>Obergrenze Rating</value>
   </data>
-  <data name="White" xml:space="preserve">
-    <value>Weiß</value>
-  </data>
   <data name="WhiteBishop" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\WhiteBishop.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="WhiteKing" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\WhiteKing.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="WhiteKnight" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\WhiteKnight.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="WhitePawn" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\WhitePawn.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="WhiteQueen" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\WhiteQueen.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Pawn" xml:space="preserve">
+    <value>Bauer</value>
   </data>
-  <data name="WhiteRook" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\WhiteRook.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Cancel" xml:space="preserve">
+    <value>Abbrechen</value>
   </data>
-  <data name="Wrong!" xml:space="preserve">
-    <value>Falsch!</value>
+  <data name="About" xml:space="preserve">
+    <value>Über</value>
+  </data>
+  <data name="Promote to" xml:space="preserve">
+    <value>Umwandeln in</value>
+  </data>
+  <data name="Rook" xml:space="preserve">
+    <value>Turm</value>
+  </data>
+  <data name="Create Puzzle Set" xml:space="preserve">
+    <value>Neuer Puzzle-Satz</value>
+  </data>
+  <data name="Next" xml:space="preserve">
+    <value>Nächstes</value>
+  </data>
+  <data name="BlackRook" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BlackRook.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="White" xml:space="preserve">
+    <value>Weiß</value>
+  </data>
+  <data name="Queen" xml:space="preserve">
+    <value>Dame</value>
+  </data>
+  <data name="BlackBishop" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BlackBishop.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="WhiteKing" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\WhiteKing.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Name of new puzzle set" xml:space="preserve">
+    <value>Name des neuen Satzes</value>
+  </data>
+  <data name="BlackPawn" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BlackPawn.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Start at number" xml:space="preserve">
+    <value>Starte bei Nummer</value>
+  </data>
+  <data name="Campephilus_principalisAYP026B" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Campephilus_principalisAYP026B.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

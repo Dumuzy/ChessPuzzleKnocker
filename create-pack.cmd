@@ -1,6 +1,8 @@
-
+set vers=1.0.1
 set temp0=C:\tmp\cpp\
-set tempdir=%temp0%ChessPuzzlePecker
+set packname=CPPecker_%vers%
+set tempdir=%temp0%%packname%
+
 
 
 md %tempdir%
@@ -18,10 +20,11 @@ xcopy *.json %tempdir%
 
 cd %tempdir%\..
 
-7za a -tzip ChessPuzzlePecker ChessPuzzlePecker
+7za a -tzip cpp  %packname%
+rename cpp.zip %packname%.zip
 
 del /Q %tempdir%\*.*
 rd %tempdir%
 
 echo off
-echo "ChessPuzzlePecker.zip created in %temp0%"
+echo "%packname%.zip created in %temp0%"

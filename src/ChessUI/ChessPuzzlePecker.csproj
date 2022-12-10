@@ -6,6 +6,8 @@
     <UseWindowsForms>true</UseWindowsForms>
     <StartupObject>ChessUI.Program</StartupObject>
     <UseWPF>False</UseWPF>
+    <VersionPrefix>1.0.1</VersionPrefix>
+    <Version>$(VersionPrefix)</Version>    
   </PropertyGroup>
 
   <ItemGroup>

@@ -30,6 +30,8 @@ namespace ChessUI
                 txLowerRating.Text = "" + p.LowerRating;
                 tbNumPuzzles.Text = "" + p.NumPuzzlesWanted;
                 tbStartAtNumber.Text = "" + p.StartPuzzleNumForCreation;
+                tbStartAtNumber.Hide();
+                lblStartAtNumber.Hide();
                 initFilterControls(0, cbFilter1, cbFilter1_2, cbFilter1Percent, p.Filters);
                 initFilterControls(1, cbFilter2, cbFilter2_2, cbFilter2Percent, p.Filters);
                 initFilterControls(2, cbFilter3, cbFilter3_2, cbFilter3Percent, p.Filters);

@@ -1,7 +1,7 @@
 [Header]
 version=1.0
 numPuzzlesWanted=100
-startPuzzleNumForCreation=1000
+startPuzzleNumForCreation=-5
 lowerRating=800
 upperRating=1200
 date=24.10.2022 20:15:39

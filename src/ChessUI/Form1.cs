@@ -379,8 +379,6 @@ namespace ChessUI
             }
         }
 
-
-
         private bool DoesCurrentPuzzleCountAsCorrect()
         {
             bool ok = true;

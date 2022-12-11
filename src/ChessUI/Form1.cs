@@ -13,6 +13,7 @@ using ChessPuzzlePecker.Properties;
 using ChessSharp;
 using ChessSharp.Pieces;
 using ChessSharp.SquareData;
+using PuzzlePecker;
 
 namespace ChessUI
 {
@@ -159,7 +160,7 @@ namespace ChessUI
 
             foreach (var c in new Control[] { cbFlipBoard, btLichess, btNext, lblWhoseTurn, lblPuzzleNum,
                 cbPuzzleSets, cbPromoteTo, lblPromoteTo, btCreatePuzleSet, lblPuzzleId, btAbout, btHelp,
-                cbLanguage, lblRoundText, lblRound, lblPuzzleState})
+                cbLanguage, lblRoundText, lblRound, lblPuzzleState, tlpSetState})
                 c.Location = AddDxDy(c.Location, (int)(9.5 * delta), 0);
         }
 
@@ -315,16 +316,18 @@ namespace ChessUI
                     }
                     else
                     {
+                        _puzzleSet.CurrentIsTried();
                         _puzzlesWithError.TryAdd(_puzzleSet.CurrentLichessId, DateTime.Now);
                         SetNormalSquareColor(_selectedSourceSquare.Value);
                         SetInfoLabels(false);
                     }
                     if (_isCurrPuzzleFinishedOk)
                     {
+                        _puzzleSet.CurrentIsTried();
                         var currentRound = _puzzleSet.CurrentRound;
-                        SetInfoLabels(true);
                         if (DoesCurrentPuzzleCountAsCorrect())
                             _puzzleSet.CurrentIsCorrect();
+                        SetInfoLabels(true);
                         lblWhoseTurn.Text = _puzzleSet.CurrentRating;
                         if (_puzzleSet.IsRoundFinished(currentRound))
                         {
@@ -352,6 +355,19 @@ namespace ChessUI
                 lblPuzzleState.Text = Res("Correct!");
             else if (ok == false)
                 lblPuzzleState.Text = Res("Wrong!");
+
+            // tlpSetState.
+            var nPuCorrect = _puzzleSet.NumCorrect(_puzzleSet.CurrentRound);
+            lblPuzzlesCorrect.Text = "" + nPuCorrect;
+            tlpSetState.ColumnStyles[0] = new ColumnStyle(SizeType.Percent, 100 * nPuCorrect / _puzzleSet.NumTotal);
+
+            var nPuUntried = _puzzleSet.NumUntried(_puzzleSet.CurrentRound);
+            lblPuzzlesUntried.Text = "" + nPuUntried;
+            tlpSetState.ColumnStyles[1] = new ColumnStyle(SizeType.Percent, 100 * nPuUntried / _puzzleSet.NumTotal);
+
+            var nPuError = _puzzleSet.NumErrors(_puzzleSet.CurrentRound);
+            lblPuzzlesWithError.Text = "" + nPuError;
+            tlpSetState.ColumnStyles[2] = new ColumnStyle(SizeType.Percent, 100 * nPuError / _puzzleSet.NumTotal);
         }
 
         private bool DoesCurrentPuzzleCountAsCorrect()
@@ -476,7 +492,6 @@ namespace ChessUI
                 _gameBoard = _puzzleSet.NextPuzzle();
                 if (_gameBoard != null)
                 {
-                    _puzzleSet.CurrentIsTried();
                     SetSideOf();
                     DrawBoard();
                     SetInfoLabels(null);
@@ -557,14 +572,7 @@ namespace ChessUI
             }
         }
 
-        private void btAbout_Click(object sender, EventArgs e)
-        {
-
-            // MessageBox.Show(t, "ChessPuzzlePecker");
-
-            new AboutBox().ShowDialog();
-
-        }
+        private void btAbout_Click(object sender, EventArgs e) => new AboutBox().ShowDialog();
 
         private void cbLanguage_SelectedIndexChanged(object sender, EventArgs e)
         {

@@ -12,7 +12,7 @@ using static System.Windows.Forms.LinkLabel;
 using System.Windows.Forms;
 using System.Net;
 
-namespace ChessUI
+namespace PuzzlePecker
 {
     public class PuzzleSet
     {
@@ -43,7 +43,7 @@ namespace ChessUI
             this.Filters = new Li<PuzzleFilter>();
             ReadSet();
             ShufflePuzzles();
-            this.Puzzles = Puzzles.OrderBy(p => p.NumTried).ThenBy(p => p.NumCorrect).ToLi();
+            this.Puzzles = Puzzles.OrderBy(p => p.NumTriedInRound).ThenBy(p => p.NumCorrect).ToLi();
         }
 
         public PuzzleGame NextPuzzle()
@@ -65,7 +65,7 @@ namespace ChessUI
         {
             currentPuzzleNum = -1;
             ShufflePuzzles();
-            this.Puzzles = Puzzles.OrderBy(p => p.NumCorrect).ThenByDescending(p => p.NumTried).ToLi();
+            this.Puzzles = Puzzles.OrderBy(p => p.NumCorrect).ThenByDescending(p => p.NumTriedInRound).ToLi();
         }
 
         public string CurrentLichessId => Puzzles[currentPuzzleNum].LichessId;
@@ -74,7 +74,7 @@ namespace ChessUI
 
         public void CurrentIsCorrect() => ++Puzzles[currentPuzzleNum].NumCorrect;
 
-        public void CurrentIsTried() => ++Puzzles[currentPuzzleNum].NumTried;
+        public void CurrentIsTried() => Puzzles[currentPuzzleNum].IncNumTried();
 
         public bool HasPuzzles => !Puzzles.IsEmpty;
 
@@ -86,9 +86,18 @@ namespace ChessUI
 
         public int NumCorrect(int round) => Puzzles.Count(p => p.NumCorrect >= round);
 
+        public int NumErrors(int round) => Puzzles.Count(p => p.NumCorrect < round && p.NumTriedInRound > 0);
+
+        public int NumUntried(int round) => Puzzles.Count - NumErrors(round) - NumCorrect(round);
+
         public int CurrentRound { get; private set; } = 1;
 
-        public void IncCurrentRound() => ++CurrentRound;
+        public void IncCurrentRound()
+        {
+            ++CurrentRound;
+            foreach (var p in Puzzles)
+                p.ZeroNumTriedInRound();
+        }
 
         public override string ToString()
         {
@@ -200,7 +209,7 @@ namespace ChessUI
             var lines = File.ReadAllLines(FileName).ToLiro();
             foreach (var line in lines)
             {
-                if (line.StartsWith("TT="))
+                if (line.StartsWith("TT=") || line.StartsWith("TR="))
                     Puzzles.Add(new Puzzle(line, 0));
                 else if (line.StartsWith("FIL="))
                     Filters.Add(new PuzzleFilter(line));
@@ -282,15 +291,21 @@ internal class Puzzle
 
     public int NumCorrect { get; set; }
 
-    public int NumTried { get; set; }
+    public void IncNumTried() { ++NumTriedInRound; ++NumTriedTotal; }
+
+    public void ZeroNumTriedInRound() => NumTriedInRound = 0;
+
+    public int NumTriedInRound { get; private set; }
+
+    public int NumTriedTotal { get; private set; }
 
     public string LichessId => SLichessPuzzle.Split(',', 2)[0];
 
     public string Rating => SLichessPuzzle.Split(',')[3];
 
-    public override string ToString() => $"TT={NumTried} C={NumCorrect} E= P={SLichessPuzzle}";
+    public override string ToString() => $"TT={NumTriedInRound} C={NumCorrect} E= P={SLichessPuzzle}";
 
-    public string ToDbString() => $"TT={NumTried};C={NumCorrect};P={SLichessPuzzle}";
+    public string ToDbString() => $"TR={NumTriedInRound};C={NumCorrect};TT={NumTriedTotal};P={SLichessPuzzle}";
 
     public void Read(string dbString)
     {
@@ -301,71 +316,13 @@ internal class Puzzle
             switch (parts2[0])
             {
                 case "C": NumCorrect = Helper.ToInt(parts2[1]); break;
-                case "TT": NumTried = Helper.ToInt(parts2[1]); break;
+                case "TT": NumTriedTotal = Helper.ToInt(parts2[1]); break;
+                case "TR": NumTriedInRound = Helper.ToInt(parts2[1]); break;
                 case "P": SLichessPuzzle = parts2[1]; break;
             }
         }
     }
 
     public override int GetHashCode() => (LichessId + Rating).GetHashCode();
-}
-
-
-public class PuzzleFilter
-{
-    static public Li<PuzzleFilter> CreateFilters(string multiCreator)
-    {
-        var creators = multiCreator.SplitToWords(";".ToCharArray()).ToLi();
-        var filters = new Li<PuzzleFilter>();
-        foreach (var c in creators)
-            filters.Add(new PuzzleFilter(c));
-
-        // If all filters have got percentage 0 somebody did not select any percentages. Set all to 10. 
-        if (filters.Count(f => f.Percentage == 0) == filters.Count)
-            foreach (var f in filters)
-                f.Percentage = 10;
-
-        filters.RemoveAll(f => f.Percentage == 0);
-
-        // Set realPercentage so that Sum(realPercentage) == 100.
-        var totalPercentages = filters.Sum(f => f.Percentage);
-        foreach (var f in filters)
-            f.realPercentage = 100.0 * f.Percentage / totalPercentages;
-
-        return filters;
-    }
-
-    /// <summary> Format of the creator string= motifA1 motifA2 ...:percentageA </summary>
-    public PuzzleFilter(string creator)
-    {
-        if (creator.StartsWith("FIL="))
-            creator = creator.Substring(4);
-        var parts = creator.Trim().Split(':').ToLiro();
-        Motifs = parts[0].SplitToWords().Where(m => m != "--").ToLiro();
-        Percentage = Helper.ToInt(parts[1]);
-    }
-
-    public bool IsMatching(Liro<string> lichessLineParts)
-    {
-        var motifsInLine = lichessLineParts[7].SplitToWords();
-        for (int i = 0; i < Motifs.Count; ++i)
-            if (!motifsInLine.Contains(Motifs[i]))
-                return false;
-        return true;
-    }
-
-    public void IncNumSelected() => ++NumSelected;
-
-    public int NumSelected { get; private set; }
-
-    public bool HasEnoughOfFilter(int numTotal) => numTotal * realPercentage / 100 <= NumSelected;
-
-    public override string ToString() => $"{Motifs}:{Percentage}%:{NumSelected}#";
-
-    public string ToDbString() => $"FIL={string.Join(' ', Motifs)}:{Percentage}";
-
-    public readonly Liro<string> Motifs;
-    public int Percentage { get; private set; }
-    private double realPercentage;
 }
 

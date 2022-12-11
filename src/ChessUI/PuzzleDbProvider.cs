@@ -7,7 +7,7 @@ using System.Text;
 using System.Windows.Forms;
 using AwiUtils;
 
-namespace ChessUI
+namespace PuzzlePecker
 {
 
     /// <summary> This class gets a lichess_db_puzzle.csv or lic_part_puzzle.csv from somewhere. 

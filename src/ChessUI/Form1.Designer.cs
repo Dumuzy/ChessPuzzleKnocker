@@ -124,6 +124,11 @@
             this.lblRoundText = new System.Windows.Forms.Label();
             this.lblRound = new System.Windows.Forms.Label();
             this.btHelp = new System.Windows.Forms.Button();
+            this.tlpSetState = new System.Windows.Forms.TableLayoutPanel();
+            this.lblPuzzlesCorrect = new System.Windows.Forms.Label();
+            this.lblPuzzlesUntried = new System.Windows.Forms.Label();
+            this.lblPuzzlesWithError = new System.Windows.Forms.Label();
+            this.tlpSetState.SuspendLayout();
             this.SuspendLayout();
             // 
             // lbl_A1
@@ -771,7 +776,7 @@
             // 
             this.lblWhoseTurn.AutoSize = true;
             this.lblWhoseTurn.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.lblWhoseTurn.Location = new System.Drawing.Point(642, 160);
+            this.lblWhoseTurn.Location = new System.Drawing.Point(642, 184);
             this.lblWhoseTurn.Name = "lblWhoseTurn";
             this.lblWhoseTurn.Size = new System.Drawing.Size(19, 21);
             this.lblWhoseTurn.TabIndex = 66;
@@ -924,7 +929,7 @@
             // cbFlipBoard
             // 
             this.cbFlipBoard.AutoSize = true;
-            this.cbFlipBoard.Location = new System.Drawing.Point(642, 197);
+            this.cbFlipBoard.Location = new System.Drawing.Point(642, 214);
             this.cbFlipBoard.Name = "cbFlipBoard";
             this.cbFlipBoard.Size = new System.Drawing.Size(84, 19);
             this.cbFlipBoard.TabIndex = 86;
@@ -935,7 +940,7 @@
             // btNext
             // 
             this.btNext.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.btNext.Location = new System.Drawing.Point(642, 261);
+            this.btNext.Location = new System.Drawing.Point(642, 271);
             this.btNext.Name = "btNext";
             this.btNext.Size = new System.Drawing.Size(149, 39);
             this.btNext.TabIndex = 87;
@@ -956,9 +961,9 @@
             // btLichess
             // 
             this.btLichess.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.btLichess.Location = new System.Drawing.Point(642, 306);
+            this.btLichess.Location = new System.Drawing.Point(642, 317);
             this.btLichess.Name = "btLichess";
-            this.btLichess.Size = new System.Drawing.Size(72, 39);
+            this.btLichess.Size = new System.Drawing.Size(72, 30);
             this.btLichess.TabIndex = 89;
             this.btLichess.Text = "Lichess";
             this.btLichess.UseVisualStyleBackColor = true;
@@ -978,7 +983,7 @@
             // 
             this.cbPromoteTo.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.cbPromoteTo.FormattingEnabled = true;
-            this.cbPromoteTo.Location = new System.Drawing.Point(723, 225);
+            this.cbPromoteTo.Location = new System.Drawing.Point(723, 239);
             this.cbPromoteTo.Name = "cbPromoteTo";
             this.cbPromoteTo.Size = new System.Drawing.Size(68, 23);
             this.cbPromoteTo.TabIndex = 91;
@@ -987,7 +992,7 @@
             // 
             this.lblPromoteTo.AutoSize = true;
             this.lblPromoteTo.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.lblPromoteTo.Location = new System.Drawing.Point(639, 228);
+            this.lblPromoteTo.Location = new System.Drawing.Point(639, 242);
             this.lblPromoteTo.Name = "lblPromoteTo";
             this.lblPromoteTo.Size = new System.Drawing.Size(67, 15);
             this.lblPromoteTo.TabIndex = 92;
@@ -1009,7 +1014,7 @@
             this.lblPuzzleId.AutoSize = true;
             this.lblPuzzleId.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.lblPuzzleId.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.lblPuzzleId.Location = new System.Drawing.Point(747, 160);
+            this.lblPuzzleId.Location = new System.Drawing.Point(747, 213);
             this.lblPuzzleId.Name = "lblPuzzleId";
             this.lblPuzzleId.Size = new System.Drawing.Size(42, 14);
             this.lblPuzzleId.TabIndex = 94;
@@ -1044,7 +1049,7 @@
             // 
             this.lblPuzzleState.AutoSize = true;
             this.lblPuzzleState.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.lblPuzzleState.Location = new System.Drawing.Point(642, 374);
+            this.lblPuzzleState.Location = new System.Drawing.Point(642, 365);
             this.lblPuzzleState.Name = "lblPuzzleState";
             this.lblPuzzleState.Size = new System.Drawing.Size(13, 21);
             this.lblPuzzleState.TabIndex = 98;
@@ -1054,7 +1059,7 @@
             // 
             this.lblRoundText.AutoSize = true;
             this.lblRoundText.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.lblRoundText.Location = new System.Drawing.Point(723, 139);
+            this.lblRoundText.Location = new System.Drawing.Point(723, 184);
             this.lblRoundText.Name = "lblRoundText";
             this.lblRoundText.Size = new System.Drawing.Size(56, 21);
             this.lblRoundText.TabIndex = 99;
@@ -1064,7 +1069,7 @@
             // 
             this.lblRound.AutoSize = true;
             this.lblRound.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.lblRound.Location = new System.Drawing.Point(776, 139);
+            this.lblRound.Location = new System.Drawing.Point(776, 184);
             this.lblRound.Name = "lblRound";
             this.lblRound.Size = new System.Drawing.Size(13, 21);
             this.lblRound.TabIndex = 100;
@@ -1073,19 +1078,78 @@
             // btHelp
             // 
             this.btHelp.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.btHelp.Location = new System.Drawing.Point(720, 306);
+            this.btHelp.Location = new System.Drawing.Point(720, 317);
             this.btHelp.Name = "btHelp";
-            this.btHelp.Size = new System.Drawing.Size(71, 39);
+            this.btHelp.Size = new System.Drawing.Size(71, 30);
             this.btHelp.TabIndex = 101;
             this.btHelp.Text = "Hint";
             this.btHelp.UseVisualStyleBackColor = true;
             this.btHelp.Click += new System.EventHandler(this.btHelp_Click);
+            // 
+            // tlpSetState
+            // 
+            this.tlpSetState.ColumnCount = 3;
+            this.tlpSetState.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tlpSetState.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tlpSetState.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 45F));
+            this.tlpSetState.Controls.Add(this.lblPuzzlesCorrect, 0, 0);
+            this.tlpSetState.Controls.Add(this.lblPuzzlesUntried, 1, 0);
+            this.tlpSetState.Controls.Add(this.lblPuzzlesWithError, 2, 0);
+            this.tlpSetState.Location = new System.Drawing.Point(642, 139);
+            this.tlpSetState.Name = "tlpSetState";
+            this.tlpSetState.RowCount = 1;
+            this.tlpSetState.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tlpSetState.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tlpSetState.Size = new System.Drawing.Size(149, 30);
+            this.tlpSetState.TabIndex = 102;
+            // 
+            // lblPuzzlesCorrect
+            // 
+            this.lblPuzzlesCorrect.AutoSize = true;
+            this.lblPuzzlesCorrect.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
+            this.lblPuzzlesCorrect.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblPuzzlesCorrect.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.lblPuzzlesCorrect.Location = new System.Drawing.Point(0, 0);
+            this.lblPuzzlesCorrect.Margin = new System.Windows.Forms.Padding(0);
+            this.lblPuzzlesCorrect.Name = "lblPuzzlesCorrect";
+            this.lblPuzzlesCorrect.Size = new System.Drawing.Size(52, 30);
+            this.lblPuzzlesCorrect.TabIndex = 93;
+            this.lblPuzzlesCorrect.Text = "AAA";
+            this.lblPuzzlesCorrect.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // lblPuzzlesUntried
+            // 
+            this.lblPuzzlesUntried.AutoSize = true;
+            this.lblPuzzlesUntried.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblPuzzlesUntried.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.lblPuzzlesUntried.Location = new System.Drawing.Point(52, 0);
+            this.lblPuzzlesUntried.Margin = new System.Windows.Forms.Padding(0);
+            this.lblPuzzlesUntried.Name = "lblPuzzlesUntried";
+            this.lblPuzzlesUntried.Size = new System.Drawing.Size(52, 30);
+            this.lblPuzzlesUntried.TabIndex = 94;
+            this.lblPuzzlesUntried.Text = "BBB";
+            this.lblPuzzlesUntried.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // lblPuzzlesWithError
+            // 
+            this.lblPuzzlesWithError.AutoSize = true;
+            this.lblPuzzlesWithError.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.lblPuzzlesWithError.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblPuzzlesWithError.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.lblPuzzlesWithError.Location = new System.Drawing.Point(104, 0);
+            this.lblPuzzlesWithError.Margin = new System.Windows.Forms.Padding(0);
+            this.lblPuzzlesWithError.Name = "lblPuzzlesWithError";
+            this.lblPuzzlesWithError.Size = new System.Drawing.Size(45, 30);
+            this.lblPuzzlesWithError.TabIndex = 95;
+            this.lblPuzzlesWithError.Text = "CCC";
+            this.lblPuzzlesWithError.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(869, 622);
+            this.Controls.Add(this.tlpSetState);
             this.Controls.Add(this.btHelp);
             this.Controls.Add(this.lblRound);
             this.Controls.Add(this.lblRoundText);
@@ -1187,6 +1251,8 @@
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Chess";
+            this.tlpSetState.ResumeLayout(false);
+            this.tlpSetState.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1289,6 +1355,10 @@
         private System.Windows.Forms.Label lblRoundText;
         private System.Windows.Forms.Label lblRound;
         private System.Windows.Forms.Button btHelp;
+        private System.Windows.Forms.TableLayoutPanel tlpSetState;
+        private System.Windows.Forms.Label lblPuzzlesCorrect;
+        private System.Windows.Forms.Label lblPuzzlesWithError;
+        private System.Windows.Forms.Label lblPuzzlesUntried;
     }
 }
 

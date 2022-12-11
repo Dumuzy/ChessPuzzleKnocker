@@ -5,7 +5,7 @@ using System.IO;
 using System.Text;
 using AwiUtils;
 
-namespace ChessUI
+namespace PuzzlePecker
 {
     static internal class PuzzleCompressor
     {

@@ -6,6 +6,7 @@ using ComboBox = System.Windows.Forms.ComboBox;
 using static System.Windows.Forms.DataFormats;
 using System.Linq;
 using System.IO;
+using PuzzlePecker;
 
 namespace ChessUI
 {

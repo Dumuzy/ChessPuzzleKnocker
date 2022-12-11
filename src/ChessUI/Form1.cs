@@ -356,19 +356,30 @@ namespace ChessUI
             else if (ok == false)
                 lblPuzzleState.Text = Res("Wrong!");
 
-            // tlpSetState.
-            var nPuCorrect = _puzzleSet.NumCorrect(_puzzleSet.CurrentRound);
-            lblPuzzlesCorrect.Text = "" + nPuCorrect;
-            tlpSetState.ColumnStyles[0] = new ColumnStyle(SizeType.Percent, 100 * nPuCorrect / _puzzleSet.NumTotal);
-
-            var nPuUntried = _puzzleSet.NumUntried(_puzzleSet.CurrentRound);
-            lblPuzzlesUntried.Text = "" + nPuUntried;
-            tlpSetState.ColumnStyles[1] = new ColumnStyle(SizeType.Percent, 100 * nPuUntried / _puzzleSet.NumTotal);
-
-            var nPuError = _puzzleSet.NumErrors(_puzzleSet.CurrentRound);
-            lblPuzzlesWithError.Text = "" + nPuError;
-            tlpSetState.ColumnStyles[2] = new ColumnStyle(SizeType.Percent, 100 * nPuError / _puzzleSet.NumTotal);
+            SetTlpState(0, lblPuzzlesCorrect, _puzzleSet.NumCorrect(_puzzleSet.CurrentRound));
+            SetTlpState(1, lblPuzzlesUntried, _puzzleSet.NumUntried(_puzzleSet.CurrentRound));
+            SetTlpState(2, lblPuzzlesWithError, _puzzleSet.NumErrors(_puzzleSet.CurrentRound));
         }
+
+        void SetTlpState(int colnum, Label lbl, int nPu)
+        {
+            float perc = 100.0f * nPu / _puzzleSet.NumTotal;
+            if (nPu > 0)
+            {
+                lbl.Text = "" + nPu;
+                if (perc >= 8)
+                    tlpSetState.ColumnStyles[colnum] = new ColumnStyle(SizeType.Percent, perc);
+                else
+                    tlpSetState.ColumnStyles[colnum] = new ColumnStyle(SizeType.Absolute, 11);
+            }
+            else
+            {
+                lbl.Text = "";
+                tlpSetState.ColumnStyles[colnum] = new ColumnStyle(SizeType.Percent, perc);
+            }
+        }
+
+
 
         private bool DoesCurrentPuzzleCountAsCorrect()
         {

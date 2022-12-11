@@ -1109,6 +1109,7 @@
             this.lblPuzzlesCorrect.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
             this.lblPuzzlesCorrect.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lblPuzzlesCorrect.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.lblPuzzlesCorrect.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.lblPuzzlesCorrect.Location = new System.Drawing.Point(0, 0);
             this.lblPuzzlesCorrect.Margin = new System.Windows.Forms.Padding(0);
             this.lblPuzzlesCorrect.Name = "lblPuzzlesCorrect";
@@ -1136,6 +1137,7 @@
             this.lblPuzzlesWithError.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.lblPuzzlesWithError.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lblPuzzlesWithError.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.lblPuzzlesWithError.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.lblPuzzlesWithError.Location = new System.Drawing.Point(104, 0);
             this.lblPuzzlesWithError.Margin = new System.Windows.Forms.Padding(0);
             this.lblPuzzlesWithError.Name = "lblPuzzlesWithError";

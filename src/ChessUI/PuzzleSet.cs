@@ -269,15 +269,6 @@ currentRound={CurrentRound}
     }
 }
 
-
-//public string Name { get; private set; }
-//int numPuzzlesWanted, startPuzzleNumForCreation, lowerRating, upperRating;
-//int currentPuzzleNum;
-//Li<PuzzleFilter> filters;
-//Li<Puzzle> Puzzles;
-
-
-
 internal class Puzzle
 {
     public Puzzle(string sLichessPuzzle)

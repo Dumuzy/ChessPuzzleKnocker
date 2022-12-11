@@ -14,7 +14,7 @@ namespace ChessUI
     /// It downloads and uncompresses such files if needed. </summary>
     static internal class PuzzleDbProvider
     {
-        public const string LichessCsvPartBase = "lic_part_puzzle";
+        public const string LichessCsvPartBase = "lic*_puzzle";
         public const string LichessCsvFileName = "lichess_db_puzzle.csv";
         public static string LichessCsvDirectory => Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location);
 
@@ -50,8 +50,8 @@ namespace ChessUI
                 var licPartUrls = @"
                 http://99-developer-tools.com/wp-content/uploads/2022/12/lichess_db_puzzle.csv.gz
                 http://schachclub-ittersbach.de/wordpress/wp-content/uploads/2022/10/lic_part_puzzle-100000.csv.gz
-                "
-                        .SplitToLines();
+                ".SplitToLines();
+
                 foreach (var url in licPartUrls)
                 {
                     try

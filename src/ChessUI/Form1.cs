@@ -497,7 +497,7 @@ namespace ChessUI
 
         private void FillPuzzleSetsComboBox()
         {
-            var pzls = Directory.EnumerateFiles(".", "*.pzl");
+            var pzls = Directory.EnumerateFiles(".", "*" + PuzzleSet.FileExt);
             foreach (var pzl in pzls)
                 cbPuzzleSets.Items.Add(Path.GetFileNameWithoutExtension(pzl));
         }
@@ -544,7 +544,7 @@ namespace ChessUI
         {
             if (_puzzleSet == null)
                 _puzzleSet = new PuzzleSet("MyPuzzles-1", 100,
-                    "fork master:70;masterVsMaster:10;hangingPiece:20;", 1800, 2150, 1000,
+                    "fork master:70;masterVsMaster:10;hangingPiece:20;", 1800, 2150, PuzzleSet.StartPuzzleNumRandom,
                     PuzzleDbProvider.GetLichessCsvFile);
 
             var ib = new InputBox(_puzzleSet);

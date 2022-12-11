@@ -1,8 +1,20 @@
+rem
+rem     This script packs together a CPPecker_...zip package.
+rem     It takes the version number from ChessPuzzlePecker.csproj. 
+rem     To work, this script needs   tclsh.exe and 7za.exe in PATH. 
+
+@echo off
+set projfile=src\ChessUI\ChessPuzzlePecker.csproj
+rem The following seems to be the way to go to put the result of a command into 
+rem a variable in cmd-scripts. It is truly astonishing. 
+for /f usebackq %%i in (`tclsh extract-vers.tcl %projfile%`) do (
+  set vers=%%i
+)
+
 set vers=1.0.1
 set temp0=C:\tmp\cpp\
 set packname=CPPecker_%vers%
 set tempdir=%temp0%%packname%
-
 
 
 md %tempdir%

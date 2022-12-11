@@ -44,11 +44,13 @@ namespace ChessUI
 
         static private string TryDownloadLichessPart()
         {
-            var licPartFile = "lic_part_puzzle-100000.csv";
+            var licPartFile = "lichess_db_puzzle.csv";
             if (!File.Exists(licPartFile))
             {
                 var licPartUrls = @"
-                http://schachclub-ittersbach.de/wordpress/wp-content/uploads/2022/10/lic_part_puzzle-100000.csv.gz"
+                http://99-developer-tools.com/wp-content/uploads/2022/12/lichess_db_puzzle.csv.gz
+                http://schachclub-ittersbach.de/wordpress/wp-content/uploads/2022/10/lic_part_puzzle-100000.csv.gz
+                "
                         .SplitToLines();
                 foreach (var url in licPartUrls)
                 {

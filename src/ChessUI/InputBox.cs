@@ -70,6 +70,14 @@ namespace ChessUI
                         tbNameOfSet.Text = motifs[0];
                 }
                 tbNameOfSet.Text += $"-{tbLowerRating.Value}-{tbUpperRating.Value}";
+                if (File.Exists(tbNameOfSet.Text + PuzzleSet.FileExt))
+                    foreach (var ext in "abcdefghijklmnopqrstuvwxyz".ToCharArray())
+                        if (!File.Exists(tbNameOfSet.Text + "-" + ext + PuzzleSet.FileExt))
+                        {
+                            tbNameOfSet.Text += "-" + ext;
+                            break;
+                        }
+
             }
             var ps = new PuzzleSet(tbNameOfSet.Text, Helper.ToInt(tbNumPuzzles.Text), filters,
                 tbLowerRating.Value, tbUpperRating.Value, Helper.ToInt(tbStartAtNumber.Text),

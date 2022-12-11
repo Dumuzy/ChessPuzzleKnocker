@@ -98,6 +98,10 @@ namespace ChessUI
             return s;
         }
 
+        public const int StartPuzzleNumRandom = -5;
+
+        public const string FileExt = ".pzl";
+
         private void ShufflePuzzles() => Puzzles = Puzzles.OrderBy(p => rand.Next()).ToLi();
 
         #region SearchPuzzles
@@ -108,11 +112,16 @@ namespace ChessUI
             var fileName = DbFileName;
             if (fileName == null)
                 return;
+            double startPuzzleRatio = rand.NextDouble(),
+                fileSize = new System.IO.FileInfo(fileName).Length, readSize = 0;
             for (int i = 0; puzzles.Count != NumPuzzlesWanted && i < 3; ++i)
             {
                 int j = 0;
+                double minReadSize = startPuzzleRatio * fileSize;
                 foreach (string line in File.ReadLines(fileName))
-                    if (j++ >= startPuzzleNum)
+                {
+                    if ((startPuzzleNum != StartPuzzleNumRandom && j++ >= startPuzzleNum) ||
+                         (startPuzzleNum == StartPuzzleNumRandom && readSize >= minReadSize))
                         if (IsAllowed(line, puzzles))
                         {
                             var pu = new Puzzle(line);
@@ -120,6 +129,8 @@ namespace ChessUI
                             if (puzzles.Count >= NumPuzzlesWanted)
                                 break;
                         }
+                    readSize += line.Length;
+                }
                 // for debugging
                 foreach (var f in Filters)
                 {
@@ -128,11 +139,21 @@ namespace ChessUI
                 }
                 if (puzzles.Count < NumPuzzlesWanted)
                 {
-                    if (i % 2 == 0 && LowerRating >= 550)
-                        LowerRating -= 50;
-                    else if (i % 2 == 1 && UpperRating <= 3150)
-                        UpperRating += 50;
-                    startPuzzleNum = 0;
+                    if (startPuzzleNum == StartPuzzleNumRandom)
+                    {
+                        startPuzzleRatio = i == 0 ? startPuzzleRatio / 4 : rand.NextDouble();
+                        readSize = 0;
+                    }
+                    else
+                        startPuzzleNum = 0;
+
+                    if (i > 0)
+                    {
+                        if (i % 2 == 0 && UpperRating <= 3150)
+                            UpperRating += 50;
+                        else if (i % 2 == 1 && LowerRating >= 550)
+                            LowerRating -= 50;
+                    }
                 }
             }
             this.Puzzles = puzzles.Values.ToLi();
@@ -242,7 +263,7 @@ currentRound={CurrentRound}
         readonly string Name, DbFileName;
         string FileName => SFileName(Name);
 
-        static string SFileName(string name) => Helper.MakeFilenameSafe(name) + ".pzl";
+        static string SFileName(string name) => Helper.MakeFilenameSafe(name) + FileExt;
         static Random rand = new Random();
         #endregion Fields  
     }

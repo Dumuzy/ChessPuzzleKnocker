@@ -1,4 +1,4 @@
-﻿namespace ChessUI
+﻿namespace PuzzleKnocker
 {
     partial class Form1
     {

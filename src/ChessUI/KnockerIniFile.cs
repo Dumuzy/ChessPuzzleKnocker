@@ -4,13 +4,13 @@ using System.Text;
 using System.Windows.Forms;
 using AwiUtils;
 
-namespace ChessUI
+namespace PuzzleKnocker
 {
     public partial class Form1 : Form
     {
-        class PeckerIniFile
+        class KnockerIniFile
         {
-            internal PeckerIniFile(Form1 form)
+            internal KnockerIniFile(Form1 form)
             {
                 this.form = form;
                 dir = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
@@ -49,7 +49,7 @@ namespace ChessUI
 
             bool isReading;
             readonly string dir;
-            const string filename = "ChessPuzzlePecker.ini", Section = "A";
+            const string filename = "ChessPuzzleKnocker.ini", Section = "Allgemein";
             readonly Form1 form;
             readonly IniFile ini;
         }

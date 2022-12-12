@@ -3,16 +3,18 @@ using System.Diagnostics;
 using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
+using PuzzleKnocker;
 
-namespace ChessPuzzlePecker
+namespace PuzzleKnocker
 {
     partial class AboutBox : Form
     {
         public AboutBox(bool isDonate = false)
         {
             InitializeComponent();
-            this.Text = String.Format("About {0}", AssemblyTitle);
-            this.labelProductName.Text = AssemblyProduct + String.Format(" v{0}", AssemblyVersion);
+            var title = Form1.Res(Form1.EnglishTitle);
+            this.Text = String.Format("{0} {1}", Form1.Res("About"), title);
+            this.labelProductName.Text = title + String.Format(" v{0}", AssemblyVersion);
             this.linkLabel1.Text = TrimTextForLinkLabel(GetRawText(isDonate));
 
             if (!isDonate)
@@ -99,24 +101,7 @@ I am   keizer@atlantis44.de   at Paypal.";
 
         #region Assembly Attribute Accessors
 
-        public string AssemblyTitle
-        {
-            get
-            {
-                object[] attributes = Assembly.GetExecutingAssembly().GetCustomAttributes(typeof(AssemblyTitleAttribute), false);
-                if (attributes.Length > 0)
-                {
-                    AssemblyTitleAttribute titleAttribute = (AssemblyTitleAttribute)attributes[0];
-                    if (titleAttribute.Title != "")
-                    {
-                        return titleAttribute.Title;
-                    }
-                }
-                return System.IO.Path.GetFileNameWithoutExtension(Assembly.GetExecutingAssembly().CodeBase);
-            }
-        }
-
-        public string AssemblyVersion
+          public string AssemblyVersion
         {
             get
             {
@@ -137,19 +122,6 @@ I am   keizer@atlantis44.de   at Paypal.";
             }
         }
 
-        public string AssemblyProduct
-        {
-            get
-            {
-                object[] attributes = Assembly.GetExecutingAssembly().GetCustomAttributes(typeof(AssemblyProductAttribute), false);
-                if (attributes.Length == 0)
-                {
-                    return "";
-                }
-                return ((AssemblyProductAttribute)attributes[0]).Product;
-            }
-        }
-
         public string AssemblyCopyright
         {
             get
@@ -163,19 +135,6 @@ I am   keizer@atlantis44.de   at Paypal.";
             }
         }
 
-        public string AssemblyCompany
-        {
-            get
-            {
-                object[] attributes = Assembly.GetExecutingAssembly().GetCustomAttributes(typeof(AssemblyCompanyAttribute), false);
-                if (attributes.Length == 0)
-                {
-                    return "";
-                }
-                return ((AssemblyCompanyAttribute)attributes[0]).Company;
-            }
-        }
         #endregion
-
     }
 }

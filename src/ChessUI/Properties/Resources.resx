@@ -133,7 +133,10 @@
   <data name="Knight" xml:space="preserve">
     <value>Springer</value>
   </data>
-  <data name="Correct!" xml:space="preserve">
+  <data name="Chess Puzzle Knocker" xml:space="preserve">
+    <value>Schachpuzzle-Specht</value>
+  </data>
+    <data name="Correct!" xml:space="preserve">
     <value>Korrekt!</value>
   </data>
   <data name="Donate" xml:space="preserve">

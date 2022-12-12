@@ -1,4 +1,4 @@
-﻿namespace ChessPuzzlePecker
+﻿namespace PuzzleKnocker
 {
     partial class AboutBox
     {
@@ -59,7 +59,7 @@
             // logoPictureBox
             // 
             this.logoPictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.logoPictureBox.Image = global::ChessPuzzlePecker.Properties.Resources.Campephilus_principalisAYP026B;
+            this.logoPictureBox.Image = global::PuzzleKnocker.Properties.Resources.Campephilus_principalisAYP026B;
             this.logoPictureBox.Location = new System.Drawing.Point(4, 3);
             this.logoPictureBox.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.logoPictureBox.Name = "logoPictureBox";

@@ -8,14 +8,14 @@ using System.Media;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using AwiUtils;
-using ChessPuzzlePecker;
-using ChessPuzzlePecker.Properties;
+using PuzzleKnocker;
+using PuzzleKnocker.Properties;
 using ChessSharp;
 using ChessSharp.Pieces;
 using ChessSharp.SquareData;
 using PuzzlePecker;
 
-namespace ChessUI
+namespace PuzzleKnocker
 {
 
     public partial class Form1 : Form
@@ -29,8 +29,9 @@ namespace ChessUI
         bool _isCurrPuzzleFinishedOk;
         private Dictionary<string, DateTime> _puzzlesWithError = new Dictionary<string, DateTime>();
         static public string Language { get; set; } = "EN";
+        public const string EnglishTitle = "Chess Puzzle Knocker";
         int numClicks;
-        readonly PeckerIniFile iniFile;
+        readonly KnockerIniFile iniFile;
         readonly DonateButton donateButton;
 
         class SquareTag
@@ -48,8 +49,8 @@ namespace ChessUI
         public Form1()
         {
             InitializeComponent();
-            this.iniFile = new PeckerIniFile(this);
-            this.Text = "ChessPuzzlePecker";
+            this.iniFile = new KnockerIniFile(this);
+            this.Text = EnglishTitle;
             _squareLabels = Controls.OfType<Label>().Where(m => Regex.IsMatch(m.Name, "lbl_[A-H][1-8]")).ToArray();
             _sideLabels = Controls.OfType<Label>().Where(m => Regex.IsMatch(m.Name, "^label[A-H1-8]$")).ToLiro();
 
@@ -456,7 +457,7 @@ namespace ChessUI
                     }
                     else
                     {
-                        lbl.BackgroundImage = (Image)ChessPuzzlePecker.Properties.Resources.ResourceManager.
+                        lbl.BackgroundImage = (Image)PuzzleKnocker.Properties.Resources.ResourceManager.
                             GetObject($"{piece.Owner}{piece.GetType().Name}");
                         (lbl.Tag as SquareTag).PieceCol = piece.Owner;
                     }

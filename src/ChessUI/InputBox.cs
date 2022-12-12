@@ -8,7 +8,7 @@ using System.Linq;
 using System.IO;
 using PuzzlePecker;
 
-namespace ChessUI
+namespace PuzzleKnocker
 {
     public partial class InputBox : Form
     {

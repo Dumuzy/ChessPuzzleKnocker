@@ -6,7 +6,7 @@ using System.Text;
 using System.Windows.Forms;
 using AwiUtils;
 
-namespace ChessPuzzlePecker
+namespace PuzzleKnocker
 {
     internal class DonateButton
     {
@@ -17,8 +17,8 @@ namespace ChessPuzzlePecker
         /// <param name="getNumClicks"> A func which returns num clicks made. </param>
         /// <param name="minNumClicks"> If getNumCLicks { minNumClicks, button is not shown. </param>
         /// <param name="shallShowNow"> Only if shallShowNow returns true, the button is shown. </param>
-        public DonateButton(Button bt, string iniDonated, Func<int> getNumClicks, int minNumClicks, 
-            Func<bool> shallShowNow)
+        public DonateButton(Button bt, string iniDonated, Func<int> getNumClicks, int minNumClicks,
+            Func<bool> shallShowNow, int clicksTillColorChange = 20)
         {
             this.btDonate = bt;
             this.btDonate.Visible = false;
@@ -26,6 +26,7 @@ namespace ChessPuzzlePecker
             this.getNumClicks = getNumClicks;
             this.minNumClicksForShowing = minNumClicks;
             this.shallShowNow = shallShowNow;
+            this.clicksTillColorChange = clicksTillColorChange;
         }
 
         public string Text => btDonate.Text;
@@ -36,9 +37,10 @@ namespace ChessPuzzlePecker
             if (shallShowNow() && numClicks >= minNumClicksForShowing && !HasDonated())
             {
                 var colors = new Color[] { Color.FromArgb(192, 0, 0), Color.AliceBlue, Color.Black, 
-                    Color.FromArgb(0, 192, 0), Color.CornflowerBlue };
+                    Color.FromArgb(0, 192, 0), Color.CornflowerBlue, Color.MediumVioletRed, Color.DarkOrange };
                 btDonate.Visible = true;
-                btDonate.BackColor = colors[(numClicks % 100) / 20];
+                var divisor = clicksTillColorChange * colors.Length;
+                btDonate.BackColor = colors[(numClicks % divisor) / clicksTillColorChange];
                 if (btDonate.BackColor.GetBrightness() > 0.4)
                     btDonate.ForeColor = Color.Black;
                 else
@@ -70,7 +72,7 @@ namespace ChessPuzzlePecker
         readonly Button btDonate;
         readonly string iniDonated;
         readonly Func<int> getNumClicks;
-        readonly int minNumClicksForShowing;
+        readonly int minNumClicksForShowing, clicksTillColorChange;
         readonly Func<bool> shallShowNow;
     }
 }

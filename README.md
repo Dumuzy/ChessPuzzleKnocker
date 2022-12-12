@@ -1,29 +1,11 @@
-# Welcome to ChessPuzzlePecker 👋
+# Welcome to ChessPuzzleKnocker 👋
 
 [![Build status](https://ci.appveyor.com/api/projects/status/fbrec04diyk4vf2s/branch/master?svg=true)](https://ci.appveyor.com/project/Youssef1313/chesssharp/branch/master)
 
-ChessPuzzlePecker is a chess training tool built in C#. The repository includes the WinForms app and a the ChessSharp library, which I forked to create this application. 
+ChessPuzzleKnocker is a chess training tool built in C#. The repository includes the WinForms app and a the ChessSharp library, which I forked to create this application. 
 
 ## Install the package
-   This chapter is probably wrong currently. ---
-
-- To install the package from Package Manager Console, run the following command:
-
-    ```
-    Install-Package ChessSharp
-    ```
-
-- To install the package from .NET CLI, run the following command:
-
-    ```
-    dotnet add package ChessSharp
-    ```
-
-- To install using the PackageReference, add the following XML node into your project file. For more information about PackageReference, see [NuGet package reference format](https://docs.microsoft.com/nuget/consume-packages/package-references-in-project-files).
-
-    ```xml
-    <PackageReference Include="ChessSharp" Version="1.1.0" />
-    ```
+  Just extract the zip-file found under Releases.
 
 ## Repository structure
 
@@ -34,7 +16,7 @@ The repository consists of three folders:
 - `src` folder: This folder contains the actual source code and contains these folders:
     - `AwiUtils`: SOme generally usable utilities  that I use in many projects. 
     - `ChessSharp`: The source code of the ChessSharp Library, originally from [https://youssef1313.github.io/ChessSharp/](https://youssef1313.github.io/ChessSharp/). I've improved it and fixed some bugs, though. 
-    - `ChessUI`: The ChessPuzzlePecker app.  It consumes the ChessSharp library.
+    - `ChessUI`: The ChessPuzzleKnocker app.  It consumes the ChessSharp library.
     - `ChessSharpWeb`: an ASP.NET Core MVC project that consumes the library. **Not completed, and not working currently.**
 
 ## Screenshot of the UI (WinForms) project
@@ -45,9 +27,9 @@ The repository consists of three folders:
 
 Contributions, issues, bug reports, and feature requests are welcome!
 
-Feel free to check the [issues page](https://github.com/Dumuzy/ChessPuzzlePecker/issues).
+Feel free to check the [issues page](https://github.com/Dumuzy/ChessPuzzleKnocker/issues).
 
-Can you make ChessPuzzlePecker better ? Feel free to open a pull request.
+Can you make ChessPuzzleKnocker better ? Feel free to open a pull request.
 
 ## Show your support
 

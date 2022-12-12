@@ -8,12 +8,40 @@ namespace ChessPuzzlePecker
 {
     partial class AboutBox : Form
     {
-        public AboutBox()
+        public AboutBox(bool isDonate = false)
         {
             InitializeComponent();
             this.Text = String.Format("About {0}", AssemblyTitle);
             this.labelProductName.Text = AssemblyProduct + String.Format(" v{0}", AssemblyVersion);
-            this.linkLabel1.Text = TrimTextForLinkLabel(@"A chess puzzle training program inspired by 
+            this.linkLabel1.Text = TrimTextForLinkLabel(GetRawText(isDonate));
+
+            if (!isDonate)
+            {
+                AddLink2Label(linkLabel1, "Lichess", "https://lichess.org/");
+                AddLink2Label(linkLabel1, "Schachclub Ittersbach", "http://schachclub-ittersbach.de/");
+                AddLink2Label(linkLabel1, "Dumuzy@Github", "https://github.com/Dumuzy/ChessPuzzlePecker");
+            }
+            AddLink2Label(linkLabel1, "Alakaluf at Lichess", "https://lichess.org/@/Alakaluf");
+            AddLink2Label(linkLabel1, "Paypal", "https://www.paypal.com");
+
+            if (isDonate)
+                labelProductName.Font =  linkLabel1.Font = new System.Drawing.Font("Segoe UI", 12F, 
+                    System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, (byte)(0));
+        }
+
+        string GetRawText(bool isDonate)
+        {
+            string t;
+            if (isDonate)
+                t = @"
+
+If you like this software... I would be delighted if you'd buy me a coffee! :-)
+I am   keizer@atlantis44.de   at Paypal.
+
+Also, I'm giving chess lessons for players with a Lichess rapid rating below 1750. 
+Only 5 Eu per hour in deutsch or english. Contact Alakaluf at Lichess.";
+            else
+                t = @"A chess puzzle training program inspired by 
 the Woodpecker method.
 
 Special thanks to Lichess, from where all the puzzle data is coming. 
@@ -24,16 +52,8 @@ Also, I'm giving chess lessons for players with a Lichess rapid rating below 175
 Only 5 Eu per hour in deutsch or english. 
 
 If you like this software... I would be delighted if you'd buy me a coffee! :-)
-I am   keizer@atlantis44.de   at Paypal.");
-
-            // You could download more puzzle data from there: 
-            // https://database.lichess.org/lichess_db_puzzle.csv.bz2 
-
-            AddLink2Label(linkLabel1, "Lichess", "https://lichess.org/");
-            AddLink2Label(linkLabel1, "Schachclub Ittersbach", "http://schachclub-ittersbach.de/");
-            AddLink2Label(linkLabel1, "Dumuzy@Github", "https://github.com/Dumuzy/ChessPuzzlePecker");
-            AddLink2Label(linkLabel1, "Alakaluf at Lichess", "https://lichess.org/@/Alakaluf");
-            AddLink2Label(linkLabel1, "Paypal", "https://www.paypal.com");
+I am   keizer@atlantis44.de   at Paypal.";
+            return t;
         }
 
         void AddLink2Label(LinkLabel ll, string linkText, string link, int delta = 0)

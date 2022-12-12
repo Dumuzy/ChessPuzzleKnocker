@@ -128,6 +128,7 @@
             this.lblPuzzlesCorrect = new System.Windows.Forms.Label();
             this.lblPuzzlesUntried = new System.Windows.Forms.Label();
             this.lblPuzzlesWithError = new System.Windows.Forms.Label();
+            this.btDonate = new System.Windows.Forms.Button();
             this.tlpSetState.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -1146,11 +1147,23 @@
             this.lblPuzzlesWithError.Text = "CCC";
             this.lblPuzzlesWithError.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // btDonate
+            // 
+            this.btDonate.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.btDonate.Location = new System.Drawing.Point(642, 353);
+            this.btDonate.Name = "btDonate";
+            this.btDonate.Size = new System.Drawing.Size(149, 39);
+            this.btDonate.TabIndex = 103;
+            this.btDonate.Text = "Donate";
+            this.btDonate.UseVisualStyleBackColor = true;
+            this.btDonate.Click += new System.EventHandler(this.btDonate_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(869, 622);
+            this.Controls.Add(this.btDonate);
             this.Controls.Add(this.tlpSetState);
             this.Controls.Add(this.btHelp);
             this.Controls.Add(this.lblRound);
@@ -1361,6 +1374,7 @@
         private System.Windows.Forms.Label lblPuzzlesCorrect;
         private System.Windows.Forms.Label lblPuzzlesWithError;
         private System.Windows.Forms.Label lblPuzzlesUntried;
+        private System.Windows.Forms.Button btDonate;
     }
 }
 

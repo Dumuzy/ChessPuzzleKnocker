@@ -136,7 +136,10 @@
   <data name="Correct!" xml:space="preserve">
     <value>Korrekt!</value>
   </data>
-  <data name="Turn board" xml:space="preserve">
+  <data name="Donate" xml:space="preserve">
+    <value>Spenden</value>
+  </data>
+    <data name="Turn board" xml:space="preserve">
     <value>Drehe Brett</value>
   </data>
   <data name="Wrong!" xml:space="preserve">

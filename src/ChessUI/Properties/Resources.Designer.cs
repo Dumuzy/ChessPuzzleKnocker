@@ -194,6 +194,15 @@ namespace ChessPuzzlePecker.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Spenden.
+        /// </summary>
+        internal static string Donate {
+            get {
+                return ResourceManager.GetString("Donate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Filter.
         /// </summary>
         internal static string Filter_for {

@@ -25,11 +25,13 @@ namespace ChessUI
         private Square? _selectedSourceSquare;
         private PuzzleGame _gameBoard = new PuzzleGame("00143,r2q1rk1/5ppp/1np5/p1b5/2p1B3/P7/1P3PPP/R1BQ1RK1 b - - 1 17,d8f6 d1h5 h7h6 h5c5,1871,75,93,790,advantage middlegame short,https://lichess.org/jcuxlI63/black#34");
         private PuzzleSet _puzzleSet;
-        string _currPuzzleSetName;
+        string _currPuzzleSetName, iniDonated;
         bool _isCurrPuzzleFinishedOk;
         private Dictionary<string, DateTime> _puzzlesWithError = new Dictionary<string, DateTime>();
         static public string Language { get; set; } = "EN";
-
+        int numClicks;
+        readonly PeckerIniFile iniFile;
+        readonly DonateButton donateButton;
 
         class SquareTag
         {
@@ -46,11 +48,13 @@ namespace ChessUI
         public Form1()
         {
             InitializeComponent();
+            this.iniFile = new PeckerIniFile(this);
             this.Text = "ChessPuzzlePecker";
             _squareLabels = Controls.OfType<Label>().Where(m => Regex.IsMatch(m.Name, "lbl_[A-H][1-8]")).ToArray();
             _sideLabels = Controls.OfType<Label>().Where(m => Regex.IsMatch(m.Name, "^label[A-H1-8]$")).ToLiro();
 
-            ReadIniFile();      // inifile is read twice, second tim for selected pzl, first time for language.
+            iniFile.Read();      // inifile is read twice, second tim for selected pzl, first time for language.
+            donateButton = new DonateButton(btDonate, iniDonated, () => numClicks, 120, () => lblPuzzleState.Text == "");
             TranslateLabels();
 
             foreach (var lbl in _squareLabels)
@@ -66,7 +70,7 @@ namespace ChessUI
             cbPromoteTo.SelectedItem = cbPromoteTo.Items.Cast<PawnPromotionEx>().First(p => p.To == PawnPromotion.Queen);
 
             FillPuzzleSetsComboBox();
-            ReadIniFile();      // inifile is read twice, second tim for selected pzl, first time for language.
+            iniFile.Read();      // inifile is read twice, second tim for selected pzl, first time for language.
         }
 
         void ReadPuzzles()
@@ -160,7 +164,7 @@ namespace ChessUI
 
             foreach (var c in new Control[] { cbFlipBoard, btLichess, btNext, lblWhoseTurn, lblPuzzleNum,
                 cbPuzzleSets, cbPromoteTo, lblPromoteTo, btCreatePuzleSet, lblPuzzleId, btAbout, btHelp,
-                cbLanguage, lblRoundText, lblRound, lblPuzzleState, tlpSetState})
+                cbLanguage, lblRoundText, lblRound, lblPuzzleState, tlpSetState, btDonate})
                 c.Location = AddDxDy(c.Location, (int)(9.5 * delta), 0);
         }
 
@@ -277,8 +281,15 @@ namespace ChessUI
         private PawnPromotion? GetPromotion(Square? from, Square to) => _gameBoard.
             IsPromotionMove(from, to) ? ((PawnPromotionEx)cbPromoteTo.SelectedItem).To : (PawnPromotion?)null;
 
+        private void IncNumClicks()
+        {
+            if (++numClicks % 10 == 0)
+                iniFile.WriteNumNext();
+        }
+
         private void SquaresLabels_Click(object sender, EventArgs e)
         {
+            IncNumClicks();
             if (_isCurrPuzzleFinishedOk)
                 return;
             Label selectedLabel = (Label)sender;
@@ -356,17 +367,20 @@ namespace ChessUI
             else if (ok == false)
                 lblPuzzleState.Text = Res("Wrong!");
 
-            SetTlpState(0, lblPuzzlesCorrect, _puzzleSet.NumCorrect(_puzzleSet.CurrentRound));
-            SetTlpState(1, lblPuzzlesUntried, _puzzleSet.NumUntried(_puzzleSet.CurrentRound));
-            SetTlpState(2, lblPuzzlesWithError, _puzzleSet.NumErrors(_puzzleSet.CurrentRound));
+            donateButton.SetState();
+
+            SetCorrectTodoErrorState(0, lblPuzzlesCorrect, _puzzleSet.NumCorrect(_puzzleSet.CurrentRound));
+            SetCorrectTodoErrorState(1, lblPuzzlesUntried, _puzzleSet.NumUntried(_puzzleSet.CurrentRound));
+            SetCorrectTodoErrorState(2, lblPuzzlesWithError, _puzzleSet.NumErrors(_puzzleSet.CurrentRound));
         }
 
-        void SetTlpState(int colnum, Label lbl, int nPu)
+         void SetCorrectTodoErrorState(int colnum, Label lbl, int nPu)
         {
             float perc = 100.0f * nPu / _puzzleSet.NumTotal;
             if (nPu > 0)
             {
                 lbl.Text = "" + nPu;
+                // ab 14% passen 1 und noch ne Ziffer drauf. 
                 if (perc >= 8)
                     tlpSetState.ColumnStyles[colnum] = new ColumnStyle(SizeType.Percent, perc);
                 else
@@ -495,6 +509,7 @@ namespace ChessUI
 
         private void btNext_Click(object sender, EventArgs e)
         {
+            IncNumClicks();
             if (_puzzleSet != null && _puzzleSet.HasPuzzles)
             {
                 _isCurrPuzzleFinishedOk = false;
@@ -532,37 +547,9 @@ namespace ChessUI
 
             ReadPuzzles();
             _isCurrPuzzleFinishedOk = true;
-            WriteIniFile();
+            iniFile.Write();
             btNext_Click(this, null);
         }
-
-        private void WriteIniFile()
-        {
-            if (!isReadingIniFile)
-            {
-                var iniLines = $@"
-                    PuzzleSet={_currPuzzleSetName}
-                    Language={cbLanguage.SelectedItem}".SplitToLines();
-                File.WriteAllLines(IniFileName, iniLines);
-            }
-        }
-
-        private void ReadIniFile()
-        {
-            if (File.Exists(IniFileName))
-            {
-                isReadingIniFile = true;
-                var lines = File.ReadAllLines(IniFileName).ToLi();
-                cbPuzzleSets.SelectedItem = lines[0].Split('=')[1];
-                if (lines.Count >= 2)
-                    cbLanguage.SelectedItem = lines[1].Split('=')[1];
-                isReadingIniFile = false;
-            }
-        }
-
-        private bool isReadingIniFile;
-
-        const string IniFileName = "ChessPuzzlePecker.ini";
 
         private void btCreatePuzzleSet_Click(object sender, EventArgs e)
         {
@@ -583,10 +570,12 @@ namespace ChessUI
 
         private void btAbout_Click(object sender, EventArgs e) => new AboutBox().ShowDialog();
 
+        private void btDonate_Click(object sender, EventArgs e) => new AboutBox(true).ShowDialog();
+
         private void cbLanguage_SelectedIndexChanged(object sender, EventArgs e)
         {
             Form1.Language = (string)cbLanguage.SelectedItem;
-            WriteIniFile();
+            iniFile.Write();
             // Changing the language happens extremely seldom.
             TranslateLabels();
         }

@@ -8,8 +8,7 @@ using System.Media;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using AwiUtils;
-using PuzzleKnocker;
-using PuzzleKnocker.Properties;
+using ChessKnocker.Properties;
 using ChessSharp;
 using ChessSharp.Pieces;
 using ChessSharp.SquareData;
@@ -17,7 +16,6 @@ using PuzzlePecker;
 
 namespace PuzzleKnocker
 {
-
     public partial class Form1 : Form
     {
         private readonly Label[] _squareLabels;
@@ -29,7 +27,7 @@ namespace PuzzleKnocker
         bool _isCurrPuzzleFinishedOk;
         private Dictionary<string, DateTime> _puzzlesWithError = new Dictionary<string, DateTime>();
         static public string Language { get; set; } = "EN";
-        public const string EnglishTitle = "Chess Puzzle Knocker";
+        public const string EnglishTitle = "Chess Knocker";
         int numClicks;
         readonly KnockerIniFile iniFile;
         readonly DonateButton donateButton;
@@ -457,7 +455,7 @@ namespace PuzzleKnocker
                     }
                     else
                     {
-                        lbl.BackgroundImage = (Image)PuzzleKnocker.Properties.Resources.ResourceManager.
+                        lbl.BackgroundImage = (Image)ChessKnocker.Properties.Resources.ResourceManager.
                             GetObject($"{piece.Owner}{piece.GetType().Name}");
                         (lbl.Tag as SquareTag).PieceCol = piece.Owner;
                     }

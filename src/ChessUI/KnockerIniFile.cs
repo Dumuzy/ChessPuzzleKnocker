@@ -49,7 +49,7 @@ namespace PuzzleKnocker
 
             bool isReading;
             readonly string dir;
-            const string filename = "ChessPuzzleKnocker.ini", Section = "Allgemein";
+            const string filename = "ChessKnocker.ini", Section = "Allgemein";
             readonly Form1 form;
             readonly IniFile ini;
         }

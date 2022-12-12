@@ -5,7 +5,7 @@ VisualStudioVersion = 17.3.32929.385
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChessSharp", "ChessSharp\ChessSharp.csproj", "{14AF9C40-B183-41EB-A2FB-40D97EC71125}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChessPuzzleKnocker", "ChessUI\ChessPuzzleKnocker.csproj", "{1A14EB92-18BF-4CEB-AAB2-1E5E357EC84D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChessKnocker", "ChessUI\ChessKnocker.csproj", "{1A14EB92-18BF-4CEB-AAB2-1E5E357EC84D}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AwiUtils", "AwiUtils\AwiUtils.csproj", "{4DB8FAD5-D6E1-4E3D-8D31-2041AD8265A6}"
 EndProject

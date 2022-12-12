@@ -21,7 +21,7 @@ namespace PuzzleKnocker
             {
                 AddLink2Label(linkLabel1, "Lichess", "https://lichess.org/");
                 AddLink2Label(linkLabel1, "Schachclub Ittersbach", "http://schachclub-ittersbach.de/");
-                AddLink2Label(linkLabel1, "Dumuzy@Github", "https://github.com/Dumuzy/ChessPuzzlePecker");
+                AddLink2Label(linkLabel1, "Dumuzy@Github", "https://github.com/Dumuzy/ChessPuzzleKnocker");
             }
             AddLink2Label(linkLabel1, "Alakaluf at Lichess", "https://lichess.org/@/Alakaluf");
             AddLink2Label(linkLabel1, "Paypal", "https://www.paypal.com");

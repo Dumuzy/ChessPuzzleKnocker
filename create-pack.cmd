@@ -11,7 +11,6 @@ for /f usebackq %%i in (`tclsh extract-vers.tcl %projfile%`) do (
   set vers=%%i
 )
 
-set vers=1.0.1
 set temp0=C:\tmp\ckno\
 set packname=ChessKnocker_%vers%
 set tempdir=%temp0%%packname%

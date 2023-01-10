@@ -24,9 +24,20 @@ namespace PuzzleKnocker
                     ini.WriteValue(Section, "PuzzleSet", form._currPuzzleSetName);
                     ini.WriteValue(Section, "Language", form.cbLanguage.SelectedItem.ToString());
                     WriteNumNext();
+                    WriteWindowSizePercent();
                     ini.Flush();
                 }
             }
+
+            public void WriteWindowSizePercent()
+            {
+                if (!isReading)
+                {
+                    var nnc = form.windowSizePercent; // needed because of CS1690
+                    ini.WriteValue(Section, "WindowSizePercent", Helper.ToInt(nnc).ToString());
+                }
+            }
+
 
             public void WriteNumNext()
             {
@@ -44,6 +55,7 @@ namespace PuzzleKnocker
                 form.cbLanguage.SelectedItem = ini.ReadValue(Section, "Language", "EN");
                 form.numClicks = Helper.ToInt(ini.ReadValue(Section, "Next", "0"));
                 form.iniDonated = ini.ReadValue(Section, "Donated", "Lasker");
+                form.windowSizePercent = Helper.ToInt(ini.ReadValue(Section, "WindowSizePercent", "70"));
                 isReading = false;
             }
 

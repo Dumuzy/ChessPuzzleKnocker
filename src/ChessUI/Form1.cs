@@ -24,13 +24,17 @@ namespace PuzzleKnocker
         private PuzzleGame _gameBoard = new PuzzleGame("00143,r2q1rk1/5ppp/1np5/p1b5/2p1B3/P7/1P3PPP/R1BQ1RK1 b - - 1 17,d8f6 d1h5 h7h6 h5c5,1871,75,93,790,advantage middlegame short,https://lichess.org/jcuxlI63/black#34");
         private PuzzleSet _puzzleSet;
         string _currPuzzleSetName, iniDonated;
-        bool _isCurrPuzzleFinishedOk;
+        bool _isCurrPuzzleFinishedOk, shallIgnoreResizeEvent = true;
         private Dictionary<string, DateTime> _puzzlesWithError = new Dictionary<string, DateTime>();
         static public string Language { get; set; } = "EN";
         public const string EnglishTitle = "Chess Knocker";
-        int numClicks;
+        int numClicks; 
+        double windowSizePercent;
         readonly KnockerIniFile iniFile;
         readonly DonateButton donateButton;
+        readonly Size defaultSize;
+        Size currSize;
+
 
         class SquareTag
         {
@@ -47,6 +51,7 @@ namespace PuzzleKnocker
         public Form1()
         {
             InitializeComponent();
+            this.defaultSize = this.currSize = Size;
             this.iniFile = new KnockerIniFile(this);
             this.Text = EnglishTitle;
             _squareLabels = Controls.OfType<Label>().Where(m => Regex.IsMatch(m.Name, "lbl_[A-H][1-8]")).ToArray();
@@ -62,7 +67,7 @@ namespace PuzzleKnocker
                 lbl.BackgroundImageLayout = ImageLayout.Zoom;
                 lbl.Click += SquaresLabels_Click;
             }
-            this.ResizeForm(0.7);
+            this.ResizeForm(windowSizePercent / 100.0);
 
             foreach (PawnPromotion p in Enum.GetValues(typeof(PawnPromotion)))
                 cbPromoteTo.Items.Add(new PawnPromotionEx(p, Res(p.ToString())));
@@ -131,12 +136,16 @@ namespace PuzzleKnocker
         }
         #endregion Translation
 
-        private void ResizeForm(double faktor)
+        private void ResizeForm(double faktor, bool isCalledFromEvent = false)
         {
+            shallIgnoreResizeEvent = true;
             var currLblSize = _squareLabels.First().Size;
             var newLblSize = new Size((int)(currLblSize.Width * faktor), (int)(currLblSize.Height * faktor));
             var delta = newLblSize.Width - currLblSize.Width;
-            this.Size = new Size((int)(Size.Width * faktor), (int)(Size.Height * faktor));
+            if (!isCalledFromEvent)
+                this.Size = new Size((int)(Size.Width * faktor), (int)(Size.Height * faktor));
+            else
+                windowSizePercent *= faktor;
             foreach (var sl in _squareLabels)
             {
                 sl.Size = newLblSize;
@@ -165,6 +174,8 @@ namespace PuzzleKnocker
                 cbPuzzleSets, cbPromoteTo, lblPromoteTo, btCreatePuzleSet, lblPuzzleId, btAbout, btHelp,
                 cbLanguage, lblRoundText, lblRound, lblPuzzleState, tlpSetState, btDonate})
                 c.Location = AddDxDy(c.Location, (int)(9.5 * delta), 0);
+            currSize = this.Size;
+            shallIgnoreResizeEvent = false;
         }
 
         static Point AddDxDy(Point p, int dx, int dy)
@@ -373,7 +384,7 @@ namespace PuzzleKnocker
             SetCorrectTodoErrorState(2, lblPuzzlesWithError, _puzzleSet.NumErrors(_puzzleSet.CurrentRound));
         }
 
-         void SetCorrectTodoErrorState(int colnum, Label lbl, int nPu)
+        void SetCorrectTodoErrorState(int colnum, Label lbl, int nPu)
         {
             float perc = 100.0f * nPu / _puzzleSet.NumTotal;
             if (nPu > 0)
@@ -591,7 +602,23 @@ namespace PuzzleKnocker
                 _helpState++;
             }
         }
-
         private int _helpState;
+
+        protected override void OnResizeEnd(EventArgs e) 
+        {
+            iniFile.WriteWindowSizePercent();
+            // TODO: All positions of all labels and stuff should be corrected at latest here. 
+        }
+
+        protected override void OnResize(EventArgs e)
+        {
+            if (!shallIgnoreResizeEvent)
+            {
+                var fak = 1.0 * Size.Width / currSize.Width;
+                if (fak < 0.95 || fak > 1.05)
+                    ResizeForm(fak, true);
+            }
+        }
+
     }
 }

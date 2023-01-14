@@ -28,12 +28,15 @@ namespace PuzzleKnocker
         private Dictionary<string, DateTime> _puzzlesWithError = new Dictionary<string, DateTime>();
         static public string Language { get; set; } = "EN";
         public const string EnglishTitle = "Chess Knocker";
-        int numClicks; 
-        double windowSizePercent;
+        int numClicks;
         readonly KnockerIniFile iniFile;
         readonly DonateButton donateButton;
         readonly Size defaultSize;
+        double windowSizePercent;
         Size currSize;
+        readonly Point boardLeftTop = new Point(10, 28);
+        readonly Size origSquareSize = new Size(70, 66);
+
 
 
         class SquareTag
@@ -56,6 +59,9 @@ namespace PuzzleKnocker
             this.Text = EnglishTitle;
             _squareLabels = Controls.OfType<Label>().Where(m => Regex.IsMatch(m.Name, "lbl_[A-H][1-8]")).ToArray();
             _sideLabels = Controls.OfType<Label>().Where(m => Regex.IsMatch(m.Name, "^label[A-H1-8]$")).ToLiro();
+            Font labelFont = new Font("Segoe UI", 24f, FontStyle.Regular, GraphicsUnit.Point, (byte)(0));
+            foreach (var lbl in _sideLabels)
+                lbl.Font = labelFont;
 
             iniFile.Read();      // inifile is read twice, second tim for selected pzl, first time for language.
             donateButton = new DonateButton(btDonate, iniDonated, () => numClicks, 120, () => lblPuzzleState.Text == "");
@@ -136,54 +142,79 @@ namespace PuzzleKnocker
         }
         #endregion Translation
 
+        #region Resizing
         private void ResizeForm(double faktor, bool isCalledFromEvent = false)
         {
             shallIgnoreResizeEvent = true;
-            var currLblSize = _squareLabels.First().Size;
-            var newLblSize = new Size((int)(currLblSize.Width * faktor), (int)(currLblSize.Height * faktor));
-            var delta = newLblSize.Width - currLblSize.Width;
+            var oldSquareSize = _squareLabels.First().Size;
             if (!isCalledFromEvent)
                 this.Size = new Size((int)(Size.Width * faktor), (int)(Size.Height * faktor));
             else
                 windowSizePercent *= faktor;
+            var squareSize = new Size((int)(origSquareSize.Width * windowSizePercent / 100.0),
+                (int)(origSquareSize.Height * windowSizePercent / 100.0));
+
             foreach (var sl in _squareLabels)
             {
-                sl.Size = newLblSize;
-                var dx = (sl.Name[4] - 'A') * delta;
-                var dy = (-(sl.Name[5] - '8')) * delta;
-                sl.Location = AddDxDy(sl.Location, dx, dy);
+                sl.Size = squareSize;
+                sl.Location = GetLeftTopOfSquare(squareSize, sl.Name);
             }
+
+            var labelFont = new System.Drawing.Font("Seqoe UI",
+                (float)(_sideLabels.First().Font.Size * faktor), FontStyle.Regular, GraphicsUnit.Point, (byte)(0));
+
+            foreach (var lbl in _sideLabels)
+                lbl.Font = labelFont;
 
             var fileLabels = _sideLabels.Where(m => Regex.IsMatch(m.Name, "^label[A-H]$")).ToLi();
             foreach (var lbl in fileLabels)
-            {
-                var dx = (int)((lbl.Text[0] - 'A' + 0.3) * delta);
-                var dy = (int)((8) * delta);
-                lbl.Location = AddDxDy(lbl.Location, dx, dy);
-            }
+                lbl.Location = GetLeftTopOfFileLabel(squareSize, lbl);
 
             var rowLabels = _sideLabels.Where(m => Regex.IsMatch(m.Name, "^label[1-8]$")).ToLi();
             foreach (var lbl in rowLabels)
-            {
-                var dx = 8 * delta;
-                var dy = (int)((8 - (lbl.Text[0] - '1') - 0.6) * delta);
-                lbl.Location = AddDxDy(lbl.Location, dx, dy);
-            }
+                lbl.Location = GetLeftTopOfRowLabel(squareSize, lbl);
 
+            var ddelta = squareSize.Width - oldSquareSize.Width;
             foreach (var c in new Control[] { cbFlipBoard, btLichess, btNext, lblWhoseTurn, lblPuzzleNum,
                 cbPuzzleSets, cbPromoteTo, lblPromoteTo, btCreatePuzleSet, lblPuzzleId, btAbout, btHelp,
                 cbLanguage, lblRoundText, lblRound, lblPuzzleState, tlpSetState, btDonate})
-                c.Location = AddDxDy(c.Location, (int)(9.5 * delta), 0);
+                c.Location = AddDxDy(c.Location, (int)(9.5 * ddelta), 0);
             currSize = this.Size;
             shallIgnoreResizeEvent = false;
         }
 
-        static Point AddDxDy(Point p, int dx, int dy)
+        static Point AddDxDy(Point p, double dx, double dy)
         {
             var v = new VAPointI(p.X, p.Y);
-            v += new VAPointI(dx, dy);
+            v += new VAPointI((int)Math.Round(dx, 0), (int)Math.Round(dy, 0));
             return new Point(v.X, v.Y);
         }
+
+        /// <param name="labelName">lbl_A4 o the like</param>
+        Point GetLeftTopOfSquare(Size squareSize, string labelName)
+        {
+            int file = (labelName[4] - 'A'), row = -(labelName[5] - '8');
+            var left = boardLeftTop.X + file * squareSize.Width;
+            var top = boardLeftTop.Y + row * squareSize.Height;
+            return new Point(left, top);
+        }
+
+        Point GetLeftTopOfRowLabel(Size squareSize, Label lbl)
+        {
+            var p = GetLeftTopOfSquare(squareSize, "lbl_I" + lbl.Text[0]);
+            p.Y += (int)(0.5 * squareSize.Height - 0.5 * lbl.Size.Height);
+            p.X += (int)(0.2 * lbl.Size.Width);
+            return p;
+        }
+
+        Point GetLeftTopOfFileLabel(Size squareSize, Label lbl)
+        {
+            var p = GetLeftTopOfSquare(squareSize, "lbl_" + lbl.Text[0] + "0");
+            p.X += (int)(0.5 * squareSize.Width - 0.5 * lbl.Size.Width);
+            p.Y += (int)(0.2 * lbl.Size.Height);
+            return p;
+        }
+        #endregion Resizing
 
         #region Board flipping
         private Player PlayerAtBottom =>
@@ -604,7 +635,7 @@ namespace PuzzleKnocker
         }
         private int _helpState;
 
-        protected override void OnResizeEnd(EventArgs e) 
+        protected override void OnResizeEnd(EventArgs e)
         {
             iniFile.WriteWindowSizePercent();
             // TODO: All positions of all labels and stuff should be corrected at latest here. 
@@ -615,10 +646,13 @@ namespace PuzzleKnocker
             if (!shallIgnoreResizeEvent)
             {
                 var fak = 1.0 * Size.Width / currSize.Width;
-                if (fak < 0.95 || fak > 1.05)
+                if (fak < 0.97 || fak > 1.03)
+                {
+                    if (windowSizePercent * fak > 128)
+                        fak = 128 / windowSizePercent;
                     ResizeForm(fak, true);
+                }
             }
         }
-
     }
 }

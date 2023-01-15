@@ -330,10 +330,24 @@ namespace PuzzleKnocker
 
         private void SquaresLabels_Click(object sender, EventArgs e)
         {
+            Label selectedLabel = (Label)sender;
+            var me = e as MouseEventArgs;
+            if (me.Button == MouseButtons.Right)
+                SquaresLabels_RightClick(selectedLabel, e);
+            else
+                SquaresLabels_Click(selectedLabel, e);
+        }
+
+        private void SquaresLabels_RightClick(Label selectedLabel, EventArgs e)
+        {
+            selectedLabel.BackColor = Color.Orange;
+        }
+
+        private void SquaresLabels_Click(Label selectedLabel, EventArgs e)
+        {
             IncNumClicks();
             if (_isCurrPuzzleFinishedOk)
                 return;
-            Label selectedLabel = (Label)sender;
             // First click
             if (_selectedSourceSquare == null)
             {

@@ -21,7 +21,7 @@ namespace PuzzleKnocker
         private readonly Label[] _squareLabels;
         private readonly Liro<Label> _sideLabels;
         private Square? _selectedSourceSquare;
-        private PuzzleGame _gameBoard = new PuzzleGame("00143,r2q1rk1/5ppp/1np5/p1b5/2p1B3/P7/1P3PPP/R1BQ1RK1 b - - 1 17,d8f6 d1h5 h7h6 h5c5,1871,75,93,790,advantage middlegame short,https://lichess.org/jcuxlI63/black#34");
+        private PuzzleGame _gameBoard = null; // = new PuzzleGame("00143,r2q1rk1/5ppp/1np5/p1b5/2p1B3/P7/1P3PPP/R1BQ1RK1 b - - 1 17,d8f6 d1h5 h7h6 h5c5,1871,75,93,790,advantage middlegame short,https://lichess.org/jcuxlI63/black#34");
         private PuzzleSet _puzzleSet;
         string _currPuzzleSetName, iniDonated;
         bool _isCurrPuzzleFinishedOk, shallIgnoreResizeEvent = true;
@@ -357,7 +357,7 @@ namespace PuzzleKnocker
                 if ((selectedLabel.Tag as SquareTag).PieceCol != _gameBoard.WhoseTurn)
                     return;
                 _selectedSourceSquare = (selectedLabel.Tag as SquareTag).Square;
-                var validDestinations = ChessUtilities.GetValidMovesOfSourceSquare(_selectedSourceSquare.Value, _gameBoard).Select(m => m.Destination).ToArray();
+                var validDestinations = ChessUtilities.GetValidMovesOfSourceSquare(_gameBoard, _selectedSourceSquare.Value).Select(m => m.Destination).ToArray();
                 if (validDestinations.Length == 0)
                 {
                     _selectedSourceSquare = null;
@@ -369,7 +369,7 @@ namespace PuzzleKnocker
             {
                 // Second click
                 var targetSquare = (selectedLabel.Tag as SquareTag).Square;
-                var validDestinations = ChessUtilities.GetValidMovesOfSourceSquare(_selectedSourceSquare.Value, _gameBoard).
+                var validDestinations = ChessUtilities.GetValidMovesOfSourceSquare(_gameBoard, _selectedSourceSquare.Value).
                     Select(m => m.Destination).ToLi();
                 if (validDestinations.Contains(targetSquare))
                 {

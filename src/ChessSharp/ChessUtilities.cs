@@ -1,4 +1,5 @@
-﻿using ChessSharp.Pieces;
+﻿using AwiUtils;
+using ChessSharp.Pieces;
 using ChessSharp.SquareData;
 using System;
 using System.Collections.Generic;
@@ -23,16 +24,15 @@ namespace ChessSharp
         /// <summary>Gets the valid moves of the given <see cref="ChessGame"/>.</summary>
         /// <param name="board">The <see cref="ChessGame"/> that you want to get its valid moves.</param>
         /// <returns>Returns a list of the valid moves.</returns>
-        public static List<Move> GetValidMoves(ChessGame board)
+        public static Li<Move> GetValidMoves(ChessGame board)
         {
             // Although nullable is enabled and board is non-nullable ref type, this check is needed
             // because this is a public method that can be used by an application that doesn't have
             // nullable enabled.
             _ = board ?? throw new ArgumentNullException(nameof(board));
             
-
             Player player = board.WhoseTurn;
-            var validMoves = new List<Move>();
+            var validMoves = new Li<Move>();
 
             IEnumerable<Square> playerOwnedSquares = s_allSquares.Where(sq => board[sq.File, sq.Rank]?.Owner == player);
             Square[] nonPlayerOwnedSquares = s_allSquares.Where(sq => board[sq.File, sq.Rank]?.Owner != player).ToArray(); // Converting to array to avoid "Possible multiple enumeration" as suggested by ReSharper.
@@ -43,7 +43,6 @@ namespace ChessSharp
                     .Select(nonPlayerOwnedSquare => new Move(playerOwnedSquare, nonPlayerOwnedSquare, player))
                     .Where(move => ChessGame.IsValidMove(move, board)));
             }
-
             return validMoves;
         }
 
@@ -52,17 +51,15 @@ namespace ChessSharp
         /// <param name="board">The <see cref="ChessGame"/> that you want to get its valid moves from the specified square.</param>
         /// <returns>Returns a list of the valid moves that has the given source square.</returns>
         /// 
-        public static List<Move> GetValidMovesOfSourceSquare(Square source, ChessGame board)
+        public static Li<Move> GetValidMovesOfSourceSquare(ChessGame board, Square source)
         {
             if (board == null || source == null)
                 throw new ArgumentNullException(nameof(board) + " or " + nameof(source));
 
-            var validMoves = new List<Move>();
+            var validMoves = new Li<Move>();
             Piece? piece = board[source.File, source.Rank];
             if (piece == null || piece.Owner != board.WhoseTurn)
-            {
                 return validMoves;
-            }
 
             Player player = piece.Owner;
             Square[] nonPlayerOwnedSquares = s_allSquares.Where(sq => board[sq.File, sq.Rank]?.Owner != player).ToArray();
@@ -73,6 +70,33 @@ namespace ChessSharp
             return validMoves;
         }
 
+        public static Li<Move> GetValidMovesOfTargetSquare(ChessGame board, Square target, Type pieceType)
+        {
+            if (board == null || target == null)
+                throw new ArgumentNullException(nameof(board) + " or " + nameof(target));
+
+            var validMoves = GetValidMoves(board);
+            validMoves = validMoves.Where(m => m.Destination == target && board[m.Source]?.Owner == board.WhoseTurn 
+                    && board[m.Source]?.GetType() == pieceType).ToLi();
+            return validMoves;
+        }
+
+        public static Type PieceTypeFromChar(char c)
+        {
+            switch (c)
+            {
+                case 'K': return typeof(King);
+                case 'D':
+                case 'Q': return typeof(Queen);
+                case 'T':
+                case 'R': return typeof(Rook);
+                case 'L':
+                case 'B': return typeof(Bishop);
+                case 'S':
+                case 'N': return typeof(Knight);
+            }
+            throw new NotImplementedException();
+        }
 
         internal static bool IsPlayerInCheck(Player player, ChessGame board)
         {

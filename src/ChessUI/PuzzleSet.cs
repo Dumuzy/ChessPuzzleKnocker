@@ -11,6 +11,7 @@ using AwiUtils;
 using static System.Windows.Forms.LinkLabel;
 using System.Windows.Forms;
 using System.Net;
+using System.Reflection.Metadata.Ecma335;
 
 namespace PuzzlePecker
 {
@@ -299,13 +300,15 @@ internal class Puzzle
 
     public int NumTriedTotal { get; private set; }
 
-    public string LichessId => SLichessPuzzle.Split(',', 2)[0];
+    public string LichessId => SPuzzle.Split(',', 2)[0];
 
-    public string Rating => SLichessPuzzle.Split(',')[3];
+    public string Rating => SPuzzle.Split(',')[3];
 
     public override string ToString() => $"TT={NumTriedInRound} C={NumCorrect} E= P={SLichessPuzzle}";
 
     public string ToDbString() => $"TR={NumTriedInRound};C={NumCorrect};TT={NumTriedTotal};P={SLichessPuzzle}";
+
+    private string SPuzzle => SLichessPuzzle.Split(',').Length >= 4 ?  SLichessPuzzle : ",,,,,";
 
     public void Read(string dbString)
     {

@@ -6,24 +6,19 @@ namespace ChessSharp.SquareData
 {
     internal class Parser
     {
-        private static Linie ParseFile(char file)
+        public static Linie ParseFile(char file)
         {
             // Culture doesn't really matter here, but to silence CA1304
             file = char.ToUpper(file, CultureInfo.InvariantCulture);
             if (file < 'A' || file > 'H')
-            {
                 throw new ArgumentOutOfRangeException(nameof(file));
-            }
-
             return (Linie)(file - 'A');
         }
 
-        private static Rank ParseRank(char rank)
+        public static Rank ParseRank(char rank)
         {
             if (rank < '1' || rank > '8')
-            {
                 throw new ArgumentOutOfRangeException(nameof(rank));
-            }
             return (Rank)(rank - '1');
         }
 

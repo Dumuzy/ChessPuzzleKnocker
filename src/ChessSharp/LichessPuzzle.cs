@@ -105,7 +105,7 @@ namespace ChessSharp
                     throw new NotImplementedException();
                     // var possMoves = ChessUtilities.GetValidMovesOfTargetSquare(game, Square.Create(toString), typeof(Pawn));
                 }
-                else if (sMove[sMove.Length - 1].IsContainedIn(piecesChars))
+                else if (sMove[^1].IsContainedIn(piecesChars)) // 1 from end == last char. 
                 {
                     // Bauernumwandlungszug
                     possMoves = possMoves.Where(m => m.Source.File == Parser.ParseFile(sMove[0])).ToLi();

@@ -54,10 +54,7 @@ namespace ChessSharp.SquareData
     /// <summary>Represents a chess square.</summary>
     public struct Square : IEquatable<Square>
     {
-
-        /// <summary>
-        /// Initializes a new instance of the <c>Square</c>class.
-        /// </summary>
+        /// <summary> Initializes a new instance of the <c>Square</c>class. </summary>
         /// <param name="file">A <see cref="SquareData.Linie"/> enum representing the file of the square.</param>
         /// <param name="rank">A <see cref="SquareData.Rank"/> enum representing the rank of the square.</param>
         public Square(Linie file, Rank rank)

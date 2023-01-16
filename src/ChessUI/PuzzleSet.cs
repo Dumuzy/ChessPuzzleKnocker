@@ -56,7 +56,7 @@ namespace PuzzlePecker
                     RebasePuzzles();
                 if (Puzzles[currentPuzzleNum + 1].NumCorrect != CurrentRound - 1)
                     RebasePuzzles();
-                game = new PuzzleGame(Puzzles[++currentPuzzleNum].SLichessPuzzle);
+                game = new PuzzleGame(Puzzles[++currentPuzzleNum].SRawPuzzle);
             }
             return game;
         }
@@ -144,7 +144,7 @@ namespace PuzzlePecker
                 // for debugging
                 foreach (var f in Filters)
                 {
-                    var num = puzzles.Values.Where(p => f.IsMatching(p.SLichessPuzzle.Split(',').ToLiro())).Count();
+                    var num = puzzles.Values.Where(p => f.IsMatching(p.SRawPuzzle.Split(',').ToLiro())).Count();
                     Debug.WriteLine($"Filter={f} Num={num}");
                 }
                 if (puzzles.Count < NumPuzzlesWanted)
@@ -283,12 +283,12 @@ internal class Puzzle
 {
     public Puzzle(string sLichessPuzzle)
     {
-        this.SLichessPuzzle = sLichessPuzzle;
+        this.SRawPuzzle = sLichessPuzzle;
     }
 
     public Puzzle(string dbString, int dummy) => Read(dbString);
 
-    public string SLichessPuzzle { get; private set; }
+    public string SRawPuzzle { get; private set; }
 
     public int NumCorrect { get; set; }
 
@@ -304,11 +304,11 @@ internal class Puzzle
 
     public string Rating => SPuzzle.Split(',')[3];
 
-    public override string ToString() => $"TT={NumTriedInRound} C={NumCorrect} E= P={SLichessPuzzle}";
+    public override string ToString() => $"TT={NumTriedInRound} C={NumCorrect} E= P={SRawPuzzle}";
 
-    public string ToDbString() => $"TR={NumTriedInRound};C={NumCorrect};TT={NumTriedTotal};P={SLichessPuzzle}";
+    public string ToDbString() => $"TR={NumTriedInRound};C={NumCorrect};TT={NumTriedTotal};P={SRawPuzzle}";
 
-    private string SPuzzle => SLichessPuzzle.Split(',').Length >= 4 ?  SLichessPuzzle : ",,,,,";
+    private string SPuzzle => SRawPuzzle.Split(',').Length >= 4 ?  SRawPuzzle : ",,,,,";
 
     public void Read(string dbString)
     {
@@ -321,11 +321,11 @@ internal class Puzzle
                 case "C": NumCorrect = Helper.ToInt(parts2[1]); break;
                 case "TT": NumTriedTotal = Helper.ToInt(parts2[1]); break;
                 case "TR": NumTriedInRound = Helper.ToInt(parts2[1]); break;
-                case "P": SLichessPuzzle = parts2[1]; break;
+                case "P": SRawPuzzle = parts2[1]; break;
             }
         }
     }
 
-    public override int GetHashCode() => (LichessId + Rating).GetHashCode();
+    public override int GetHashCode() => SRawPuzzle.GetHashCode();
 }
 

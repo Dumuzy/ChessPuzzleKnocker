@@ -14,17 +14,17 @@ namespace ChessSharp
         /// <summary>Gets <see cref="Piece"/> in a specific square.</summary>
         /// <param name="file">The <see cref="Linie"/> of the square.</param>
         /// <param name="rank">The <see cref="Rank"/> of the square.</param>
-        public Piece? this[Linie file, Rank rank] => Board[(int)rank][(int)file];
+        public Piece this[Linie file, Rank rank] => Board[(int)rank][(int)file];
 
-        public Piece? this[Square sq] => Board[(int)sq.Rank][(int)sq.File];
+        public Piece this[Square sq] => Board[(int)sq.Rank][(int)sq.File];
 
-        public void SetPiece(Square sq, Piece? p) => Board[(int)sq.Rank][(int)sq.File] = p;
+        public void SetPiece(Square sq, Piece p) => Board[(int)sq.Rank][(int)sq.File] = p;
 
         /// <summary>Gets a list of the game moves.</summary>
         public Li<Move> Moves { get; private set; } // TODO: BAD! Investigate why the class consumer would even need this. Make it a private field if appropriate. And make it some kind of interface (`IEnumerable` for example).
 
         /// <summary>Gets a 2D array of <see cref="Piece"/>s in the board.</summary>
-        public Piece?[][] Board { get; private set; } // TODO: It's bad idea to expose this to public.
+        public Piece[][] Board { get; private set; } // TODO: It's bad idea to expose this to public.
 
         /// <summary>Gets the <see cref="Player"/> who has turn.</summary>
         public Player WhoseTurn { get; private set; } = Player.White;

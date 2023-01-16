@@ -50,7 +50,6 @@ namespace ChessSharp
         /// <param name="source">The source <see cref="Square"/> that you're looking for its valid moves.</param>
         /// <param name="board">The <see cref="ChessGame"/> that you want to get its valid moves from the specified square.</param>
         /// <returns>Returns a list of the valid moves that has the given source square.</returns>
-        /// 
         public static Li<Move> GetValidMovesOfSourceSquare(ChessGame board, Square source)
         {
             if (board == null || source == null)
@@ -76,8 +75,8 @@ namespace ChessSharp
                 throw new ArgumentNullException(nameof(board) + " or " + nameof(target));
 
             var validMoves = GetValidMoves(board);
-            validMoves = validMoves.Where(m => m.Destination == target && board[m.Source]?.Owner == board.WhoseTurn 
-                    && board[m.Source]?.GetType() == pieceType).ToLi();
+            validMoves = validMoves.Where(m => m.Destination == target && board[m.Source].Owner == board.WhoseTurn 
+                    && board[m.Source].GetType() == pieceType).ToLi();
             return validMoves;
         }
 
@@ -110,6 +109,5 @@ namespace ChessSharp
                     where piece.IsValidGameMove(move, board)
                     select piece).Any();
         }
-
     }
 }

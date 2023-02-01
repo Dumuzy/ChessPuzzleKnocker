@@ -36,6 +36,7 @@ namespace PuzzleKnocker
         Size currSize;
         readonly Point boardLeftTop = new Point(10, 28);
         readonly Size origSquareSize = new Size(70, 66);
+        Li<PuzzleGame> lastGameStates = new Li<PuzzleGame>();
 
 
 
@@ -177,7 +178,8 @@ namespace PuzzleKnocker
             var ddelta = squareSize.Width - oldSquareSize.Width;
             foreach (var c in new Control[] { cbFlipBoard, btLichess, btNext, lblWhoseTurn, lblPuzzleNum,
                 cbPuzzleSets, cbPromoteTo, lblPromoteTo, btCreatePuzleSet, lblPuzzleId, btAbout, btHelp,
-                cbLanguage, lblRoundText, lblRound, lblPuzzleState, tlpSetState, btDonate})
+                cbLanguage, lblRoundText, lblRound, lblPuzzleState, tlpSetState, btDonate,
+                btOnePlyBack, btOnePlyForward, btAllPliesBack, btAllPliesForward})
                 c.Location = AddDxDy(c.Location, (int)(9.5 * ddelta), 0);
             currSize = this.Size;
             shallIgnoreResizeEvent = false;
@@ -421,6 +423,7 @@ namespace PuzzleKnocker
                 lblPuzzleState.Text = Res("Correct!");
             else if (ok == false)
                 lblPuzzleState.Text = Res("Wrong!");
+            btOnePlyBack.Enabled = btOnePlyForward.Enabled = btAllPliesBack.Enabled = btAllPliesForward.Enabled = ok.HasValue;
 
             donateButton.SetState();
 
@@ -549,6 +552,7 @@ namespace PuzzleKnocker
                     MessageBox.Show("Invalid Move!", "Chess", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                     return;
                 }
+                lastGameStates.Add(_gameBoard.DeepClone() as PuzzleGame);
                 _gameBoard.MakeMove(move, isMoveValidated: true);
 
                 DrawBoard(GetPlayerInCheck());
@@ -569,6 +573,7 @@ namespace PuzzleKnocker
             {
                 _isCurrPuzzleFinishedOk = false;
                 _gameBoard = _puzzleSet.NextPuzzle();
+                lastGameStates.Clear();
                 if (_gameBoard != null)
                 {
                     SetSideOf();
@@ -649,10 +654,41 @@ namespace PuzzleKnocker
         }
         private int _helpState;
 
+        private void btOnePlyBack_Click(object sender, EventArgs e)
+        {
+            if (!lastGameStates.IsEmpty)
+            {
+                var g = lastGameStates.Last();
+                lastGameStates.RemoveAt(lastGameStates.Count - 1);
+                _gameBoard = g;
+                DrawBoard(GetPlayerInCheck());
+
+                Player whoseTurn = _gameBoard.WhoseTurn;
+                lblWhoseTurn.Text = Res(whoseTurn.ToString());
+            }
+        }
+
+        private void btOnePlyForward_Click(object sender, EventArgs e)
+        {
+            if (_gameBoard.HasMove)
+                _gameBoard.MakeMove(this.MakeMove);
+        }
+
+        private void btAllPliesBack_Click(object sender, EventArgs e)
+        {
+            while (!lastGameStates.IsEmpty)
+                btOnePlyBack_Click(sender, e);
+        }
+
+        private void btAllPliesForward_Click(object sender, EventArgs e)
+        {
+            while (_gameBoard.HasMove)
+                _gameBoard.MakeMove(this.MakeMove);
+        }
+
         protected override void OnResizeEnd(EventArgs e)
         {
             iniFile.WriteWindowSizePercent();
-            // TODO: All positions of all labels and stuff should be corrected at latest here. 
         }
 
         protected override void OnResize(EventArgs e)

@@ -371,11 +371,7 @@ namespace ChessSharp
 
         }
 
-        public ChessGame DeepClone()
-        {
-            var g = this.DeepTClone<ChessGame>();
-            return g;
-        }
+        public virtual ChessGame DeepClone() => this.DeepTClone<ChessGame>();
 
         protected LichessPuzzle puzzle;
     }

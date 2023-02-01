@@ -1,4 +1,5 @@
-﻿using ChessSharp.Pieces;
+﻿using AwiUtils;
+using ChessSharp.Pieces;
 using ChessSharp.SquareData;
 using System;
 using System.Linq;
@@ -13,9 +14,6 @@ namespace ChessSharp
                 MakeMove(CurrMove);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         /// <param name="formMakeMove"></param>
         /// <returns>true, if puzzle is finished.</returns>
         public bool MakeMoveAndAnswer(Action<Square, Square> formMakeMove, Move tryMove)
@@ -52,10 +50,12 @@ namespace ChessSharp
 
         public int NErrors { get; private set; }
 
+        public override ChessGame DeepClone() => this.DeepTClone<PuzzleGame>();
+
         private bool IsCorrectMove(Square from, Square to, PawnPromotion? pp) => HasMove &&
                     from == CurrMove.Source && to == CurrMove.Destination && pp == CurrMove.PromoteTo;
 
-        private void MakeMove(Action<Square, Square> formMakeMove, Move? tryMove)
+        public void MakeMove(Action<Square, Square> formMakeMove, Move tryMove = null)
         {
             // Lichess allows alternate solutions in mating puzzles as last move. 
             // Therefore, not always i CurrMove the move to make. 

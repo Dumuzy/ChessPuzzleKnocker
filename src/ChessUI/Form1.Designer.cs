@@ -129,6 +129,10 @@
             this.lblPuzzlesUntried = new System.Windows.Forms.Label();
             this.lblPuzzlesWithError = new System.Windows.Forms.Label();
             this.btDonate = new System.Windows.Forms.Button();
+            this.btOnePlyForward = new System.Windows.Forms.Button();
+            this.btOnePlyBack = new System.Windows.Forms.Button();
+            this.btAllPliesBack = new System.Windows.Forms.Button();
+            this.btAllPliesForward = new System.Windows.Forms.Button();
             this.tlpSetState.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -1158,11 +1162,61 @@
             this.btDonate.UseVisualStyleBackColor = true;
             this.btDonate.Click += new System.EventHandler(this.btDonate_Click);
             // 
+            // btOnePlyForward
+            // 
+            this.btOnePlyForward.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.btOnePlyForward.Location = new System.Drawing.Point(719, 399);
+            this.btOnePlyForward.Name = "btOnePlyForward";
+            this.btOnePlyForward.Size = new System.Drawing.Size(32, 30);
+            this.btOnePlyForward.TabIndex = 105;
+            this.btOnePlyForward.Text = ">";
+            this.btOnePlyForward.UseVisualStyleBackColor = true;
+            this.btOnePlyForward.Click += new System.EventHandler(this.btOnePlyForward_Click);
+            // 
+            // btOnePlyBack
+            // 
+            this.btOnePlyBack.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.btOnePlyBack.Location = new System.Drawing.Point(682, 399);
+            this.btOnePlyBack.Name = "btOnePlyBack";
+            this.btOnePlyBack.Size = new System.Drawing.Size(32, 30);
+            this.btOnePlyBack.TabIndex = 104;
+            this.btOnePlyBack.Text = "<";
+            this.btOnePlyBack.UseVisualStyleBackColor = true;
+            this.btOnePlyBack.Click += new System.EventHandler(this.btOnePlyBack_Click);
+            // 
+            // btAllPliesBack
+            // 
+            this.btAllPliesBack.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.btAllPliesBack.Location = new System.Drawing.Point(642, 399);
+            this.btAllPliesBack.Margin = new System.Windows.Forms.Padding(0, 3, 0, 3);
+            this.btAllPliesBack.Name = "btAllPliesBack";
+            this.btAllPliesBack.Size = new System.Drawing.Size(40, 30);
+            this.btAllPliesBack.TabIndex = 106;
+            this.btAllPliesBack.Text = "<<";
+            this.btAllPliesBack.UseVisualStyleBackColor = true;
+            this.btAllPliesBack.Click += new System.EventHandler(this.btAllPliesBack_Click);
+            // 
+            // btAllPliesForward
+            // 
+            this.btAllPliesForward.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.btAllPliesForward.Location = new System.Drawing.Point(751, 399);
+            this.btAllPliesForward.Margin = new System.Windows.Forms.Padding(1, 3, 1, 3);
+            this.btAllPliesForward.Name = "btAllPliesForward";
+            this.btAllPliesForward.Size = new System.Drawing.Size(40, 30);
+            this.btAllPliesForward.TabIndex = 107;
+            this.btAllPliesForward.Text = ">>";
+            this.btAllPliesForward.UseVisualStyleBackColor = true;
+            this.btAllPliesForward.Click += new System.EventHandler(this.btAllPliesForward_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(869, 622);
+            this.Controls.Add(this.btAllPliesForward);
+            this.Controls.Add(this.btAllPliesBack);
+            this.Controls.Add(this.btOnePlyForward);
+            this.Controls.Add(this.btOnePlyBack);
             this.Controls.Add(this.btDonate);
             this.Controls.Add(this.tlpSetState);
             this.Controls.Add(this.btHelp);
@@ -1373,6 +1427,10 @@
         private System.Windows.Forms.Label lblPuzzlesWithError;
         private System.Windows.Forms.Label lblPuzzlesUntried;
         private System.Windows.Forms.Button btDonate;
+        private System.Windows.Forms.Button btOnePlyForward;
+        private System.Windows.Forms.Button btOnePlyBack;
+        private System.Windows.Forms.Button btAllPliesBack;
+        private System.Windows.Forms.Button btAllPliesForward;
     }
 }
 

@@ -12,6 +12,8 @@ using static System.Windows.Forms.LinkLabel;
 using System.Windows.Forms;
 using System.Net;
 using System.Reflection.Metadata.Ecma335;
+using ChessSharp.SquareData;
+using ChessKnocker;
 
 namespace PuzzlePecker
 {
@@ -56,7 +58,7 @@ namespace PuzzlePecker
                     RebasePuzzles();
                 if (Puzzles[currentPuzzleNum + 1].NumCorrect != CurrentRound - 1)
                     RebasePuzzles();
-                game = new PuzzleGame(Puzzles[++currentPuzzleNum].SRawPuzzle);
+                game = new PuzzleGame(Puzzles[++currentPuzzleNum].SRawPuzzle, true);
             }
             return game;
         }
@@ -76,6 +78,9 @@ namespace PuzzlePecker
         public void CurrentIsCorrect() => ++Puzzles[currentPuzzleNum].NumCorrect;
 
         public void CurrentIsTried() => Puzzles[currentPuzzleNum].IncNumTried();
+
+        public Li<string> CurrentTags { get { return Puzzles[currentPuzzleNum].Tags; }
+            set { Puzzles[currentPuzzleNum].Tags = value; } }
 
         public bool HasPuzzles => !Puzzles.IsEmpty;
 
@@ -258,8 +263,13 @@ currentRound={CurrentRound}
 
         Li<string> FiltersToLines() => Filters.Select(f => f.ToDbString()).ToLi();
 
+        public void ExportSet()
+        {
+            Puzzles.Clear();
+            ReadSet();
+            new PvfExporter(FileName, Puzzles).Export();
+        }
         #endregion Read and Write
-
         #region Fields
         Li<Puzzle> Puzzles;
 
@@ -291,6 +301,19 @@ internal class Puzzle
     public string SRawPuzzle { get; private set; }
 
     public int NumCorrect { get; set; }
+
+    public Li<string> Tags
+    {
+        get { return SPuzzle.Split(',')[7].SplitToWords().ToLi(); }
+        set
+        {
+            var currSTags = SPuzzle.Split(',')[7];
+            var sTags = string.Join(" ", value);
+            if (SPuzzle == SRawPuzzle)
+                SRawPuzzle = SRawPuzzle.Replace(currSTags, sTags);
+            else throw new Exception("SPuzzle != SRawPuzzle");
+        }
+    }
 
     public void IncNumTried() { ++NumTriedInRound; ++NumTriedTotal; }
 

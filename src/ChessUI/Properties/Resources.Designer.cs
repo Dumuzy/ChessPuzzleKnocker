@@ -70,6 +70,15 @@ namespace ChessKnocker.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Lg.
+        /// </summary>
+        internal static string Bf {
+            get {
+                return ResourceManager.GetString("Bf", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Läufer.
         /// </summary>
         internal static string Bishop {
@@ -239,6 +248,15 @@ namespace ChessKnocker.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Kg.
+        /// </summary>
+        internal static string Kf {
+            get {
+                return ResourceManager.GetString("Kf", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to König.
         /// </summary>
         internal static string King {
@@ -284,6 +302,15 @@ namespace ChessKnocker.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Sg.
+        /// </summary>
+        internal static string Nf {
+            get {
+                return ResourceManager.GetString("Nf", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Anzahl der Puzzles.
         /// </summary>
         internal static string Number_of_puzzles {
@@ -302,6 +329,15 @@ namespace ChessKnocker.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Bg.
+        /// </summary>
+        internal static string Pf {
+            get {
+                return ResourceManager.GetString("Pf", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Umwandeln in.
         /// </summary>
         internal static string Promote_to {
@@ -311,11 +347,29 @@ namespace ChessKnocker.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Dg.
+        /// </summary>
+        internal static string Qf {
+            get {
+                return ResourceManager.GetString("Qf", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Dame.
         /// </summary>
         internal static string Queen {
             get {
                 return ResourceManager.GetString("Queen", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tg.
+        /// </summary>
+        internal static string Rf {
+            get {
+                return ResourceManager.GetString("Rf", resourceCulture);
             }
         }
         

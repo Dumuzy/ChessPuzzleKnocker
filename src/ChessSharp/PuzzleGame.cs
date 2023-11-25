@@ -8,9 +8,10 @@ namespace ChessSharp
 {
     public class PuzzleGame : ChessGame
     {
-        public PuzzleGame(string fenOrLichessPuzzle) : base(fenOrLichessPuzzle)
+        public PuzzleGame(string fenOrLichessPuzzle, bool shallMakeFirstMove) : base(fenOrLichessPuzzle)
         {
-            if (puzzle.Moves != null && !puzzle.Moves.IsEmpty && puzzle.PuzzleType != PuzzleType.LucasChessPuzzle)
+            if (puzzle.Moves != null && !puzzle.Moves.IsEmpty && 
+                  puzzle.PuzzleType != PuzzleType.LucasChessPuzzle && shallMakeFirstMove)
                 MakeMove(CurrMove);
         }
 
@@ -77,5 +78,7 @@ namespace ChessSharp
         public Move CurrMove => puzzle.Moves[puzzleMoveNum];
 
         int puzzleMoveNum = 0;
+
+        public Li<Move> PuzzleMoves => puzzle.Moves;
     }
 }

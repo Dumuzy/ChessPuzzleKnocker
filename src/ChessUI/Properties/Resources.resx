@@ -223,7 +223,25 @@
   <data name="Queen" xml:space="preserve">
     <value>Dame</value>
   </data>
-  <data name="BlackBishop" type="System.Resources.ResXFileRef, System.Windows.Forms">
+  <data name="Qf" xml:space="preserve">
+    <value>Dg</value>
+  </data>
+  <data name="Rf" xml:space="preserve">
+    <value>Tg</value>
+  </data>
+  <data name="Bf" xml:space="preserve">
+    <value>Lg</value>
+  </data>
+  <data name="Nf" xml:space="preserve">
+    <value>Sg</value>
+  </data>
+  <data name="Pf" xml:space="preserve">
+    <value>Bg</value>
+  </data>
+  <data name="Kf" xml:space="preserve">
+    <value>Kg</value>
+  </data>
+    <data name="BlackBishop" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\BlackBishop.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="WhiteKing" type="System.Resources.ResXFileRef, System.Windows.Forms">

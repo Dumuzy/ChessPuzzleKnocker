@@ -8,7 +8,7 @@ using AwiUtils;
 
 namespace ChessSharp
 {
-     /// <summary>Represents the chess game.</summary>
+    /// <summary>Represents the chess game.</summary>
     public class ChessGame : IDeepCloneable<ChessGame>
     {
         /// <summary>Gets <see cref="Piece"/> in a specific square.</summary>
@@ -18,13 +18,48 @@ namespace ChessSharp
 
         public Piece this[Square sq] => Board[(int)sq.Rank][(int)sq.File];
 
+        public string Fen
+        {
+            get
+            {
+                var fen = "";
+                for (Rank ra = Rank.Eighth; ra >= Rank.First; --ra)
+                {
+                    int spaceCount = 0;
+                    for (Linie li = Linie.A; li <= Linie.H; ++li)
+                    {
+                        if (this[li, ra] == null)
+                            spaceCount++;
+                        else
+                        {
+                            if (spaceCount != 0)
+                                fen += spaceCount;
+                            spaceCount = 0;
+                            var piece = this[li, ra];
+                            fen += ChessUtilities.FenCharOfPiece(piece);
+                        }
+                        if (li == Linie.H && spaceCount != 0)
+                            fen += spaceCount;
+                    }
+                    if (ra != Rank.First)
+                        fen += "/";
+                }
+                fen += WhoseTurn == Player.White ? " w " : " b ";
+                fen += FenCastleState 
+                    + " - 1 1";  // TODO
+                return fen;
+            }
+        }
+
+        public string ShortFen => Fen.Split()[0];
+
         public void SetPiece(Square sq, Piece p) => Board[(int)sq.Rank][(int)sq.File] = p;
 
         /// <summary>Gets a list of the game moves.</summary>
-        public Li<Move> Moves { get; private set; } // TODO: BAD! Investigate why the class consumer would even need this. Make it a private field if appropriate. And make it some kind of interface (`IEnumerable` for example).
+        public Li<Move> Moves { get; private set; }
 
         /// <summary>Gets a 2D array of <see cref="Piece"/>s in the board.</summary>
-        public Piece[][] Board { get; private set; } // TODO: It's bad idea to expose this to public.
+        public Piece[][] Board { get; private set; }
 
         /// <summary>Gets the <see cref="Player"/> who has turn.</summary>
         public Player WhoseTurn { get; private set; } = Player.White;
@@ -69,7 +104,7 @@ namespace ChessSharp
                     if (int.TryParse(curr.ToString(), out int spaces) && spaces != 0)
                         c += spaces;
                     else
-                        r[c++] = fenpieces[curr];
+                        r[c++] = ChessUtilities.FenChars2Pieces[curr];
                 }
                 Board[7 - i] = r;
             }
@@ -87,22 +122,19 @@ namespace ChessSharp
 
         }
 
-        static readonly Dictionary<char, Piece> fenpieces = new Dictionary<char, Piece>
+        private string FenCastleState
         {
-            { 'r', new Rook(Player.Black) },
-            { 'n', new Knight(Player.Black) },
-            { 'b', new Bishop(Player.Black) },
-            { 'q', new Queen(Player.Black) },
-            { 'k', new King(Player.Black) },
-            { 'p', new Pawn(Player.Black) },
-            { 'R', new Rook(Player.White) },
-            { 'N', new Knight(Player.White) },
-            { 'B', new Bishop(Player.White) },
-            { 'Q', new Queen(Player.White) },
-            { 'K', new King(Player.White) },
-            { 'P', new Pawn(Player.White) },
-        };
-
+            get
+            {
+                string s = CanWhiteCastleKingSide ? "K" : "";
+                s += CanWhiteCastleQueenSide ? "Q" : "";
+                s += CanBlackCastleKingSide ? "k" : "";
+                s += CanBlackCastleQueenSide ? "q" : "";
+                if (s == "")
+                    s = "-";
+                return s;
+            }
+        }
 
 
         /// <summary>Makes a move in the game.</summary>
@@ -169,7 +201,15 @@ namespace ChessSharp
                 if (Pawn.GetPawnMoveType(move) == PawnMoveType.Capture &&
                     this[move.Destination.File, move.Destination.Rank] == null)
                 {
-                    this.SetPiece(Moves.Last().Destination, null);
+                    // Wenn der erste angegebene Zug ein e.p ist, ist Moves leer. 
+                    if (Moves.IsEmpty)
+                    {
+                        var killed = new Square(move.Destination.File, move.Source.Rank);
+                        this.SetPiece(killed, null);
+                    }
+                    else
+                        this.SetPiece(Moves.Last().Destination, null);
+
                 }
 
             }

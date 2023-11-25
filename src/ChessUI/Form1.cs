@@ -179,7 +179,9 @@ namespace PuzzleKnocker
             foreach (var c in new Control[] { cbFlipBoard, btLichess, btNext, lblWhoseTurn, lblPuzzleNum,
                 cbPuzzleSets, cbPromoteTo, lblPromoteTo, btCreatePuzleSet, lblPuzzleId, btAbout, btHelp,
                 cbLanguage, lblRoundText, lblRound, lblPuzzleState, tlpSetState, btDonate,
-                btOnePlyBack, btOnePlyForward, btAllPliesBack, btAllPliesForward})
+                btOnePlyBack, btOnePlyForward, btAllPliesBack, btAllPliesForward,
+                cbKingFork, cbQueenFork, cbRookFork, cbBishopFork, cbNightFork, cbPawnFork,
+                btExport})
                 c.Location = AddDxDy(c.Location, (int)(9.5 * ddelta), 0);
             currSize = this.Size;
             shallIgnoreResizeEvent = false;
@@ -579,12 +581,25 @@ namespace PuzzleKnocker
                     SetSideOf();
                     DrawBoard();
                     SetInfoLabels(null);
+                    SetForkTypeCheckboxes();
                     lblWhoseTurn.Text = Res(_gameBoard.WhoseTurn.ToString());
                     lblPuzzleId.Text = _puzzleSet.CurrentLichessId;
                     _helpState = 0;
                 }
                 else
                     SystemSounds.Beep.Play();
+            }
+        }
+
+
+        private void SetForkTypeCheckboxes()
+        {
+            var t = _puzzleSet.CurrentTags.Where(x => x.IsContainedIn("kf qf rf bf nf pf".Split())).ToLi();
+            var cbs = new CheckBox[] { cbKingFork, cbQueenFork, cbRookFork, cbBishopFork, cbNightFork, cbPawnFork };
+            foreach (var cb in cbs)
+            {
+                var type = cb.Name.Substring(2, 1).ToLowerInvariant() + "f";
+                cb.Checked = t.Contains(type);
             }
         }
 
@@ -703,6 +718,28 @@ namespace PuzzleKnocker
                     ResizeForm(fak, true);
                 }
             }
+        }
+
+        private void cbFork_CheckedChanged(object sender, EventArgs e)
+        {
+            var tags = new OrderedSet<string>(_puzzleSet.CurrentTags);
+            var orgTags = new OrderedSet<string>(tags.Items); ;
+            CheckBox cb = sender as CheckBox;
+            var type = cb.Name.Substring(2, 1).ToLowerInvariant() + "f";
+            if (cb.Checked)
+                tags.Add(type);
+            else
+                tags.Remove(type);
+            if (!Helper.AreStringListsEqual(tags.Items, orgTags.Items))
+            {
+                _puzzleSet.CurrentTags = tags.Items.ToLi();
+                _puzzleSet.WriteSet();
+            }
+        }
+
+        private void btExport_Click(object sender, EventArgs e)
+        {
+            _puzzleSet.ExportSet();
         }
     }
 }

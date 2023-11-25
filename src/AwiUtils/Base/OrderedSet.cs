@@ -21,6 +21,15 @@ namespace AwiUtils
             }
         }
 
+        public void Remove(T item)
+        {
+            if (set.Contains(item))
+            {
+                set.Remove(item);
+                items.Remove(item);
+            }
+        }
+
         public void AddRange(IEnumerable<T> items)
         {
             foreach (var item in items)

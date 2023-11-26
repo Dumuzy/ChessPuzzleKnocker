@@ -56,6 +56,7 @@ namespace PuzzleKnocker
                 form.numClicks = Helper.ToInt(ini.ReadValue(Section, "Next", "0"));
                 form.iniDonated = ini.ReadValue(Section, "Donated", "Lasker");
                 form.windowSizePercent = Helper.ToInt(ini.ReadValue(Section, "WindowSizePercent", "70"));
+                form.uiFlags = Helper.ToInt(ini.ReadValue(Section, "UISpecial", "0"));
                 isReading = false;
             }
 

@@ -28,7 +28,7 @@ namespace ChessKnocker
 
         void AddPuzzle(Li<string> lines, Puzzle p, ref int n)
         {
-            bool isWithMoveInQuestion = true; // ShallBeWithMoveInQuestion(p);
+            bool isWithMoveInQuestion = ShallBeWithMoveInQuestion(p);
             PuzzleGame game = new PuzzleGame(p.SRawPuzzle, !isWithMoveInQuestion);
 
             lines.Add("Begin Fen");

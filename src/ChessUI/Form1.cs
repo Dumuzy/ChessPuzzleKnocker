@@ -33,6 +33,8 @@ namespace PuzzleKnocker
         readonly DonateButton donateButton;
         readonly Size defaultSize;
         double windowSizePercent;
+        int uiFlags;
+        const int UIFlagHasForkCheckboxes = 1, UIFlagHasExportButton = 2;
         Size currSize;
         readonly Point boardLeftTop = new Point(10, 28);
         readonly Size origSquareSize = new Size(70, 66);
@@ -82,6 +84,9 @@ namespace PuzzleKnocker
 
             FillPuzzleSetsComboBox();
             iniFile.Read();      // inifile is read twice, second tim for selected pzl, first time for language.
+            cbKingFork.Visible = cbQueenFork.Visible = cbRookFork.Visible = cbBishopFork.Visible =
+                cbNightFork.Visible = cbPawnFork.Visible = Ext.HasFlag(uiFlags, UIFlagHasForkCheckboxes);
+            btExport.Visible = Ext.HasFlag(uiFlags, UIFlagHasExportButton);
         }
 
         void ReadPuzzles()

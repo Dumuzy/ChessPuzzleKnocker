@@ -42,6 +42,7 @@ namespace ChessKnocker
             if (isWithMoveInQuestion)
                 rating += GetRatingPlusForMoveInQuestion(rating);
             lines.Add("lichessRating: " + rating);
+            lines.Add("lichessId: " + p.LichessId);
 
             if (isWithMoveInQuestion)
                 game.MakeMove(game.PuzzleMoves[0], true);

@@ -37,16 +37,45 @@ namespace PuzzlePecker
             SearchPuzzles();
         }
 
-        static public PuzzleSet ReadPuzzleSet(string name) => File.Exists(SFileName(name)) ? new PuzzleSet(name) : null;
+        static public PuzzleSet ReadPuzzleSet(string name, bool shallShuffle) =>
+            File.Exists(SFileName(name)) ? new PuzzleSet(name, shallShuffle, false) : null;
 
-        private PuzzleSet(string name)
+        static public PuzzleSet ReadFromPath(string fullPath, bool shallShuffle) =>
+            File.Exists(fullPath) ? new PuzzleSet(fullPath, shallShuffle, true) : null;
+
+        internal PuzzleSet(string name, int numPuzzles, string filters, int lowerRating, int upperRating,
+            int startPuzzleNumForCreation, string puzzleSourceFile, Li<Puzzle> puzzles)
         {
             this.Name = name;
+            this.NumPuzzlesWanted = numPuzzles;
+            this.StartPuzzleNumForCreation = startPuzzleNumForCreation;
+            this.LowerRating = lowerRating;
+            this.UpperRating = upperRating;
+            this.Filters = PuzzleFilter.CreateFilters(filters);
+            this.Puzzles = new Li<Puzzle>();
+            foreach (var p in puzzles)
+                Puzzles.Add(new Puzzle(p.SRawPuzzle));
+            this.DbFileName = puzzleSourceFile;
+        }
+
+
+        private PuzzleSet(string fullPath, bool shallShuffle, bool isFullPath)
+        {
+            this.Name = SFileName(Path.GetFileNameWithoutExtension(fullPath));
+            if (isFullPath)
+                this.FullPath = fullPath;
             this.Puzzles = new Li<Puzzle>();
             this.Filters = new Li<PuzzleFilter>();
             ReadSet();
-            ShufflePuzzles();
+            if (shallShuffle)
+                ShufflePuzzles();
             this.Puzzles = Puzzles.OrderBy(p => p.NumTriedInRound).ThenBy(p => p.NumCorrect).ToLi();
+        }
+
+        public PuzzleSet()
+        {
+            this.Puzzles = new Li<Puzzle>();
+            this.Filters = new Li<PuzzleFilter>();
         }
 
         public PuzzleGame NextPuzzle()
@@ -79,8 +108,11 @@ namespace PuzzlePecker
 
         public void CurrentIsTried() => Puzzles[currentPuzzleNum].IncNumTried();
 
-        public Li<string> CurrentTags { get { return Puzzles[currentPuzzleNum].Tags; }
-            set { Puzzles[currentPuzzleNum].Tags = value; } }
+        public Li<string> CurrentTags
+        {
+            get { return Puzzles[currentPuzzleNum].Tags; }
+            set { Puzzles[currentPuzzleNum].Tags = value; }
+        }
 
         public bool HasPuzzles => !Puzzles.IsEmpty;
 
@@ -118,6 +150,8 @@ namespace PuzzlePecker
         public const string FileExt = ".pzl";
 
         private void ShufflePuzzles() => Puzzles = Puzzles.OrderBy(p => rand.Next()).ToLi();
+
+        internal Li<Puzzle> Puzzles { get; private set; }
 
         #region SearchPuzzles
         void SearchPuzzles()
@@ -210,9 +244,10 @@ namespace PuzzlePecker
         #endregion SearchPuzzles
 
         #region Read and Write
-        public void ReadSet()
+        public void ReadSet() => ReadFromLines(File.ReadAllLines(FileName).ToLi());
+
+        public void ReadFromLines(Li<string> lines)
         {
-            var lines = File.ReadAllLines(FileName).ToLiro();
             foreach (var line in lines)
             {
                 if (line.StartsWith("TT=") || line.StartsWith("TR="))
@@ -236,15 +271,17 @@ namespace PuzzlePecker
             }
         }
 
-        public void WriteSet()
+        public Li<string> GetLinesForWriting()
         {
             var lines = HeaderToLines();
             lines.Add("[Filters]");
             lines.AddRange(FiltersToLines());
             lines.Add("[Puzzles]");
             lines.AddRange(Puzzles.Select(p => p.ToDbString()));
-            File.WriteAllLines(FileName, lines);
+            return lines;
         }
+
+        public void WriteSet() => File.WriteAllLines(FileName, GetLinesForWriting());
 
         Li<string> HeaderToLines()
         {
@@ -271,7 +308,6 @@ currentRound={CurrentRound}
         }
         #endregion Read and Write
         #region Fields
-        Li<Puzzle> Puzzles;
 
         public readonly Li<PuzzleFilter> Filters;
         public int LowerRating { get; private set; }
@@ -280,10 +316,16 @@ currentRound={CurrentRound}
         public int StartPuzzleNumForCreation { get; private set; }
 
         int currentPuzzleNum = -1;
-        readonly string Name, DbFileName;
-        string FileName => SFileName(Name);
+        readonly string Name, DbFileName, FullPath;
+        string FileName => string.IsNullOrEmpty(FullPath) ? SFileName(Name) : FullPath;
 
-        static string SFileName(string name) => Helper.MakeFilenameSafe(name) + FileExt;
+        static string SFileName(string name)
+        {
+            var h = Helper.MakeFilenameSafe(name);
+            if (!h.EndsWith(FileExt))
+                h += FileExt;
+            return h;
+        }
         static Random rand = new Random();
         #endregion Fields  
     }
@@ -331,7 +373,7 @@ internal class Puzzle
 
     public string ToDbString() => $"TR={NumTriedInRound};C={NumCorrect};TT={NumTriedTotal};P={SRawPuzzle}";
 
-    private string SPuzzle => SRawPuzzle.Split(',').Length >= 4 ?  SRawPuzzle : ",,,,,";
+    private string SPuzzle => SRawPuzzle.Split(',').Length >= 4 ? SRawPuzzle : ",,,,,";
 
     public void Read(string dbString)
     {

@@ -591,14 +591,24 @@ namespace AwiUtils
         }
 
         /// <summary> Erstellt ein Dictionary aus einem String, so: Zuerst splitte den String mit SplitToWords, 
-        /// und mach dann die Einträge mit index 0, 2, 4,... zu keys und die anderen zu Values. </summary>
+        /// und mach dann die Einträge mit index 0, 2, 4,... zu keys und die anderen zu Values. 
+        /// Falls keyValueSeparator != ' ' ist, splitte den String mit SplitToWords und danach jeden Teil 
+        ///  am ersten keyValueSeparator. Linke Seite getrimmt wird Key, rechte Seite getrimmt wird Value. </summary>
         /// <remarks> Bsp: "a 1   c 3 "   ->   a:1,  c:3 </remarks>
-        public static Dictionary<string, string> ToDictionary(string s, IEqualityComparer<string> eqComparer = null)
+        public static Dictionary<string, string> ToDictionary(string s, IEqualityComparer<string> eqComparer = null,
+                char keyValueSeparator=' ')
         {
             var d = eqComparer == null ? new Dictionary<string, string>() : new Dictionary<string, string>(eqComparer);
             var e = s.SplitToWords();
-            for (int i = 0; i < e.Length - 1; i += 2)
-                d.Add(e[i], e[i + 1]);
+            if (keyValueSeparator == ' ')
+                for (int i = 0; i < e.Length - 1; i += 2)
+                    d.Add(e[i], e[i + 1]);
+            else
+                foreach (var kvp in e)
+                {
+                    var parts = kvp.Split(keyValueSeparator, 2).Select(s => s.Trim()).ToArray();
+                    d.Add(parts[0], parts[1]);
+                }
             return d;
         }
 

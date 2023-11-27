@@ -8,6 +8,7 @@ using System.Media;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using AwiUtils;
+using ChessKnocker;
 using ChessKnocker.Properties;
 using ChessSharp;
 using ChessSharp.Pieces;
@@ -34,7 +35,7 @@ namespace PuzzleKnocker
         readonly Size defaultSize;
         double windowSizePercent;
         int uiFlags;
-        const int UIFlagHasForkCheckboxes = 1, UIFlagHasExportButton = 2;
+        const int UIFlagHasForkCheckboxes = 1, UIFlagHasExportButton = 2, UIFlagHasMssTestButton = 4;
         Size currSize;
         readonly Point boardLeftTop = new Point(10, 28);
         readonly Size origSquareSize = new Size(70, 66);
@@ -87,13 +88,14 @@ namespace PuzzleKnocker
             cbKingFork.Visible = cbQueenFork.Visible = cbRookFork.Visible = cbBishopFork.Visible =
                 cbNightFork.Visible = cbPawnFork.Visible = Ext.HasFlag(uiFlags, UIFlagHasForkCheckboxes);
             btExport.Visible = Ext.HasFlag(uiFlags, UIFlagHasExportButton);
+            btMssTest.Visible = Ext.HasFlag(uiFlags, UIFlagHasMssTestButton);
         }
 
         void ReadPuzzles()
         {
             if (_currPuzzleSetName != null)
             {
-                _puzzleSet = PuzzleSet.ReadPuzzleSet(_currPuzzleSetName);
+                _puzzleSet = PuzzleSet.ReadPuzzleSet(_currPuzzleSetName, true);
                 if (_puzzleSet == null)
                     MessageBox.Show($"Cannot find PuzzleSet {_currPuzzleSetName}.");
             }
@@ -186,7 +188,7 @@ namespace PuzzleKnocker
                 cbLanguage, lblRoundText, lblRound, lblPuzzleState, tlpSetState, btDonate,
                 btOnePlyBack, btOnePlyForward, btAllPliesBack, btAllPliesForward,
                 cbKingFork, cbQueenFork, cbRookFork, cbBishopFork, cbNightFork, cbPawnFork,
-                btExport})
+                btExport, btMssTest})
                 c.Location = AddDxDy(c.Location, (int)(9.5 * ddelta), 0);
             currSize = this.Size;
             shallIgnoreResizeEvent = false;
@@ -742,9 +744,7 @@ namespace PuzzleKnocker
             }
         }
 
-        private void btExport_Click(object sender, EventArgs e)
-        {
-            _puzzleSet.ExportSet();
-        }
+        private void btExport_Click(object sender, EventArgs e) => _puzzleSet.ExportSet();
+        private void btMssTest_Click(object sender, EventArgs e) => MssBrett.TestCreate();
     }
 }

@@ -140,6 +140,7 @@
             cbKingFork = new System.Windows.Forms.CheckBox();
             cbPawnFork = new System.Windows.Forms.CheckBox();
             btExport = new System.Windows.Forms.Button();
+            btMssTest = new System.Windows.Forms.Button();
             tlpSetState.SuspendLayout();
             SuspendLayout();
             // 
@@ -1290,11 +1291,23 @@
             btExport.UseVisualStyleBackColor = true;
             btExport.Click += btExport_Click;
             // 
+            // btMssTest
+            // 
+            btMssTest.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            btMssTest.Location = new System.Drawing.Point(642, 9);
+            btMssTest.Name = "btMssTest";
+            btMssTest.Size = new System.Drawing.Size(42, 24);
+            btMssTest.TabIndex = 115;
+            btMssTest.Text = "Mss";
+            btMssTest.UseVisualStyleBackColor = true;
+            btMssTest.Click += btMssTest_Click;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             ClientSize = new System.Drawing.Size(869, 622);
+            Controls.Add(btMssTest);
             Controls.Add(btExport);
             Controls.Add(cbPawnFork);
             Controls.Add(cbKingFork);
@@ -1526,6 +1539,7 @@
         private System.Windows.Forms.CheckBox cbKingFork;
         private System.Windows.Forms.CheckBox cbPawnFork;
         private System.Windows.Forms.Button btExport;
+        private System.Windows.Forms.Button btMssTest;
     }
 }
 
